@@ -52,32 +52,33 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-//	@GetMapping("/users/{id}/edit")
 	@GetMapping("/users/edit/{id}")
-//	@GetMapping("/users/edit")
 	public String editUserForm(@PathVariable("id") Long id, Model model) {
 
 		Optional<User> user = userService.getUserById(id);
-		model.addAttribute("user", user);
+//		User user = userService.getUserById(id).get();
 
-		System.out.println("sssss" + id);
+		model.addAttribute("user", user.get());
+//		model.addAttribute("user.id", id);
+		model.addAttribute("user.id", user.get().getId());
+		System.out.println("sssss" + user.toString());
 		return "user/edit";
 
 	}
 
-//	@PostMapping("/users/{id}/edit")
-	@PostMapping("/users/edit")
-//	public String editUser(@PathVariable("id") Long id, @Valid @ModelAttribute("user") UserDto userDto,
-	public String editUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
+//	@PostMapping("/users/edit")
+	@PostMapping("/users/edit/{id}")
+	public String editUser(@PathVariable("id") Long id, @Valid @ModelAttribute("user") User user,
+			BindingResult result) {
+
 		if (result.hasErrors()) {
 			return "user/edit";
 		}
-		
-		Long id = userDto.getId();
-		
+
 		System.out.println("ddddd" + id);
-		userService.updateUser(id, userDto);
+		userService.updateUser(id, user);
 		return "redirect:/users";
+
 	}
 
 	@GetMapping("/users/delete/{id}")

@@ -10,9 +10,11 @@
 
 
 		<tbody>
-			<form action="#" th:action="@{/users/edit}" th:object="${user}"
-				method="post">
-				
+			<!-- <form action="#" th:action="@{/users/edit}" th:object="${user}"
+				method="post"> -->
+			<form th:action="@{/users/edit/{id}(id=${user.id})}"
+				th:object="${user}" method="post">
+
 				<!-- 			<form action="#" th:action="@{/users/edit}"
  -->
 
@@ -42,7 +44,6 @@
 
 
 			</form>
-
 		</tbody>
 	</table>
 </body>
