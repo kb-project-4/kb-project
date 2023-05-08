@@ -18,8 +18,18 @@ public class BankAccount extends BaseEntity {
 
 	private String accountNumber;
 
+	private String bankname;
+
+	private String bankcode;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bank_id")
+	private Bank bank;
+
+	
 }

@@ -41,38 +41,49 @@ public class UserController {
 		model.addAttribute("user", new User());
 		return "user/new";
 	}
-	
 
 	@PostMapping("/users/new")
 	public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
-		
+
 		userService.createUser(user);
 		return "redirect:/users";
 	}
 
-	@GetMapping("/users/{id}/edit")
+//	@GetMapping("/users/{id}/edit")
+	@GetMapping("/users/edit/{id}")
+//	@GetMapping("/users/edit")
 	public String editUserForm(@PathVariable("id") Long id, Model model) {
+
 		Optional<User> user = userService.getUserById(id);
 		model.addAttribute("user", user);
+
+		System.out.println("sssss" + id);
 		return "user/edit";
+
 	}
 
-	@PostMapping("/users/{id}/edit")
-	public String editUser(@PathVariable("id") Long id, @Valid @ModelAttribute("user") UserDto userDto,
-			BindingResult result) {
+//	@PostMapping("/users/{id}/edit")
+	@PostMapping("/users/edit")
+//	public String editUser(@PathVariable("id") Long id, @Valid @ModelAttribute("user") UserDto userDto,
+	public String editUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result) {
 		if (result.hasErrors()) {
 			return "user/edit";
 		}
+		
+		Long id = userDto.getId();
+		
+		System.out.println("ddddd" + id);
 		userService.updateUser(id, userDto);
 		return "redirect:/users";
 	}
 
-	@PostMapping("/users/{id}/delete")
+	@GetMapping("/users/delete/{id}")
 	public String deleteUser(@PathVariable("id") Long id) {
 		userService.deleteUser(id);
 		return "redirect:/users";
 	}
+
 }
