@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.UserDto;
@@ -87,4 +86,9 @@ public class UserController {
 		return "redirect:/users";
 	}
 
+	@GetMapping("users/index")
+	public String mainpage() {
+		return "user/index";
+
+	}
 }

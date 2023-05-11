@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>BookMark</title>
+</head>
+<body>
+	<h1>BookMark</h1>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Bank Number</th>
+			<th>URL</th>
+			<th>Description</th>
+		</tr>
+
+		<tr>
+			<td th:text="${bookMark.name}"></td>
+			<td th:text="${bookMark.banknumber}"></td>
+		</tr>
+	</table>
+</body>
+</html>
