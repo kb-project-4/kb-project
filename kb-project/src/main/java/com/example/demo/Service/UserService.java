@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.UserDto;
+import com.example.demo.dto.Login;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
@@ -25,20 +25,20 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-//	public User updateUser(Long id, UserDto userDto) {
-		public User updateUser(Long id, User userDto) {
+	public User updateUser(Long id, User user) {
 		Optional<User> optionalUser = userRepository.findById(id);
 
 		if (optionalUser.isPresent()) {
-			User user = optionalUser.get();
-			user.setUsername(userDto.getUsername());
-			user.setEmail(userDto.getEmail());
-			user.setPassword(userDto.getPassword());
-			user.setPhone(userDto.getPhone());
-			user.setAddress(userDto.getAddress());
+			User user1 = optionalUser.get();
+			user1.setUsername(user.getUsername());
+			user1.setuserid(user.getuserid());
+			user1.setPassword(user.getPassword());
+			user1.setPhone(user.getPhone());
+			user1.setAddress(user.getAddress());
 
-			return userRepository.save(user);
+			return userRepository.save(user1);
 		}
+
 		return null;
 	}
 
@@ -52,6 +52,12 @@ public class UserService {
 
 	public Optional<User> getUserById(Long id) {
 		return userRepository.findById(id);
+	}
+
+	public User getUserByuserid(String userid) {
+		User user = userRepository.findByuserid(userid);
+		return user;
+
 	}
 
 }

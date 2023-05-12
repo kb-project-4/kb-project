@@ -12,8 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Service.UserService;
-import com.example.demo.dto.UserDto;
+import com.example.demo.dto.Login;
 import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
 
 @Controller
 public class UserController {
@@ -27,6 +28,14 @@ public class UserController {
 		model.addAttribute("users", userList);
 		return "user/list";
 	}
+//
+//	@PostMapping("/users/login")
+//	public String login(Model model) {
+//
+//		model.addAttribute("login", new Login());
+//
+//		return "user/main";
+//	}
 
 	@GetMapping("/users/{id}")
 	public String getUser(@PathVariable("id") Long id, Model model) {
@@ -65,7 +74,6 @@ public class UserController {
 
 	}
 
-//	@PostMapping("/users/edit")
 	@PostMapping("/users/edit/{id}")
 	public String editUser(@PathVariable("id") Long id, @Valid @ModelAttribute("user") User user,
 			BindingResult result) {
@@ -87,8 +95,31 @@ public class UserController {
 	}
 
 	@GetMapping("users/index")
-	public String mainpage() {
+	public String mainpageForm(Model model) {
+
+		model.addAttribute("login", new Login());
+
 		return "user/index";
 
 	}
+
+	@PostMapping("users/index")
+	public String mainpage(@ModelAttribute("login") Login login) {
+
+		System.out.println("id" + login.getUserid());
+		User userByuserid = userService.getUserByuserid(login.getUserid());
+
+		System.out.println("user" + userByuserid.toString());
+
+		if (login.getPassword().equals(userByuserid.getPassword())) {
+
+			return "user/main";
+
+		}
+
+		else
+			return "redirect:/index";
+
+	}
+
 }

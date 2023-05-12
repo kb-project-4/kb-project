@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.*;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
 
 @Entity
 @Data
+@Builder
 
 public class User extends BaseEntity {
 	@Id
@@ -22,7 +25,10 @@ public class User extends BaseEntity {
 	private Long id;
 
 	private String username;
-	private String email;
+
+	@Column(unique = true)
+	private String userid;
+
 	private String password;
 	private String phone;
 	private String address;
@@ -46,12 +52,12 @@ public class User extends BaseEntity {
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getuserid() {
+		return userid;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setuserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getPassword() {
