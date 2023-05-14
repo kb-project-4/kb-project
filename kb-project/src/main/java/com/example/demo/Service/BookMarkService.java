@@ -1,16 +1,13 @@
 package com.example.demo.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.UserDto;
 import com.example.demo.entity.BookMark;
-import com.example.demo.entity.User;
 import com.example.demo.repository.BookMarkRepository;
-import com.example.demo.repository.UserRepository;
 
 @Service
 public class BookMarkService {
@@ -23,42 +20,50 @@ public class BookMarkService {
 	}
 
 	public BookMark createBookMark(BookMark bookMark) {
-
 		return bookMarkRepository.save(bookMark);
 	}
 
-//
-//	public BookMark updateBookMark(String banknubmer, String name,BookMark bookMark) {
-//		
-//		Optional<BookMark> optionalBookmark = bookMarkRepository.findbyBanknumber(banknumber) ;
-//		
-//		if (optionalBookmark.isPresent()) {
-//
-//			BookMark  bMark = optionalBookmark.get();
-//			bMark.set)
-//			
-//			user.setAddress(userDto.getAddress());
-//
-//			return userRepository.save(user);
-//		}
-//
-//		return null;
-//	}
-//	
-//	
-
-	public void deleteBookMark(String bankname, String banknumber) {
-
-		bookMarkRepository.deleteByBanknumber(banknumber);
-
+	public void deleteBookMark(Long id) {
+		bookMarkRepository.deleteById(id);
 	}
 
-	public List<BookMark> getAllbookmarks() {
+	public List<BookMark> getAllBookmarks() {
 		return bookMarkRepository.findAll();
 	}
 
-	public BookMark getbookmarkbybanknumber(String banknumber) {
-		return bookMarkRepository.findByBanknumber(banknumber);
+	public List<BookMark> getUserAllBookmarks(String userid) {
+
+		List<BookMark> bookMarks = bookMarkRepository.findAll();
+		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
+
+		for (BookMark bookMark : bookMarks) {
+			if (userid.equals(bookMark.getUser().getUserid()))
+				bookMarks2.add(bookMark);
+
+		}
+
+		return bookMarks2;
+
+	}
+
+	public BookMark getBookmarkByBankNumber(String bankNumber) {
+		return bookMarkRepository.findByBanknumber(bankNumber);
+	}
+
+	public BookMark getBookMarkById(Long id) {
+		return bookMarkRepository.findById(id).orElse(null);
+	}
+
+	public BookMark updateBookMark(Long id, BookMark updatedBookMark) {
+		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
+
+		if (existingBookMark != null) {
+			existingBookMark.setBanknumber(updatedBookMark.getBanknumber());
+			existingBookMark.setName(updatedBookMark.getName());
+			// Set other properties as needed
+			return bookMarkRepository.save(existingBookMark);
+		}
+		return null;
 	}
 
 }

@@ -6,8 +6,8 @@
 <title>Bookmark Form</title>
 </head>
 <body>
-	<h1>Bookmark Form</h1>
-	<form action="#" th:action="@{/bookmarks/create}"
+	<h1>북마크 수정</h1>
+	<form action="#" th:action="@{/bookmarks/edit/{id}(id=${id})}"
 		th:object="${bookMark}" method="post">
 
 
@@ -36,7 +36,5 @@
 		</div>
 
 	</form>
-	<a th:href="@{/users/main}">메인으로 돌아가기</a>
-
 </body>
 </html>

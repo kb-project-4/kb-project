@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class UserController {
 
 		userService.createUser(user);
 		return "user/main";
-		
+
 	}
 
 	@GetMapping("/users/edit/{id}")
@@ -95,7 +97,8 @@ public class UserController {
 	}
 
 	@PostMapping("/users/index")
-	public String mainpage(@ModelAttribute("login") Login login, RedirectAttributes redirectAttributes) {
+	public String mainpage(@ModelAttribute("login") Login login, RedirectAttributes redirectAttributes,
+			HttpSession session) {
 
 		System.out.println("idssss: " + login.getUserid());
 		System.out.println("idssss: " + login.getPassword());
@@ -106,12 +109,40 @@ public class UserController {
 
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
 			System.out.println("success");
-			return "user/main";
-		} else {
+			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
+
+			return "redirect:/users/main";
+		}
+		else {
 			redirectAttributes.addFlashAttribute("errorMessage", "회원정보 오류");
 
 			return "redirect:/users/index";
 		}
+
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		// 세션 무효화
+		HttpSession session = request.getSession();
+		if (session != null) {
+			System.out.println("session inval");
+			session.invalidate();
+		}
+		// 로그인 페이지로 리다이렉트
+		return "redirect:/users/index";
+	}
+
+	@GetMapping("users/main")
+	public String main(HttpSession session, HttpServletRequest request, Model model) {
+		// 여기에서 필요한 데이터를 모델에 추가하면 됩니다.
+		session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+
+		model.addAttribute("userid", userid);
+		System.out.println("useriddd" + userid);
+		return "user/main";
 
 	}
 
