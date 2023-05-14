@@ -31,7 +31,7 @@ public class UserService {
 		if (optionalUser.isPresent()) {
 			User user1 = optionalUser.get();
 			user1.setUsername(user.getUsername());
-			user1.setuserid(user.getuserid());
+			user1.setUserid(user.getUserid());
 			user1.setPassword(user.getPassword());
 			user1.setPhone(user.getPhone());
 			user1.setAddress(user.getAddress());
@@ -54,7 +54,7 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public User getUserByuserid(String userid) {
+	public User getUserByUserId(String userid) {
 		User user = userRepository.findByuserid(userid);
 		return user;
 

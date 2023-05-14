@@ -26,9 +26,10 @@ public class BookMark {
 	private String bankname;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user")
 	private User user;
 
+	
 	public Long getId() {
 		return id;
 	}

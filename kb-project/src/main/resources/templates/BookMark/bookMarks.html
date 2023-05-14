@@ -11,14 +11,18 @@
 			<tr>
 				<th>Name</th>
 				<th>Bank Number</th>
-				<th>URL</th>
-				<th>Description</th>
+				<th>myid</th>
+				<th>myname</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="bookMark : ${bookMarks}">
+
 				<td th:text="${bookMark.name}"></td>
 				<td th:text="${bookMark.banknumber}"></td>
+ 				<td th:text="${bookMark.user.userid}"></td>
+ 				<td th:text="${bookMark.user.username}"></td>
+
 			</tr>
 
 		</tbody>

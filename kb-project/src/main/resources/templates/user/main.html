@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Button Example</title>
+<title>Button</title>
 </head>
 <body>
-	<h1>Button Example</h1>
+	<h1>main</h1>
 
 	<a th:href="@{/transfer}"><button>송금</button></a>
-	<a th:href="@{/favorites}"><button>즐겨찾기</button></a>
+	<a
+		th:href="@{/bookmarks/create/{userid}(userid=${userid})}">
+		<button>즐겨찾기</button>
+	</a>
 	<a th:href="@{/account}"><button>계좌조회</button></a>
 	<a th:href="@{/news}"><button>뉴스</button></a>
 </body>

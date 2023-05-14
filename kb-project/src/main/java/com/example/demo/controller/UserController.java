@@ -15,6 +15,7 @@ import com.example.demo.Service.UserService;
 import com.example.demo.dto.Login;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -28,14 +29,6 @@ public class UserController {
 		model.addAttribute("users", userList);
 		return "user/list";
 	}
-//
-//	@PostMapping("/users/login")
-//	public String login(Model model) {
-//
-//		model.addAttribute("login", new Login());
-//
-//		return "user/main";
-//	}
 
 	@GetMapping("/users/{id}")
 	public String getUser(@PathVariable("id") Long id, Model model) {
@@ -57,7 +50,8 @@ public class UserController {
 		}
 
 		userService.createUser(user);
-		return "redirect:/users";
+		return "user/main";
+		
 	}
 
 	@GetMapping("/users/edit/{id}")
@@ -94,31 +88,30 @@ public class UserController {
 		return "redirect:/users";
 	}
 
-	@GetMapping("users/index")
+	@GetMapping("/users/index")
 	public String mainpageForm(Model model) {
-
 		model.addAttribute("login", new Login());
-
 		return "user/index";
-
 	}
 
-	@PostMapping("users/index")
-	public String mainpage(@ModelAttribute("login") Login login) {
+	@PostMapping("/users/index")
+	public String mainpage(@ModelAttribute("login") Login login, RedirectAttributes redirectAttributes) {
 
-		System.out.println("id" + login.getUserid());
-		User userByuserid = userService.getUserByuserid(login.getUserid());
+		System.out.println("idssss: " + login.getUserid());
+		System.out.println("idssss: " + login.getPassword());
 
-		System.out.println("user" + userByuserid.toString());
+		User userByUserId = userService.getUserByUserId(login.getUserid());
 
-		if (login.getPassword().equals(userByuserid.getPassword())) {
+		System.out.println("ssss" + userByUserId.toString());
 
+		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
+			System.out.println("success");
 			return "user/main";
+		} else {
+			redirectAttributes.addFlashAttribute("errorMessage", "회원정보 오류");
 
+			return "redirect:/users/index";
 		}
-
-		else
-			return "redirect:/index";
 
 	}
 

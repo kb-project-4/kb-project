@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserDto {
 	private Long id;
 	private String username;
-	private String email;
+	private String userid;
 	private String password;
 	private String phone;
 	private String address;
@@ -25,8 +25,8 @@ public class UserDto {
 		return username;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getuserid() {
+		return userid;
 	}
 
 	public String getPassword() {

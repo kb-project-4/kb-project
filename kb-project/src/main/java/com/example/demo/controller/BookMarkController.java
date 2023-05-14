@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Service.BookMarkService;
+import com.example.demo.Service.UserService;
 import com.example.demo.entity.BookMark;
+import com.example.demo.entity.User;
 
 @Controller
 @RequestMapping("/bookmarks")
@@ -20,6 +23,9 @@ public class BookMarkController {
 
 	@Autowired
 	private BookMarkService bookMarkService;
+
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/{banknumber}")
 	public String getBookMark(@PathVariable("banknumber") String banknumber, Model model) {
@@ -36,12 +42,15 @@ public class BookMarkController {
 		return "BookMark/bookMarks";
 	}
 
-	@GetMapping("/create")
-	public String createBookMarkForm(Model model) {
+	@GetMapping("/create/{userid}")
+	public String createBookMarkForm(@PathVariable("userid") String userid, Model model) {
 		BookMark bookMark = new BookMark();
+		User user = userService.getUserByUserId(userid);
+		bookMark.setUser(user);
 		model.addAttribute("bookMark", bookMark);
 		return "BookMark/bookMarkForm";
 	}
+	
 
 	@PostMapping("/create")
 	public String createBookMark(@ModelAttribute("bookMark") BookMark bookMark) {
@@ -70,6 +79,5 @@ public class BookMarkController {
 		return "redirect:/bookmarks";
 
 	}
-
 
 }
