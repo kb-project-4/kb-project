@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Create Bank Account</title>
+</head>
+<body>
+	<h1>Create Bank Account</h1>
+	<form action="/bankaccounts" method="post">
+		<label for="accountNumber">Account Number:</label> <input type="text"
+			id="accountNumber" name="accountNumber" required> <br>
+			 <label
+			for="bankName">Bank Name:</label> <input type="text" id="bankName"
+			name="bankName" required> <br> <label for="bankCode">Bank
+			Code:</label> <input type="text" id="bankCode" name="bankCode" required>
+		<br> 
+		<label for="userId">User ID:</label> 
+		<input type="text"
+			id="userId" name="userId" required> <br> 
+			<labelfor="amount">Amount:</label> 
+			<input type="text" id="amount"
+			name="amount" required> <br> 
+			<input type="submit" value="Create">
+	</form>
+</body>
+</html>

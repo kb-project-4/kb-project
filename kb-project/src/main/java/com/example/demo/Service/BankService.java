@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Bank;
 import com.example.demo.repository.BankRepository;
-  
+
 @Service
 public class BankService {
 
@@ -28,7 +28,7 @@ public class BankService {
 		return bankRepository.save(bank);
 	}
 
-	public Bank updateBank(Bank bank) {
+	public Bank updateBank(Long id, Bank bank) {
 		return bankRepository.save(bank);
 	}
 

@@ -6,22 +6,22 @@
 <title>Bookmark Form</title>
 </head>
 <body>
-	<h1>Bookmark Form</h1>
+	<h1>북마크 등록</h1>
 	<form action="#" th:action="@{/bookmarks/create}"
 		th:object="${bookMark}" method="post">
 
 
 		<div>
-			<label>Bank Name:</label> <input type="text" th:field="*{bankname}">
+			<label>은행명:</label> <input type="text" th:field="*{bankname}">
 		</div>
 
 		<div>
-			<label>Bank Number:</label> <input type="text"
+			<label>계좌번호:</label> <input type="text"
 				th:field="*{banknumber}">
 		</div>
 
 		<div class="form-group">
-			<label for="name">Name</label> <input type="text"
+			<label for="name">이름</label> <input type="text"
 				class="form-control" id="name" th:field="*{name}" required>
 		</div>
 

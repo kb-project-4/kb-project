@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Bank Account List</title>
+</head>
+<body>
+	<h1>계좌</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Account Number</th>
+				<th>Bank Name</th>
+				<th>Bank Code</th>
+				<th>User Name</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="bankAccount : ${bankAccounts}">
+				<td th:text="${bankAccount.accountNumber}"></td>
+				<td th:text="${bankAccount.bankname}"></td>
+				<td th:text="${bankAccount.bankcode}"></td>
+				<td th:text="${bankAccount.user.name}"></td>
+				<td th:text="${bankAccount.amount}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<a th:href="@{/bankaccounts/create"} >계좌생성</a>
+</body>
+</html>
