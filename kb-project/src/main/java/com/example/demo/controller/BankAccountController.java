@@ -30,30 +30,35 @@ public class BankAccountController {
 
 	@GetMapping("/bankaccounts")
 	public String getBankAccounts(Model model, HttpServletRequest request) {
+		System.out.println("bankaccount");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+		System.out.println("user" + user.toString());
 		String userid = user.getUserid();
+		System.out.println("userid " + userid);
 
 		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByuserId(request);
+
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "bankaccount/list";
+
 	}
 
 	@PostMapping("/bankaccounts")
 	public String createBankAccount(@ModelAttribute("bankAccount") BankAccount bankAccount,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		bankAccount.setUser(user);
-		Bank bank = null;
 
-		bankAccountService.createBankAccount(bankAccount, user, bank);
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+		String bankname = bankAccount.getBank().getBankname();
+
+		bankAccountService.createBankAccount(bankAccount, bankname, userid);
 
 		return "redirect:/bankaccounts";
-		
+
 	}
 
-	
 	@GetMapping("/bankaccounts/create")
 	public String createBankAccountform(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -70,9 +75,9 @@ public class BankAccountController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		Bank bank = bankAccount.getBank();
-
-		bankAccountService.createBankAccount(bankAccount, user, bank);
+		String userid = user.getUserid();
+		String bankname = bankAccount.getBank().getBankname();
+		bankAccountService.createBankAccount(bankAccount, userid, bankname);
 		return "redirect:/bankaccounts";
 
 	}

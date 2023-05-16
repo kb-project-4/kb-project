@@ -24,6 +24,10 @@ public class BankService {
 		return bankRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bank id: " + id));
 	}
 
+	public Bank getBankBybankname(String bankname) {
+		return bankRepository.findByBankname(bankname);
+	}
+
 	public Bank createBank(Bank bank) {
 		return bankRepository.save(bank);
 	}

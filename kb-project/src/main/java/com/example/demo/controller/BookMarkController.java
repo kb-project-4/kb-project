@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Service.BookMarkService;
 import com.example.demo.Service.UserService;
+import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
 
@@ -44,14 +45,14 @@ public class BookMarkController {
 //
 //	}
 
-	@GetMapping 
+	@GetMapping
 	public String getUserBookMarks(Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("here");
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
-		System.out.println("userid"+userid);
-		
+		System.out.println("userid" + userid);
+
 		List<BookMark> bookMarks = bookMarkService.getUserAllBookmarks(userid);
 		model.addAttribute("bookMarks", bookMarks);
 		model.addAttribute("userid", userid);
@@ -92,11 +93,21 @@ public class BookMarkController {
 
 		System.out.println("userid_create" + userid);
 
-		if (userService.getUserByusernmae(bookMark.getName()) != null) {
+		if (userService.getUserByUsername(bookMark.getName()) != null) {// db에 잇는 유저
 
-			bookMarkService.createBookMark(bookMark);
+			User user1 = userService.getUserByUsername(bookMark.getName());
 
-			return "redirect:/bookmarks";
+			for (BankAccount bankAccount : user1.getBankAccounts()) {
+				if (bankAccount.equals(bookMark.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과 같은경우
+
+					bookMarkService.createBookMark(bookMark);
+
+					return "redirect:/bookmarks";
+				}
+			}
+
+			System.out.println("계좌를 똑바로 입력");
+
 		}
 
 		System.out.println("해당사용자 없음");

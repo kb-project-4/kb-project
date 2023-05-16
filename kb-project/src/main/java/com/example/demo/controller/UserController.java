@@ -51,8 +51,12 @@ public class UserController {
 			return "user/new";
 		}
 
+		User defaultuser = new User();
+		defaultuser.setAddress("잠원");
+		defaultuser.setAddress("잠원");
+
 		userService.createUser(user);
-		return "user/main";
+		return "redirect:/users/index";
 
 	}
 
@@ -109,10 +113,10 @@ public class UserController {
 
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
 
-			if (userByUserId.isDisabled() == false) {
+			System.out.println("success");
+			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 
-				System.out.println("success");
-				session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
+			if (userByUserId.isDisabled() == false) {
 
 				return "redirect:/users/main";
 

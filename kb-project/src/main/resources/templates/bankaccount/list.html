@@ -9,19 +9,17 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Account Number</th>
-				<th>Bank Name</th>
-				<th>Bank Code</th>
-				<th>User Name</th>
-				<th>Amount</th>
+				<th>계좌번호</th>
+				<th>은행명</th>
+				<th>유저이름</th>
+				<th>잔액</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="bankAccount : ${bankAccounts}">
 				<td th:text="${bankAccount.accountNumber}"></td>
-				<td th:text="${bankAccount.bankname}"></td>
-				<td th:text="${bankAccount.bankcode}"></td>
-				<td th:text="${bankAccount.user.name}"></td>
+				<td th:text="${bankAccount.bank.bankname}"></td>
+				<td th:text="${bankAccount.user.username}"></td>
 				<td th:text="${bankAccount.amount}"></td>
 			</tr>
 		</tbody>
@@ -36,6 +34,6 @@
 
 
 	<a href="/bankaccounts/create">계좌생성</a>
-
+	<a th:href="@{/users/main}">메인으로 돌아가기</a>  
 </body>
 </html>

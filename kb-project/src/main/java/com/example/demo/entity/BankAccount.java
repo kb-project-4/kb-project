@@ -20,9 +20,7 @@ public class BankAccount extends BaseEntity {
 
 	private String accountNumber;
 
-	private String bankname;
-
-	private String bankcode;
+//	private String bankname;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -55,22 +53,14 @@ public class BankAccount extends BaseEntity {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-	public String getBankname() {
-		return bankname;
-	}
-
-	public void setBankname(String bankname) {
-		this.bankname = bankname;
-	}
-
-	public String getBankcode() {
-		return bankcode;
-	}
-
-	public void setBankcode(String bankcode) {
-		this.bankcode = bankcode;
-	}
+//
+//	public String getBankname() {
+//		return bankname;
+//	}
+//
+//	public void setBankname(String bankname) {
+//		this.bankname = bankname;
+//	}
 
 	public User getUser() {
 		return user;

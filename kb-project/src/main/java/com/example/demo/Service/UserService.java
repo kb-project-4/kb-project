@@ -60,7 +60,7 @@ public class UserService {
 
 	}
 
-	public User getUserByusernmae(String username) {
+	public User getUserByUsername(String username) {
 		User user = userRepository.findByUsername(username);
 		return user;
 

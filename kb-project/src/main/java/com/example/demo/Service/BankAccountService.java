@@ -13,14 +13,22 @@ import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BankAccountRepository;
 import com.example.demo.repository.BankRepository;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class BankAccountService {
 
 	private final BankAccountRepository bankAccountRepository;
+	private final UserRepository userRepository;
+	private final UserService userService;
+	private final BankService bankService;
 
-	public BankAccountService(BankAccountRepository bankAccountRepository) {
+	public BankAccountService(BankAccountRepository bankAccountRepository, UserRepository userRepository,
+			UserService userService, BankService bankService) {
 		this.bankAccountRepository = bankAccountRepository;
+		this.userRepository = userRepository;
+		this.userService = userService;
+		this.bankService = bankService;
 	}
 
 	public List<BankAccount> getBankAccountByuserId(HttpServletRequest request) {
@@ -32,19 +40,27 @@ public class BankAccountService {
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
 		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
-		for (BankAccount bankAccount : bankAccounts) {
-			if (bankAccount.getUser().getUserid().equals(userid)) {
-				bankAccounts2.add(bankAccount);
-			}
-		}
+		if (bankAccounts.isEmpty()) {
+			return null;
+		} else {
 
-		return bankAccounts2;
+			for (BankAccount bankAccount : bankAccounts) {
+				if (bankAccount.getUser().getUserid().equals(userid)) {
+					bankAccounts2.add(bankAccount);
+				}
+			}
+
+			return bankAccounts2;
+		}
 	}
 
-	public BankAccount createBankAccount(BankAccount bankAccount, User user, Bank bank) {
+	public BankAccount createBankAccount(BankAccount bankAccount, String bankname, String userid) {
+
+		User user = userService.getUserByUserId(userid);
+		Bank bank = bankService.getBankBybankname(bankname);
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);
 		return bankAccountRepository.save(bankAccount);
 	}
-	
+
 }

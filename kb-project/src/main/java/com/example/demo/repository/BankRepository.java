@@ -9,4 +9,5 @@ import com.example.demo.entity.BookMark;
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long> {
 
+	Bank findByBankname(String bankname );
 }

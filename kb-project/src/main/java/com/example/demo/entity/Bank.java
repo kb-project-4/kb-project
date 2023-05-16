@@ -22,6 +22,7 @@ public class Bank {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	
 	@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<BankAccount> bankAccounts = new ArrayList<>();
 
