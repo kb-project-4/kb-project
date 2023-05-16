@@ -32,6 +32,15 @@ public class User extends BaseEntity {
 	private String password;
 	private String phone;
 	private String address;
+	private boolean disabled;
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<BankAccount> bankAccounts = new ArrayList<>();
@@ -51,7 +60,7 @@ public class User extends BaseEntity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
- 
+
 	public String getUserid() {
 		return userid;
 	}

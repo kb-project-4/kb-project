@@ -34,8 +34,45 @@
 						id="address" th:field="*{address}" />
 				</div>
 				<div>
+					<label for="disabled">Disabled:</label> <input type="radio"
+						id="disabled" name="disabled" th:checked="${user.disabled}"
+						th:onclick="toggleDisabled()" />
+				</div>
+
+				<script th:inline="javascript">
+					function toggleDisabled() {
+						var radio = document.getElementById("disabled");
+						if (radio.checked)
+							radio.value = "1";
+						else
+							radio.value = "0";
+					}
+				</script>
+
+
+
+				<div>
+					<label for="disabled">abled:</label> <input type="radio"
+						id="disabled2" name="disabled" th:checked="${user.disabled}"
+						th:onclick="toggleDisabled2()" />
+				</div>
+
+				<script th:inline="javascript">
+					function toggleDisabled2() {
+						var radio = document.getElementById("disabled2");
+						if (radio.checked)
+							radio.value = "0";
+						else
+							radio.value = "1";
+					}
+				</script>
+
+
+				<div>
 					<button type="submit">Submit</button>
 				</div>
+
+
 			</form>
 
 		</tbody>

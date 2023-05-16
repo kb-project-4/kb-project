@@ -5,6 +5,7 @@ import com.example.demo.entity.Bank;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BankAccountRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +46,35 @@ public class BankAccountController {
 		User user = (User) session.getAttribute("user");
 		bankAccount.setUser(user);
 		Bank bank = null;
-		
+
 		bankAccountService.createBankAccount(bankAccount, user, bank);
 
 		return "redirect:/bankaccounts";
+		
+	}
+
+	
+	@GetMapping("/bankaccounts/create")
+	public String createBankAccountform(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		model.addAttribute("bankAccount", new BankAccount());
+		return "bankaccount/create";
+
+	}
+
+	@PostMapping("/bankaccounts/create")
+	public String createBankAccount(HttpServletRequest request,
+			@ModelAttribute("bankaccount") BankAccount bankAccount) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Bank bank = bankAccount.getBank();
+
+		bankAccountService.createBankAccount(bankAccount, user, bank);
+		return "redirect:/bankaccounts";
+
 	}
 
 	// 다른 HTTP 요청에 대한 메서드 작성 (계좌 생성, 수정, 삭제 등)

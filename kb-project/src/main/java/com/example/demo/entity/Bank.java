@@ -26,7 +26,6 @@ public class Bank {
 	private List<BankAccount> bankAccounts = new ArrayList<>();
 
 	private String bankname;
-	private String bankcode;
 
 	public Long getId() {
 		return id;
@@ -50,14 +49,6 @@ public class Bank {
 
 	public void setBankname(String bankname) {
 		this.bankname = bankname;
-	}
-
-	public String getBankcode() {
-		return bankcode;
-	}
-
-	public void setBankcode(String bankcode) {
-		this.bankcode = bankcode;
 	}
 
 }

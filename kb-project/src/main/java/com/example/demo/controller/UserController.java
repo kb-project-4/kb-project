@@ -108,11 +108,24 @@ public class UserController {
 		System.out.println("ssss" + userByUserId.toString());
 
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
-			System.out.println("success");
-			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 
-			return "redirect:/users/main";
+			if (userByUserId.isDisabled() == false) {
+
+				System.out.println("success");
+				session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
+
+				return "redirect:/users/main";
+
+			}
+
+			else {
+				// 장애인이동
+				System.out.println("장애인");
+				return "redirect:/users/main";
+
+			}
 		}
+
 		else {
 			redirectAttributes.addFlashAttribute("errorMessage", "회원정보 오류");
 

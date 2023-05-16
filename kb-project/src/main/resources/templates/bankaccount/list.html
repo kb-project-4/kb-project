@@ -25,7 +25,17 @@
 				<td th:text="${bankAccount.amount}"></td>
 			</tr>
 		</tbody>
+
+		<tbody th:unless="${bankAccounts != null}">
+			<tr>
+				<td colspan="5">No bank accounts found.</td>
+			</tr>
+		</tbody>
+
 	</table>
-	<a th:href="@{/bankaccounts/create"} >계좌생성</a>
+
+
+	<a href="/bankaccounts/create">계좌생성</a>
+
 </body>
 </html>

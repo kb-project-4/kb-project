@@ -57,6 +57,7 @@ public class BankController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
 
 	@DeleteMapping("/{id}")
 	public void deleteBank(@PathVariable Long id) {
