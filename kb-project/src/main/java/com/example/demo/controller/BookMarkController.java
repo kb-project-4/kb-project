@@ -71,9 +71,9 @@ public class BookMarkController {
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
-		System.out.println("dddd" + userid);
+		System.out.println("userid" + userid);
 		User user1 = userService.getUserByUserId(userid);
-		System.out.println("userssssddddd" + user1.getUsername());
+		System.out.println("username" + user1.getUsername());
 
 		bookMark.setUser(user1);
 
@@ -98,7 +98,8 @@ public class BookMarkController {
 			User user1 = userService.getUserByUsername(bookMark.getName());
 
 			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.equals(bookMark.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과 같은경우
+				if (bankAccount.getBank().getBankname().equals(bookMark.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
+																							// 같은경우
 
 					bookMarkService.createBookMark(bookMark);
 
