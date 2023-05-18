@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Bookmark Form</title>
+</head>
+<body>
+	<h1>북마크 수정</h1>
+	<form action="#" th:action="@{/bookmarks/edit/{id}(id=${id})}"
+		th:object="${bookMark}" method="post">
+
+
+		<div>
+			<label>Bank Name:</label> <input type="text" th:field="*{bankname}">
+		</div>
+
+		<div>
+			<label>Bank Number:</label> <input type="text"
+				th:field="*{banknumber}">
+		</div>
+
+		<div class="form-group">
+			<label for="name">Name</label> <input type="text"
+				class="form-control" id="name" th:field="*{name}" required>
+		</div>
+
+		<div>
+			<input type="hidden" th:field="*{user}">
+		</div>
+
+
+
+		<div>
+			<button type="submit">Submit</button>
+		</div>
+
+	</form>
+</body>
+</html>

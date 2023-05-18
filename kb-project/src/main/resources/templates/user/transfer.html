@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>송금 폼</title>
+</head>
+<body>
+	<h2>송금 폼</h2>
+
+	<form action="#" th:action="@{/transfer}" th:object="${Log}"
+		method="post">
+
+		<div>
+			<label for="recipient_name">받는사람 이름:</label> <input type="text"
+				id="recipient_name" th:field="*{recipient_name}" />
+		</div>
+
+		<div>
+			<label for="recipient_banknumber">받는사람 계좌번호:</label> <input
+				type="text" id="recipient_banknumber"
+				th:field="*{recipient_banknumber}" />
+		</div>
+
+		<div>
+			<label for="amount">송금액:</label> <input type="text" id="amount"
+				th:field="*{amount}" />
+		</div>
+
+		<div>
+			<input type="hidden" id="category" th:field="*{category}"
+				th:value="송금" />
+		</div>
+
+
+		<div>
+			<button type="submit">송금</button>
+		</div>
+
+	</form>
+
+</body>
+</html>

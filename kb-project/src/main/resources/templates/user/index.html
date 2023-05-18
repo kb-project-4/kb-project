@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .button-container {
+             margin-top: 10px;
+        }
+
+        .button-container button {
+            height: 110px;
+            width: 110px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+
+    <form action="#" th:action="@{/users/index}" method="post">
+        <div>
+            <label for="username">userid:</label>
+            <input type="text" id="username" name="userid" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="button-container">
+        <form action="/users/new" method="get">
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+</body>
+</html>
