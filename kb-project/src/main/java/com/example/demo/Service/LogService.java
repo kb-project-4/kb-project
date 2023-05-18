@@ -53,9 +53,12 @@ public class LogService {
 			System.out.println("remain" + (amount - sendamount));
 
 			BankAccount bankAccount = bankAccountService.getBankAccountByuserId(request).get(0);
-			
+
 			BankAccount bankAccounts1 = user2.getBankAccounts().get(0);
 			bankAccounts1.setAmount(amount - sendamount);
+
+			BankAccount bankAccount2 = bankAccountService.getBankAccountByuserId(request).get(0);
+			bankAccount2.setAmount(amount - sendamount);
 
 //			bankAccounts1.setAmount(amount);
 
@@ -70,7 +73,7 @@ public class LogService {
 			List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 			bankAccounts2.add(bankAccounts1);
 			System.out.println("bankaccount number" + bankAccounts1.getAccountNumber());
-			user2.setBankAccounts(bankAccounts2);
+			user2.setBankAccounts(bankAccounts2); //
 
 			logRepository.save(log);
 
