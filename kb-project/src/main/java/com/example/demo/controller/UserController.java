@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.Login;
+import com.example.demo.entity.Bank;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,10 +51,10 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
-
-		User defaultuser = new User();
-		defaultuser.setAddress("잠원");
-		defaultuser.setAddress("잠원");
+//
+//		User defaultuser = new User();
+//		defaultuser.setAddress("잠원");
+//		defaultuser.setAddress("잠원");
 
 		userService.createUser(user);
 		return "redirect:/users/index";
@@ -153,6 +154,21 @@ public class UserController {
 	@GetMapping("users/main")
 	public String main(HttpSession session, HttpServletRequest request, Model model) {
 		// 여기에서 필요한 데이터를 모델에 추가하면 됩니다.
+		session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+
+		model.addAttribute("userid", userid);
+		System.out.println("useriddd" + userid);
+		return "user/main";
+
+	}
+
+	
+	@GetMapping("users/transfer")
+	public String transfer(HttpSession session, HttpServletRequest request, Model model) {
+		// 여기에서 필요한 데이터를 모델에 추가하면 됩니다.
+		
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();

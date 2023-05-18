@@ -5,12 +5,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+
+@Getter
+
+@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BankAccount extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +28,6 @@ public class BankAccount extends BaseEntity {
 	private Long amount;
 
 	private String accountNumber;
-
-//	private String bankname;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -53,14 +60,6 @@ public class BankAccount extends BaseEntity {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-//
-//	public String getBankname() {
-//		return bankname;
-//	}
-//
-//	public void setBankname(String bankname) {
-//		this.bankname = bankname;
-//	}
 
 	public User getUser() {
 		return user;

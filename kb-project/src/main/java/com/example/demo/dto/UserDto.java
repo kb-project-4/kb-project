@@ -17,27 +17,4 @@ public class UserDto {
 	private String phone;
 	private String address;
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public String getuserid() {
-		return userid;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
 }

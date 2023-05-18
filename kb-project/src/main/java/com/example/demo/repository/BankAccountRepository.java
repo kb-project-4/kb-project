@@ -9,4 +9,5 @@ import com.example.demo.entity.User;
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
+	
 }
