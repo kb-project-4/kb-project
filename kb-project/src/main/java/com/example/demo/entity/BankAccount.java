@@ -37,5 +37,4 @@ public class BankAccount extends BaseEntity {
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
 
-	
 }
