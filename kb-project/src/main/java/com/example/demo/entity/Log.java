@@ -12,11 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 
 public class Log {
 	@Id
@@ -27,11 +34,10 @@ public class Log {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	
+	private String recipient_name;
 	private String recipient_banknumber;
+	private String category;
 
-	
 	private Long amount;
 
-	
 }

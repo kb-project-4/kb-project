@@ -13,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Service.LogService;
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.Login;
 import com.example.demo.entity.Bank;
+import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private LogService logService;
 
 	@GetMapping("/users")
 	public String getUsers(Model model) {
@@ -164,18 +169,38 @@ public class UserController {
 
 	}
 
-	
-	@GetMapping("users/transfer")
-	public String transfer(HttpSession session, HttpServletRequest request, Model model) {
-		// 여기에서 필요한 데이터를 모델에 추가하면 됩니다.
-		
+	@GetMapping("/transfer")
+	public String transferform(HttpSession session, HttpServletRequest request, Model model) {
+
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
 		model.addAttribute("userid", userid);
+		model.addAttribute("Log", new Log());
+
 		System.out.println("useriddd" + userid);
-		return "user/main";
+
+		return "user/transfer";
+
+	}
+
+	@PostMapping("/transfer")
+	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") Log log) {
+
+		session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+
+		log.setUser(user);
+		System.out.println("user" + log.getUser().getUsername());
+		System.out.println("flag");
+
+		logService.saveLog(log, user, request);
+
+		System.out.println("userid" + userid);
+
+		return "redirect:/users/main";
 
 	}
 

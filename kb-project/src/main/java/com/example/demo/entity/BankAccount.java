@@ -29,52 +29,13 @@ public class BankAccount extends BaseEntity {
 
 	private String accountNumber;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-
+	
 }

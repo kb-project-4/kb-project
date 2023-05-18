@@ -30,6 +30,7 @@ public class BankAccountController {
 
 	@GetMapping("/bankaccounts")
 	public String getBankAccounts(Model model, HttpServletRequest request) {
+
 		System.out.println("bankaccount");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -81,6 +82,7 @@ public class BankAccountController {
 		return "redirect:/bankaccounts";
 
 	}
+	
 
 	// 다른 HTTP 요청에 대한 메서드 작성 (계좌 생성, 수정, 삭제 등)
 }
