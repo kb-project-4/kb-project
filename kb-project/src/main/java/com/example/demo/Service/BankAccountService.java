@@ -36,7 +36,7 @@ public class BankAccountService {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
-
+		
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
 		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
