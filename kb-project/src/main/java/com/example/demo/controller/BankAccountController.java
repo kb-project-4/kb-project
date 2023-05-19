@@ -82,7 +82,6 @@ public class BankAccountController {
 		return "redirect:/bankaccounts";
 
 	}
-	
 
 	// 다른 HTTP 요청에 대한 메서드 작성 (계좌 생성, 수정, 삭제 등)
 }
