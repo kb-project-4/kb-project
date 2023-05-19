@@ -20,11 +20,13 @@ public class LogService {
 
 	private final LogRepository logRepository;
 	private final UserService userService;
+	private final BankAccountService bankAccountService;
 
 	@Autowired
-	public LogService(LogRepository logRepository, UserService userService) {
+	public LogService(LogRepository logRepository, UserService userService, BankAccountService bankAccountService) {
 		this.logRepository = logRepository;
 		this.userService = userService;
+		this.bankAccountService = bankAccountService;
 	}
 
 	@Transactional
@@ -36,33 +38,45 @@ public class LogService {
 		System.out.println("savelog");
 		System.out.println("user" + user2.toString());
 		BankAccount bankAccounts = user2.getBankAccounts().get(0);
-		Long amount = ((BankAccount) bankAccounts).getAmount();
+
+		Long amount = ((BankAccount) bankAccounts).getAmount();// 본인돈
 		System.out.println("amount" + amount);
-		
-		amount -= log.getAmount(); // 보낼 돈 액수
-		if(amount<0)
-		{
+
+		Long sendamount = log.getAmount(); // 보낼 돈 액수
+
+		if (amount - sendamount < 0) {
 			System.out.println("잔액부족");
-		}
-		else {
-			 
-			bankAccounts.setAmount(amount);
+
+		} else {
+//			bankAccounts.setAmount(amount - sendamount);
+
+			System.out.println("remain" + (amount - sendamount));
+
+			BankAccount bankAccount = bankAccountService.getBankAccountByuserId(request).get(0);
+
+			BankAccount bankAccounts1 = user2.getBankAccounts().get(0);
+			bankAccounts1.setAmount(amount - sendamount);
+
+			BankAccount bankAccount2 = bankAccountService.getBankAccountByuserId(request).get(0);
+			bankAccount2.setAmount(amount - sendamount);
+
+//			bankAccounts1.setAmount(amount);
 
 			String name = log.getRecipient_name();
 			User user1 = userService.getUserByUsername(name);// 받는사람
 			System.out.println("rec name" + name);
 
 			Long amount1 = user1.getBankAccounts().get(0).getAmount();// 받는사람현재잔액
-			user1.getBankAccounts().get(0).setAmount(amount1 - amount);
+			user1.getBankAccounts().get(0).setAmount(amount1 + sendamount);
 			System.out.println("rec amountcur" + amount1);
 
 			List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
-			bankAccounts2.add(bankAccounts);
-			System.out.println("bankaccount number" + bankAccounts.getAccountNumber());
-			user2.setBankAccounts(bankAccounts2);
+			bankAccounts2.add(bankAccounts1);
+			System.out.println("bankaccount number" + bankAccounts1.getAccountNumber());
+			user2.setBankAccounts(bankAccounts2); //
 
 			logRepository.save(log);
-			
+
 		}
 
 	}

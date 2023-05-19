@@ -193,10 +193,12 @@ public class UserController {
 		String userid = user.getUserid();
 
 		log.setUser(user);
+		System.out.println(log);
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
 		logService.saveLog(log, user, request);
+		
 
 		System.out.println("userid" + userid);
 
