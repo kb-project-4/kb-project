@@ -15,7 +15,7 @@
 	<name>kb-project</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -46,9 +46,10 @@
 		</dependency>
 
 
-		<!-- <dependency> <groupId>com.mysql</groupId> <artifactId>mysql-connector-j</artifactId> 
+		<!-- <dependency> <groupId>com.mysql</groupId>
+		<artifactId>mysql-connector-j</artifactId> 
 			<scope>runtime</scope> </dependency> -->
-			
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -67,9 +68,13 @@
 			<version>8.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		
-		
+
+		<!-- Web Socket-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

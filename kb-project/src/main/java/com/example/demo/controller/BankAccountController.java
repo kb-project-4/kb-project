@@ -43,7 +43,7 @@ public class BankAccountController {
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "bankaccount/list";
 
-	}
+	}	
 
 	@PostMapping("/bankaccounts")
 	public String createBankAccount(@ModelAttribute("bankAccount") BankAccount bankAccount,
