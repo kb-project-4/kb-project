@@ -29,7 +29,7 @@ public class LogService {
 		this.bankAccountService = bankAccountService;
 	}
 
-	@Transactional
+	/*@Transactional
 	public void saveLog(Log log, User user, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
@@ -79,7 +79,7 @@ public class LogService {
 
 		}
 
-	}
+	}*/
 
 	// Add other methods as needed
 

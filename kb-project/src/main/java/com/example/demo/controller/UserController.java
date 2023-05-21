@@ -110,11 +110,8 @@ public class UserController {
 	public String mainpage(@ModelAttribute("login") Login login, RedirectAttributes redirectAttributes,
 			HttpSession session) {
 
-		System.out.println("idssss: " + login.getUserid());
-		System.out.println("idssss: " + login.getPassword());
-
 		User userByUserId = userService.getUserByUserId(login.getUserid());
-
+		System.out.println("AAA");
 		System.out.println("ssss" + userByUserId.toString());
 
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
@@ -157,14 +154,15 @@ public class UserController {
 	}
 
 	@GetMapping("users/main")
-	public String main(HttpSession session, HttpServletRequest request, Model model) {
+	public String main(HttpServletRequest request, Model model) {
 		// 여기에서 필요한 데이터를 모델에 추가하면 됩니다.
-		session = request.getSession();
+
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
 		model.addAttribute("userid", userid);
-		System.out.println("useriddd" + userid);
+
 		return "user/main";
 
 	}
@@ -185,7 +183,7 @@ public class UserController {
 
 	}
 
-	@PostMapping("/transfer")
+	/*@PostMapping("/transfer")
 	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") Log log) {
 
 		session = request.getSession();
@@ -204,6 +202,6 @@ public class UserController {
 
 		return "redirect:/users/main";
 
-	}
+	}*/
 
 }
