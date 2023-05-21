@@ -29,7 +29,7 @@ public class LogService {
 		this.bankAccountService = bankAccountService;
 	}
 
-	@Transactional
+	/*@Transactional
 	public void saveLog(Log log, User user, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
@@ -67,7 +67,11 @@ public class LogService {
 			System.out.println("rec name" + name);
 
 			Long amount1 = user1.getBankAccounts().get(0).getAmount();// 받는사람현재잔액
+<<<<<<< HEAD
 			user1.getBankAccounts().get(0).setAmount(amount1 + amount);
+=======
+			user1.getBankAccounts().get(0).setAmount(amount1 + sendamount);
+>>>>>>> origin/main
 			System.out.println("rec amountcur" + amount1);
 
 			List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
@@ -79,7 +83,7 @@ public class LogService {
 
 		}
 
-	}
+	}*/
 
 	// Add other methods as needed
 
