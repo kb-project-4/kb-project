@@ -23,33 +23,27 @@ public class BankAccountController {
 
 	private final BankAccountService bankAccountService;
 
-	@Autowired
 	public BankAccountController(BankAccountService bankAccountService) {
 		this.bankAccountService = bankAccountService;
 	}
 
-	@GetMapping("/bankaccounts")
+	@GetMapping("/bankaccounts") // User Bank Account List
 	public String getBankAccounts(Model model, HttpServletRequest request) {
-
-		System.out.println("bankaccount");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		System.out.println("user" + user.toString());
-		String userid = user.getUserid();
-		System.out.println("userid " + userid);
-
-		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByuserId(request);
+		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByuserId(user);
 
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "bankaccount/list";
 
-	}
+	}	
 
-	@PostMapping("/bankaccounts")
+	// User Bank Account Create
+	// User Clients send Data for Bank Accounts
+	@PostMapping("/bankaccounts") 
 	public String createBankAccount(@ModelAttribute("bankAccount") BankAccount bankAccount,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 		String bankname = bankAccount.getBank().getBankname();
@@ -60,11 +54,9 @@ public class BankAccountController {
 
 	}
 
-	@GetMapping("/bankaccounts/create")
-	public String createBankAccountform(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
+	// User Bank Account  Create FormPage
+	@GetMapping("/bankaccounts/create") 
+	public String createBankAccountform( Model model) {
 		model.addAttribute("bankAccount", new BankAccount());
 		return "bankaccount/create";
 

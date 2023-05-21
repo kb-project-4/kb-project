@@ -31,10 +31,7 @@ public class BankAccountService {
 		this.bankService = bankService;
 	}
 
-	public List<BankAccount> getBankAccountByuserId(HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+	public List<BankAccount> getBankAccountByuserId(User user) {
 		String userid = user.getUserid();
 
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
@@ -54,8 +51,8 @@ public class BankAccountService {
 		}
 	}
 
+	// 
 	public BankAccount createBankAccount(BankAccount bankAccount, String bankname, String userid) {
-
 		User user = userService.getUserByUserId(userid);
 		Bank bank = bankService.getBankBybankname(bankname);
 		bankAccount.setUser(user);
