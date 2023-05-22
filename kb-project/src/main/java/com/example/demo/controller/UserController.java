@@ -120,6 +120,7 @@ public class UserController {
 			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 
 			if (userByUserId.isDisabled() == false) {
+				System.out.println("비장애인");
 
 				return "redirect:/users/main";
 
@@ -183,7 +184,8 @@ public class UserController {
 
 	}
 
-	/*@PostMapping("/transfer")
+	
+	@PostMapping("/transfer")
 	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") Log log) {
 
 		session = request.getSession();
@@ -196,12 +198,11 @@ public class UserController {
 		System.out.println("flag");
 
 		logService.saveLog(log, user, request);
-		
 
 		System.out.println("userid" + userid);
 
 		return "redirect:/users/main";
 
-	}*/
+	}
 
 }

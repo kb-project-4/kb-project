@@ -25,6 +25,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	@Autowired
 	BankAccountService bankAccountService;
 
+	
 	private enum Command {
 		송금, 조회,
 	}
@@ -34,19 +35,21 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	}
 
 	private UserState userState = UserState.INITIAL; // 현재는 초기상
-	private User user = new User(); // HttpSession에서 가져온 user정보를 담을 객체 
+	private User user = new User(); // HttpSession에서 가져온 user정보를 담을 객체
 
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
+		System.out.println("연결 시도중");
 	}
 
+	
 	@Override
 	// 실제로 서버와 통신하는
 	// handleTextMessage
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지 
-		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴 
+		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지
+		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
 
 		if (userState == UserState.INITIAL) {
 			if (payload.equals("송금")) {

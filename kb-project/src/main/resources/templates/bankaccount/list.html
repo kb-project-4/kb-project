@@ -57,22 +57,30 @@
 				<th>은행명</th>
 				<th>유저이름</th>
 				<th>잔액</th>
+				<th>삭제</th>
+
 			</tr>
 		</thead>
+
 		<tbody>
 			<tr th:each="bankAccount : ${bankAccounts}">
 				<td th:text="${bankAccount.accountNumber}"></td>
 				<td th:text="${bankAccount.bank.bankname}"></td>
 				<td th:text="${bankAccount.user.username}"></td>
 				<td th:text="${bankAccount.amount}"></td>
+				<td><a th:href="@{/bankaccounts/delete}">삭제</a></td>
+
 			</tr>
 		</tbody>
+
 
 		<tbody th:unless="${bankAccounts != null}">
 			<tr>
 				<td colspan="4">No bank accounts found.</td>
 			</tr>
 		</tbody>
+
+
 	</table>
 
 	<a href="/bankaccounts/create">계좌생성</a>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.UserRepository;
 
 @Service
+@Transactional
 public class BankAccountService {
 
 	private final BankAccountRepository bankAccountRepository;
@@ -51,15 +53,25 @@ public class BankAccountService {
 		}
 	}
 
-	// 
-	public BankAccount createBankAccount(BankAccount bankAccount, String bankname, String userid) {
-		User user = userService.getUserByUserId(userid);
-		Bank bank = bankService.getBankBybankname(bankname);
+	//
+	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
+
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);
 		return bankAccountRepository.save(bankAccount);
 	}
 
+	//
 	
-	
+	@Transactional
+	public BankAccount deleteBankAccount(BankAccount bankAccount) {
+		Long bankaccountid = bankAccount.getId();
+		System.out.println("bankaccountid" + bankaccountid);
+		String accountnumber = bankAccount.getAccountNumber();
+		System.out.println("accountnum" + accountnumber);
+		bankAccountRepository.deleteByAccountNumber(accountnumber);
+
+		return bankAccount;
+	}
+
 }
