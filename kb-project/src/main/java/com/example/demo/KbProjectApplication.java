@@ -9,5 +9,4 @@ public class KbProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KbProjectApplication.class, args);
 	}
-
 }
