@@ -25,6 +25,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+
 	public User updateUser(Long id, User user) {
 		Optional<User> optionalUser = userRepository.findById(id);
 
