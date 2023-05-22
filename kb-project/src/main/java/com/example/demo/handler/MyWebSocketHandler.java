@@ -58,7 +58,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
 				Long balance = bankAccountByuserId.get(0).getAmount();
 				String username = user.getUsername();
-				String msg = username + "의 잔액은 " + balance.toString() + "입니다.";
+				String msg = username + "의 잔액은 " + balance.toString() +"원 입니다.";
 				session.sendMessage(new TextMessage(msg));
 			}
 
