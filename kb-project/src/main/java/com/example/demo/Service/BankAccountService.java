@@ -33,6 +33,25 @@ public class BankAccountService {
 		this.bankService = bankService;
 	}
 
+	public BankAccount updateBankAccount(BankAccount bankAccount) {
+		// 계좌 조회
+		BankAccount existingAccount = bankAccountRepository.findById(bankAccount.getId()).orElse(null);
+
+		if (existingAccount != null) {
+			// 기존 계좌 정보 업데이트
+			existingAccount.setAccountNumber(bankAccount.getAccountNumber());
+			existingAccount.setAmount(bankAccount.getAmount());
+			existingAccount.setBank(bankAccount.getBank());
+			existingAccount.setUser(bankAccount.getUser());
+
+			// 변경사항 저장
+			return bankAccountRepository.save(existingAccount);
+		}
+
+		return null; // 계좌가 존재하지 않을 경우 null 반환
+	}
+	
+	
 	public List<BankAccount> getBankAccountByuserId(User user) {
 		String userid = user.getUserid();
 
@@ -73,5 +92,7 @@ public class BankAccountService {
 
 		return bankAccount;
 	}
+	
+	
 
 }

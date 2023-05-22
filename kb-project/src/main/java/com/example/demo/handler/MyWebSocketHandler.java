@@ -52,6 +52,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
 
 		if (userState == UserState.INITIAL) {
+			
 			if (payload.equals("송금")) {
 				session.sendMessage(new TextMessage("송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
