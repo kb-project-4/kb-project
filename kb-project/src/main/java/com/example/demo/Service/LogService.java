@@ -29,11 +29,11 @@ public class LogService {
 		this.bankAccountService = bankAccountService;
 	}
 
-	/*@Transactional
+	@Transactional
 	public void saveLog(Log log, User user, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
-		User user2 = (User) session.getAttribute("user");
+		User user2 = (User) session.getAttribute("user");// 본인
 
 		System.out.println("savelog");
 		System.out.println("user" + user2.toString());
@@ -52,26 +52,23 @@ public class LogService {
 
 			System.out.println("remain" + (amount - sendamount));
 
-			BankAccount bankAccount = bankAccountService.getBankAccountByuserId(request).get(0);
+			BankAccount bankAccount = bankAccountService.getBankAccountByuserId(user2).get(0);
 
 			BankAccount bankAccounts1 = user2.getBankAccounts().get(0);
 			bankAccounts1.setAmount(amount - sendamount);
 
-			BankAccount bankAccount2 = bankAccountService.getBankAccountByuserId(request).get(0);
+			BankAccount bankAccount2 = bankAccountService.getBankAccountByuserId(user2).get(0);
 			bankAccount2.setAmount(amount - sendamount);
 
 //			bankAccounts1.setAmount(amount);
 
+			
 			String name = log.getRecipient_name();
 			User user1 = userService.getUserByUsername(name);// 받는사람
 			System.out.println("rec name" + name);
 
 			Long amount1 = user1.getBankAccounts().get(0).getAmount();// 받는사람현재잔액
-<<<<<<< HEAD
-			user1.getBankAccounts().get(0).setAmount(amount1 + amount);
-=======
 			user1.getBankAccounts().get(0).setAmount(amount1 + sendamount);
->>>>>>> origin/main
 			System.out.println("rec amountcur" + amount1);
 
 			List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
@@ -83,7 +80,7 @@ public class LogService {
 
 		}
 
-	}*/
+	}
 
 	// Add other methods as needed
 
