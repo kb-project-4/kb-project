@@ -30,10 +30,10 @@ public class LogService {
 	}
 
 	@Transactional
-	public void saveLog(Log log, User user, HttpServletRequest request) {
+	public void saveLog(Log log, User me) {
 
-		HttpSession session = request.getSession();
-		User me = (User) session.getAttribute("user");// 본인
+//		HttpSession session = request.getSession();
+//		User me = (User) session.getAttribute("user");// 본인
 
 		System.out.println("savelog");
 		System.out.println("user" + me.toString());
@@ -100,7 +100,6 @@ public class LogService {
 
 //			me.setBankAccounts(mybankaccountslist); // 유저 계좌에 새계좌 업데이트
 
-			
 			logRepository.save(log);
 
 		}

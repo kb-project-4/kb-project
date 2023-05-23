@@ -53,6 +53,7 @@ public class BankAccountService {
 	
 	
 	public List<BankAccount> getBankAccountByuserId(User user) {
+		
 		String userid = user.getUserid();
 
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
