@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.Login;
+import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
@@ -20,11 +21,12 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public User createUser(User user) {
+	public User createUser(UserDto user) {
 
-		return userRepository.save(user);
+		User user2 = user.toEntity();
+
+		return userRepository.save(user2);
 	}
-
 
 	public User updateUser(Long id, User user) {
 		Optional<User> optionalUser = userRepository.findById(id);
