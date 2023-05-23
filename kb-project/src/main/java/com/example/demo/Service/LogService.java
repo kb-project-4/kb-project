@@ -33,12 +33,12 @@ public class LogService {
 	@Transactional
 	public void saveLog(LogDto log, User me) {
 		System.out.println("savelog");
-		System.out.println("user" + me.toString());
+		System.out.println("user" + me.toString()); // 본인
 		BankAccount mybankAccounts = new BankAccount();
 
 		int idx = 0;// 본인계좌 인덱스
 		int i = 0;
-		System.out.println("log.get" + log.getMy_banknumber());
+		System.out.println("log.get" + log.getMy_banknumber()); //내 계좌번호
 
 		for (BankAccount bankAccounts1 : me.getBankAccounts()) {
 			System.out.println("bankaccount" + bankAccounts1.getAccountNumber());
@@ -69,7 +69,7 @@ public class LogService {
 			User user1 = userService.getUserByUsername(name);// 받는사람
 			System.out.println("rec name" + name);
 
-			Long recipent_curmoney = 0L;
+			Long recipent_curmoney = 0L; 
 			BankAccount bankAccount = new BankAccount();
 			for (BankAccount bankAccounts1 : user1.getBankAccounts()) {
 
@@ -80,28 +80,20 @@ public class LogService {
 
 			}
 
-			bankAccount.setAmount(recipent_curmoney + sendamount);
+			bankAccount.setAmount(recipent_curmoney + sendamount); // 받는사람계좌 돈 증가
 
 			System.out.println("rec amountcur" + recipent_curmoney);// 받는사람 현재잔액
 
 			List<BankAccount> mybankaccountslist = new ArrayList<>(me.getBankAccounts());
 
 			mybankaccountslist.set(idx, mybankAccounts); // 본인계좌 업데이트
-//
-//			for (BankAccount bankAccount2 : mybankaccountslist) {
-//
-//				System.out.println("bankaccounts" + bankAccount2.toString());
-//			}
+// 
 
-			bankAccountService.updateBankAccount(mybankAccounts);
-
-//			me.setBankAccounts(mybankaccountslist); // 유저 계좌에 새계좌 업데이트
-
-//			log.setCategory("송금");
+			bankAccountService.updateBankAccount(mybankAccounts); //내 계좌에 돈 이빠졋으니 업데이트 
 
 			Log log2 = log.toEntity();
 
-			logRepository.save(log2);
+			logRepository.save(log2); //계좌 내역 저장
 
 		}
 
