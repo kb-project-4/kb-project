@@ -32,6 +32,7 @@ public class LogService {
 //		this.bankAccountRepository = bankAccountRepository;
 	}
 
+	
 	public void update(Log logentity) {
 
 		logRepository.save(logentity); // 계좌 내역 저장

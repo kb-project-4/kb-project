@@ -121,18 +121,6 @@ public class BankAccountService {
 
 		System.out.println("mybankid1" + mybankAccount.getId());
 
-//
-//		for (BankAccount bankAccounts1 : me.getBankAccounts()) {
-//			System.out.println("bankaccount" + bankAccounts1.getAccountNumber());
-//			if (bankAccounts1.getAccountNumber().equals(log.getMy_banknumber())) {
-//				System.out.println("succ");
-//
-//				mybankAccount = bankAccounts1.toDto(); // 본인계좌
-//				idx = i;
-//			}
-//			i++;
-//		}
-
 		System.out.println("mybankaccount" + mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
 		System.out.println("amount" + amount);
