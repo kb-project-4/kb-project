@@ -1,10 +1,6 @@
 package com.example.demo.handler;
 
-import java.math.BigDecimal;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -24,7 +20,7 @@ import com.example.demo.entity.User;
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
-	UserService useService;
+	UserService userService;
 
 	@Autowired
 	BankAccountService bankAccountService;
@@ -69,6 +65,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
+				String userBankNumber =
 				session.sendMessage(new TextMessage(name + "에게 " + amount  + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
 			}
@@ -87,7 +84,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
 			if (action.equals("예")) {
-				logService.saveLog(null, user, null);
+//				logService.saveLog(null, user, null);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
 				userState = UserState.INITIAL;
 			} else if (action.equals("아니오")) {
