@@ -32,10 +32,6 @@ public class LogService {
 
 	@Transactional
 	public void saveLog(LogDto log, User me) {
-
-//		HttpSession session = request.getSession();
-//		User me = (User) session.getAttribute("user");// 본인
-
 		System.out.println("savelog");
 		System.out.println("user" + me.toString());
 		BankAccount mybankAccounts = new BankAccount();
