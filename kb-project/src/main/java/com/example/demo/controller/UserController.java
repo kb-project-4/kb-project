@@ -13,10 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Service.BankAccountService;
 import com.example.demo.Service.LogService;
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.LogDto;
 import com.example.demo.dto.Login;
+import com.example.demo.dto.UserDto;
 import com.example.demo.entity.Bank;
 import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
@@ -31,6 +33,9 @@ public class UserController {
 
 	@Autowired
 	private LogService logService;
+
+	@Autowired
+	private BankAccountService bankaccountservice;
 
 	@GetMapping("/users")
 	public String getUsers(Model model) {
@@ -53,7 +58,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
+	public String createUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
@@ -206,7 +211,7 @@ public class UserController {
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
-		logService.saveLog(log, user);
+		bankaccountservice.transferToUser(log, user);
 
 		System.out.println("userid" + userid);
 

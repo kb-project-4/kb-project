@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Service.BookMarkService;
 import com.example.demo.Service.UserService;
+import com.example.demo.dto.BookMarkDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
@@ -83,7 +84,7 @@ public class BookMarkController {
 	}
 
 	@PostMapping("/create")
-	public String createBookMark(@ModelAttribute("bookMark") BookMark bookMark, HttpSession session,
+	public String createBookMark(@ModelAttribute("bookMark") BookMarkDto bookMark, HttpSession session,
 			HttpServletRequest request) {
 
 		session = request.getSession();
@@ -93,12 +94,14 @@ public class BookMarkController {
 
 		System.out.println("userid_create" + userid);
 
-		if (userService.getUserByUsername(bookMark.getName()) != null) {// db에 잇는 유저
+		BookMark bookMark2 = bookMark.toEntity();
 
-			User user1 = userService.getUserByUsername(bookMark.getName());
+		if (userService.getUserByUsername(bookMark2.getName()) != null) {// db에 잇는 유저
+
+			User user1 = userService.getUserByUsername(bookMark2.getName());
 
 			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.getBank().getBankname().equals(bookMark.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
+				if (bankAccount.getBank().getBankname().equals(bookMark2.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
 																							// 같은경우
 
 					bookMarkService.createBookMark(bookMark);
@@ -129,7 +132,7 @@ public class BookMarkController {
 	}
 
 	@PostMapping("/edit/{id}")
-	public String updateBookMark(@PathVariable("id") Long id, @ModelAttribute("bookMark") BookMark updatedBookMark) {
+	public String updateBookMark(@PathVariable("id") Long id, @ModelAttribute("bookMark") BookMarkDto updatedBookMark) {
 		BookMark bookMark = bookMarkService.updateBookMark(id, updatedBookMark);
 		if (bookMark != null) {
 			return "redirect:/bookmarks";

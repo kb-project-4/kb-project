@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.BookMarkDto;
 import com.example.demo.entity.BookMark;
 import com.example.demo.repository.BookMarkRepository;
 
@@ -19,8 +20,9 @@ public class BookMarkService {
 		this.bookMarkRepository = bookMarkRepository;
 	}
 
-	public BookMark createBookMark(BookMark bookMark) {
-		return bookMarkRepository.save(bookMark);
+	public BookMark createBookMark(BookMarkDto bookMark) {
+		BookMark bookMark2 = bookMark.toEntity();
+		return bookMarkRepository.save(bookMark2);
 	}
 
 	public void deleteBookMark(Long id) {
@@ -54,11 +56,11 @@ public class BookMarkService {
 		return bookMarkRepository.findById(id).orElse(null);
 	}
 
-	public BookMark updateBookMark(Long id, BookMark updatedBookMark) {
+	public BookMark updateBookMark(Long id, BookMarkDto updatedBookMark) {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
-			existingBookMark.setBanknumber(updatedBookMark.getBanknumber());
+			existingBookMark.setBanknumber(updatedBookMark.getBankname());
 			existingBookMark.setName(updatedBookMark.getName());
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
