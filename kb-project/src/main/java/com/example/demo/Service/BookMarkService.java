@@ -48,8 +48,8 @@ public class BookMarkService {
 
 	}
 
-	public BookMark getBookmarkByBankNumber(String bankNumber) {
-		return bookMarkRepository.findByBanknumber(bankNumber);
+	public BookMark getBookmarkByBankNumber(String accountnumber) {
+		return bookMarkRepository.findByAccountNumber(accountnumber);
 	}
 
 	public BookMark getBookMarkById(Long id) {
@@ -60,7 +60,7 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
-			existingBookMark.setBanknumber(updatedBookMark.getBankname());
+			existingBookMark.setAccountNumber(updatedBookMark.getAccountNumber());
 			existingBookMark.setName(updatedBookMark.getName());
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);

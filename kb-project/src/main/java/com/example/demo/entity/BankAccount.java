@@ -44,13 +44,6 @@ public class BankAccount extends BaseEntity {
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)
 				.user(this.user).bank(this.bank).build();
 
-//
-//		dto.setAccountNumber(accountNumber);
-//		dto.setAmount(amount);
-//		dto.setBank(bank);
-//		dto.setId(id);
-//		dto.setUser(user);
-
 		return dto;
 	}
 

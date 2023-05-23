@@ -27,7 +27,7 @@ public class BookMark {
 
 	private String name;
 
-	private String banknumber;
+	private String accountNumber;
 
 	private String bankname;
 
@@ -38,7 +38,7 @@ public class BookMark {
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
 		dto.setName(this.name);
-		dto.setBanknumber(this.banknumber);
+		dto.setAccountNumber(this.accountNumber);
 		dto.setBankname(this.bankname);
 		dto.setUser(this.user);
 		return dto;
