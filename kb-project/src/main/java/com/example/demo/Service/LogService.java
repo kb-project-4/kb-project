@@ -31,47 +31,35 @@ public class LogService {
 	}
 
 	@Transactional
-	public void saveLog(LogDto log, User me) {
-		System.out.println("savelog");
-		System.out.println("user" + me.toString()); // 본인
+	public void saveLog(LogDto log, User me) { // 송금
 		BankAccount mybankAccounts = new BankAccount();
 
 		int idx = 0;// 본인계좌 인덱스
 		int i = 0;
-		System.out.println("log.get" + log.getMy_banknumber()); //내 계좌번호
 
 		for (BankAccount bankAccounts1 : me.getBankAccounts()) {
-			System.out.println("bankaccount" + bankAccounts1.getAccountNumber());
 			if (bankAccounts1.getAccountNumber().equals(log.getMy_banknumber())) {
-				System.out.println("succ");
 				mybankAccounts = bankAccounts1; // 본인계좌
 				idx = i;
 			}
 			i++;
 		}
 
-		System.out.println("mybankaccount" + mybankAccounts.toString());
 		Long amount = mybankAccounts.getAmount();// 본인돈
-		System.out.println("amount" + amount);
-
 		Long sendamount = log.getAmount(); // 보낼 돈 액수
 
 		if (amount - sendamount < 0) {
 			System.out.println("잔액부족");
 
 		} else {
-
-			System.out.println("remain" + (amount - sendamount));
-
 			mybankAccounts.setAmount(amount - sendamount);// 본인계좌
 
 			String name = log.getRecipient_name();
-			User user1 = userService.getUserByUsername(name);// 받는사람
-			System.out.println("rec name" + name);
+			User recepient = userService.getUserByUsername(name);// 받는사람
 
 			Long recipent_curmoney = 0L; 
 			BankAccount bankAccount = new BankAccount();
-			for (BankAccount bankAccounts1 : user1.getBankAccounts()) {
+			for (BankAccount bankAccounts1 : recepient.getBankAccounts()) {
 
 				if (bankAccounts1.getAccountNumber().equals(log.getRecipient_banknumber())) {
 					recipent_curmoney = bankAccounts1.getAmount();// 받는사람현재잔액
@@ -98,6 +86,8 @@ public class LogService {
 		}
 
 	}
+	
+
 
 	// Add other methods as needed
 
