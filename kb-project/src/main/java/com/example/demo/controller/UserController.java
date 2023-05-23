@@ -204,7 +204,7 @@ public class UserController {
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
-		logService.saveLog(log, user, request);
+		logService.saveLog(log, user);
 
 		System.out.println("userid" + userid);
 
