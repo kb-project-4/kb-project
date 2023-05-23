@@ -33,13 +33,28 @@ public class LogService {
 	public void saveLog(Log log, User user, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
-		User user2 = (User) session.getAttribute("user");// 본인
+		User me = (User) session.getAttribute("user");// 본인
 
 		System.out.println("savelog");
-		System.out.println("user" + user2.toString());
-		BankAccount bankAccounts = user2.getBankAccounts().get(0);
+		System.out.println("user" + me.toString());
+		BankAccount mybankAccounts = new BankAccount();
 
-		Long amount = ((BankAccount) bankAccounts).getAmount();// 본인돈
+		int idx = 0;// 본인계좌 인덱스
+		int i = 0;
+		System.out.println("log.get" + log.getMy_banknumber());
+
+		for (BankAccount bankAccounts1 : me.getBankAccounts()) {
+			System.out.println("bankaccount" + bankAccounts1.getAccountNumber());
+			if (bankAccounts1.getAccountNumber().equals(log.getMy_banknumber())) {
+				System.out.println("succ");
+				mybankAccounts = bankAccounts1; // 본인계좌
+				idx = i;
+			}
+			i++;
+		}
+
+		System.out.println("mybankaccount" + mybankAccounts.toString());
+		Long amount = mybankAccounts.getAmount();// 본인돈
 		System.out.println("amount" + amount);
 
 		Long sendamount = log.getAmount(); // 보낼 돈 액수
@@ -48,34 +63,44 @@ public class LogService {
 			System.out.println("잔액부족");
 
 		} else {
-//			bankAccounts.setAmount(amount - sendamount);
 
 			System.out.println("remain" + (amount - sendamount));
 
-			BankAccount bankAccount = bankAccountService.getBankAccountByuserId(user2).get(0);
+			mybankAccounts.setAmount(amount - sendamount);// 본인계좌
 
-			BankAccount bankAccounts1 = user2.getBankAccounts().get(0);
-			bankAccounts1.setAmount(amount - sendamount);
-
-			BankAccount bankAccount2 = bankAccountService.getBankAccountByuserId(user2).get(0);
-			bankAccount2.setAmount(amount - sendamount);
-
-//			bankAccounts1.setAmount(amount);
-
-			
 			String name = log.getRecipient_name();
 			User user1 = userService.getUserByUsername(name);// 받는사람
 			System.out.println("rec name" + name);
 
-			Long amount1 = user1.getBankAccounts().get(0).getAmount();// 받는사람현재잔액
-			user1.getBankAccounts().get(0).setAmount(amount1 + sendamount);
-			System.out.println("rec amountcur" + amount1);
+			Long recipent_curmoney = 0L;
+			BankAccount bankAccount = new BankAccount();
+			for (BankAccount bankAccounts1 : user1.getBankAccounts()) {
 
-			List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
-			bankAccounts2.add(bankAccounts1);
-			System.out.println("bankaccount number" + bankAccounts1.getAccountNumber());
-			user2.setBankAccounts(bankAccounts2); //
+				if (bankAccounts1.getAccountNumber().equals(log.getRecipient_banknumber())) {
+					recipent_curmoney = bankAccounts1.getAmount();// 받는사람현재잔액
+					bankAccount = bankAccounts1;// 받는사람 계좌
+				}
 
+			}
+
+			bankAccount.setAmount(recipent_curmoney + sendamount);
+
+			System.out.println("rec amountcur" + recipent_curmoney);// 받는사람 현재잔액
+
+			List<BankAccount> mybankaccountslist = new ArrayList<>(me.getBankAccounts());
+
+			mybankaccountslist.set(idx, mybankAccounts); // 본인계좌 업데이트
+//
+//			for (BankAccount bankAccount2 : mybankaccountslist) {
+//
+//				System.out.println("bankaccounts" + bankAccount2.toString());
+//			}
+
+			bankAccountService.updateBankAccount(mybankAccounts);
+
+//			me.setBankAccounts(mybankaccountslist); // 유저 계좌에 새계좌 업데이트
+
+			
 			logRepository.save(log);
 
 		}

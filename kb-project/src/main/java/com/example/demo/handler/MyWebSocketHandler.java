@@ -67,7 +67,6 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		int amount = gptResponseDto.getAmount().intValue();
 		String name = gptResponseDto.getName();
 		
-
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
 				session.sendMessage(new TextMessage("송금하시겠습니까?")); // Client에게 값 전송
