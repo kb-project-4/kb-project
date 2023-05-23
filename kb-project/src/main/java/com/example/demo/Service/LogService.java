@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BankAccountDto;
-import com.example.demo.dto.LogDto;
+import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.Log;
 import com.example.demo.entity.User;

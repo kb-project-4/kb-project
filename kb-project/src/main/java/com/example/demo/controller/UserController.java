@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.Service.BankAccountService;
 import com.example.demo.Service.LogService;
 import com.example.demo.Service.UserService;
-import com.example.demo.dto.LogDto;
+import com.example.demo.dto.TransferDto;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.Bank;
@@ -199,7 +199,7 @@ public class UserController {
 	}
 
 	@PostMapping("/transfer")
-	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") LogDto log) {
+	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") TransferDto log) {
 
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");

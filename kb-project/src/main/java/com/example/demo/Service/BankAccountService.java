@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BankAccountDto;
-import com.example.demo.dto.LogDto;
+import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.Bank;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.Log;
@@ -105,7 +105,7 @@ public class BankAccountService {
 	}
 
 	@Transactional
-	public void transferToUser(LogDto log, User me) {
+	public void transferToUser(TransferDto log, User me) {
 
 		System.out.println("savelog");
 		System.out.println("user" + me.toString()); // 본인

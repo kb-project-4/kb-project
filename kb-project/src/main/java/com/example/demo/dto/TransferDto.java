@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 
-public class LogDto {
+public class TransferDto {
 
 	private User user;
 
