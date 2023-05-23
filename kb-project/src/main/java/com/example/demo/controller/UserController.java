@@ -176,7 +176,15 @@ public class UserController {
 		String userid = user.getUserid();
 
 //		model.addAttribute("userid", userid);
-		model.addAttribute("Log", new Log());
+
+		Log log = new Log();
+		log.setUser(user);
+
+		System.out.println("log users" + log.getUser().getBankAccounts());
+
+//		model.addAttribute("Log", new Log());
+
+		model.addAttribute("Log", log);
 
 		System.out.println("useriddd" + userid);
 
@@ -184,7 +192,6 @@ public class UserController {
 
 	}
 
-	
 	@PostMapping("/transfer")
 	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") Log log) {
 
