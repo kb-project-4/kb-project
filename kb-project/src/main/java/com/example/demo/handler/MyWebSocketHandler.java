@@ -69,7 +69,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
-				session.sendMessage(new TextMessage("송금하시겠습니까?")); // Client에게 값 전송
+				session.sendMessage(new TextMessage(name + "에게 " + amount  + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
 			}
 
@@ -85,10 +85,10 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				session.sendMessage(new TextMessage("다시 말씀해주세요."));
 		}
 
-		else if (userState == UserState.WAITING_CONFIRMATION) {
+		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
 			if (action.equals("예")) {
-				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
 				logService.saveLog(null, user, null);
+				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
 				userState = UserState.INITIAL;
 			} else if (action.equals("아니오")) {
 				session.sendMessage(new TextMessage("다시 말씀해주세요."));

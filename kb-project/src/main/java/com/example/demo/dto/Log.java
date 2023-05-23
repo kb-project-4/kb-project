@@ -19,7 +19,7 @@ public class Log {
 	private long amount;
 	private String recipeint_name;
 	private String recipeint_banknumber;
-
 	private User user;
 
+	
 }
