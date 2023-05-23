@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -10,16 +11,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 
 public class LogDto {
-//
-//	private long amount;
-//	private String recipeint_name;
-//	private String recipeint_banknumber;
-//	private User user;
 
 	private User user;
 
@@ -29,5 +26,19 @@ public class LogDto {
 	private String my_banknumber;
 
 	private Long amount;
+
+	public Log toEntity() {
+
+		Log log = new Log();
+		log.setUser(user);
+		log.setAmount(amount);
+		log.setMy_banknumber(my_banknumber);
+		log.setRecipient_banknumber(recipient_banknumber);
+		log.setRecipient_name(recipient_name);
+		log.setCategory(category);
+
+		
+		return log;
+	}
 
 }

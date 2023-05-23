@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.LogDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
@@ -30,7 +31,7 @@ public class LogService {
 	}
 
 	@Transactional
-	public void saveLog(Log log, User me) {
+	public void saveLog(LogDto log, User me) {
 
 //		HttpSession session = request.getSession();
 //		User me = (User) session.getAttribute("user");// 본인
@@ -100,7 +101,11 @@ public class LogService {
 
 //			me.setBankAccounts(mybankaccountslist); // 유저 계좌에 새계좌 업데이트
 
-			logRepository.save(log);
+//			log.setCategory("송금");
+
+			Log log2 = log.toEntity();
+
+			logRepository.save(log2);
 
 		}
 
