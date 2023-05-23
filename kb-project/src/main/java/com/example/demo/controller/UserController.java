@@ -175,7 +175,7 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
-		model.addAttribute("userid", userid);
+//		model.addAttribute("userid", userid);
 		model.addAttribute("Log", new Log());
 
 		System.out.println("useriddd" + userid);

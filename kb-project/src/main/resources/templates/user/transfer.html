@@ -22,10 +22,28 @@
 		</div>
 
 		<div>
-			<label for="my_banknumber">본인 계좌번호:</label> <input
-				type="text" id="my_banknumber"
-				th:field="*{my_banknumber}" />
+			<label for="my_banknumber">본인 계좌번호:</label> <input type="text"
+				id="my_banknumber" th:field="*{my_banknumber}" />
+
 		</div>
+
+
+		<!-- 
+		<select>
+			<option value="option1">Option 1</option>
+			<option value="option2" selected>Option 2 (Default Selected)</option>
+			<option value="option3">Option 3</option>
+		</select>
+
+ -->
+
+
+		<div th:each="value : ${valueList}">
+			<label th:text="${value}"></label> <input type="text"
+				th:field="*{valueList[__${valueStat.index}__]}" />
+		</div>
+		<button type="submit">Submit</button>
+
 
 		<div>
 			<label for="amount">송금액:</label> <input type="text" id="amount"
