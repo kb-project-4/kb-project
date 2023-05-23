@@ -14,12 +14,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 
-public class Log {
+public class LogDto {
+//
+//	private long amount;
+//	private String recipeint_name;
+//	private String recipeint_banknumber;
+//	private User user;
 
-	private long amount;
-	private String recipeint_name;
-	private String recipeint_banknumber;
 	private User user;
 
-	
+	private String recipient_name;
+	private String recipient_banknumber;
+	private String category;
+	private String my_banknumber;
+
+	private Long amount;
+
 }
