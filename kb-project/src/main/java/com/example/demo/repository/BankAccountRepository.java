@@ -10,7 +10,7 @@ import com.example.demo.entity.User;
 
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
-	void deleteByAccountNumber(String accountnumber);
-	List<BankAccount> findByAllUserId(Long userId);
-	BankAccount findByAccountNumber(String accountNumber);
+	void deleteByAccountNumber(String accountnumber); 
+	BankAccount findByAccountNumber(String bankname);
+
 }

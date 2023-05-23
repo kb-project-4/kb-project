@@ -10,7 +10,7 @@ import com.example.demo.entity.BookMark;
 @Repository
 public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
-	BookMark findByBanknumber(String banknumber);
+	BookMark findByAccountNumber(String banknumber);
 
 	BookMark findByName(String name);
 
@@ -18,5 +18,4 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
 	BookMark findByid(Long id);
 
- 
 }
