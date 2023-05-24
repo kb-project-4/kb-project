@@ -1,24 +1,17 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
-import com.example.demo.entity.Bank;
-import com.example.demo.entity.BankAccount;
-import com.example.demo.entity.BookMark;
-import com.example.demo.entity.Log;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.repository.BankAccountRepository;
-import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.LogRepository;
-
 import com.example.demo.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -155,5 +148,9 @@ public class BankAccountService {
 			logService.update(logentity);
 		}
 
+	}
+
+	public BankAccount getBankAccountById(Long id) {
+		return bankAccountRepository.findById(id).orElse(null);
 	}
 }
