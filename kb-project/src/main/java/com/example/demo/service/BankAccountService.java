@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,12 +107,13 @@ public class BankAccountService {
 //		private String recipient_banknumber;
 //		private String category;
 //		private String sender_banknumber;
-		
+
 		String recipient_name = bookMark.getBookMarkName();
 		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
 		String category = "transfer";
-		TransferDto transferDto = new TransferDto(sender, recipient_name, recipient_banknumber, category, recipient_banknumber, amount);
-		
+		TransferDto transferDto = new TransferDto(sender, recipient_name, recipient_banknumber, category,
+				recipient_banknumber, amount);
+
 		transferToUser(transferDto, sender);
 	}
 

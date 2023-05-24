@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +39,17 @@ public class BookMarkService {
 
 	public List<BookMark> getUserAllBookmarks(String userid) {
 
-		List<BookMark> bookMarks = bookMarkRepository.findAll();
-		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
+		List<BookMark> bookMarks = bookMarkRepository.findAllByUserid(userid);
 
-		for (BookMark bookMark : bookMarks) {
-			if (userid.equals(bookMark.getUser().getUserid()))
-				bookMarks2.add(bookMark);
+//		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
+//
+//		for (BookMark bookMark : bookMarks) {
+//			if (userid.equals(bookMark.getUser().getUserid()))
+//				bookMarks2.add(bookMark);
+//
+//		}
 
-		}
-
-		return bookMarks2;
+		return bookMarks;
 
 	}
 

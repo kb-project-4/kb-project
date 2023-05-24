@@ -8,15 +8,18 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.example.demo.Service.BankAccountService;
-import com.example.demo.Service.BookMarkService;
-import com.example.demo.Service.GPTChatRestService;
-import com.example.demo.Service.LogService;
-import com.example.demo.Service.UserService;
+import com.example.demo.service.*;
+
+import com.example.demo.service.BankAccountService;
+import com.example.demo.service.BookMarkService;
+import com.example.demo.service.GPTChatRestService;
+import com.example.demo.service.LogService;
+import com.example.demo.service.UserService;
 import com.example.demo.dto.GPTResponseDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
+
 
 @Component
 public class MyWebSocketHandler extends TextWebSocketHandler {
@@ -63,12 +66,14 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
 
 		GPTResponseDto gptResponseDto = gptChatRestService.completionChat(payload);
+
 		String action = gptResponseDto.getAction();
+		Long amount = gptResponseDto.getAmount().longValue();
+		String name = gptResponseDto.getName();
 
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
-				amount = gptResponseDto.getAmount() != null ? gptResponseDto.getAmount().longValue() : 0L;
-				name = gptResponseDto.getName();
+
 				session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
 			}
@@ -79,7 +84,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				String username = user.getUsername();
 				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";
 				session.sendMessage(new TextMessage(msg));
-				name = "";  // 초기화
+				name = ""; // 초기화
 				amount = 0L; // name amount는 static이기 때문에 계속 초기화해줘야한다.
 			}
 

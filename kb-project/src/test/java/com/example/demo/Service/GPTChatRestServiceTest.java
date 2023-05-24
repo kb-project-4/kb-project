@@ -1,6 +1,8 @@
 package com.example.demo.Service;
 
 import com.example.demo.dto.GPTResponseDto;
+import com.example.demo.service.GPTChatRestService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,7 @@ public class LogService {
 //		this.bankAccountRepository = bankAccountRepository;
 	}
 
+	
 	public void update(Log logentity) {
 
 

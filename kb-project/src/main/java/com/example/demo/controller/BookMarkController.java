@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.Service.BookMarkService;
-import com.example.demo.Service.UserService;
 import com.example.demo.dto.BookMarkDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
+import com.example.demo.service.BookMarkService;
+import com.example.demo.service.UserService;
 
 @Controller
 @RequestMapping("/bookmarks")
@@ -40,7 +40,8 @@ public class BookMarkController {
 		String userid = user.getUserid();
 		System.out.println("userid" + userid);
 
-		List<BookMark> bookMarks = bookMarkService.getUserAllBookmarks(userid);
+		List<BookMark> bookMarks = bookMarkService.getUserAllBookmarks(userid, user);
+
 		model.addAttribute("bookMarks", bookMarks);
 		model.addAttribute("userid", userid);
 
@@ -52,7 +53,7 @@ public class BookMarkController {
 	@GetMapping("/create")
 	public String createBookMarkForm(Model model, HttpSession session, HttpServletRequest request) {
 
-		BookMark bookMark = new BookMark();
+		BookMarkDto bookMark = new BookMarkDto();
 		session = request.getSession();
 
 		User user = (User) session.getAttribute("user");
@@ -62,8 +63,9 @@ public class BookMarkController {
 		User user1 = userService.getUserByUserId(userid);
 		System.out.println("username" + user1.getUsername());
 
-		bookMark.setUser(user1);
+//		bookMark.setUser(user1);
 
+		bookMark.setUser(user);
 		model.addAttribute("bookMark", bookMark);
 
 		return "BookMark/bookMarkForm";
@@ -80,15 +82,21 @@ public class BookMarkController {
 
 		System.out.println("userid_create" + userid);
 
+		System.out.println("bookmark1 name" + bookMark.getBookMarkName());
+
 		BookMark bookMark2 = bookMark.toEntity();
+
+		System.out.println("bookmark getname" + bookMark2.getBookMarkName());
 
 		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) {// db에 잇는 유저
 
 			User user1 = userService.getUserByUsername(bookMark2.getBookMarkName());
 
 			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.getBank().getBankname().equals(bookMark2.getBookMarkName())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
-																							// 같은경우
+				if (bankAccount.getBank().getBankname().equals(bookMark2.getBookMarkBankname())) {// 해당유저의 계좌가 폼에서 입력한
+																									// 계좌
+																									// 이름과
+																									// 같은경우
 
 					bookMarkService.createBookMark(bookMark);
 

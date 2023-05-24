@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.BookMark;
+import com.example.demo.entity.User;
 
 public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
@@ -16,5 +17,7 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 	BookMark deleteByid(Long id);
 
 	BookMark findByid(Long id);
+
+	List<BookMark> findAllByUser(User user);
 
 }
