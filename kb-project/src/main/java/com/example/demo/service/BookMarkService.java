@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BookMarkDto;
 import com.example.demo.entity.BookMark;
+import com.example.demo.entity.User;
 import com.example.demo.repository.BookMarkRepository;
 
 @Service

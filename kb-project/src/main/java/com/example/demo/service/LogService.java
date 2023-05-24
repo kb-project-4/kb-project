@@ -35,8 +35,11 @@ public class LogService {
 	
 	public void update(Log logentity) {
 
+
 		logRepository.save(logentity); // 계좌 내역 저장
 	}
+	
+
 
 	// Add other methods as needed
 

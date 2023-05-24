@@ -4,6 +4,50 @@
 <head>
 <meta charset="UTF-8">
 <title>Bank Account List</title>
+
+<style>
+	/* 채팅 UI에 대한 CSS */
+	#chatContainer {
+		border: 1px solid #ccc;
+		padding: 10px;
+		margin-top: 20px;
+		overflow-y: auto;
+		max-height: 400px;
+	}
+
+	.message {
+		margin-bottom: 10px;
+	}
+
+	.userMessageContainer {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.userMessage {
+		background-color: #DCF8C6;
+		color: #333;
+		padding: 5px 10px;
+		border-radius: 10px;
+		margin-left: 10px;
+	}
+
+	.serverMessageContainer {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	.serverMessage {
+		background-color: #F4F4F4;
+		color: #333;
+		padding: 5px 10px;
+		border-radius: 10px;
+		margin-right: 10px;
+		text-align: left;
+	}
+
+</style>
+
 </head>
 
 <body>
@@ -35,7 +79,7 @@
 
 		<tbody th:unless="${bankAccounts != null}">
 			<tr>
-				<td colspan="5">No bank accounts found.</td>
+				<td colspan="4">No bank accounts found.</td>
 			</tr>
 
 		</tbody>
@@ -52,6 +96,9 @@
 	<button id="stopBtn" onclick="stopRecognition()">멈춤</button>
 	<div id="result"></div>
 
+	<h1>채팅</h1>
+	<div id="chatContainer"></div>
+
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -67,7 +114,8 @@
 		socket.onmessage = function(event) {
 			const message = event.data;
 			console.log('Received message:', message);
-			// 메시지 출력이나 처리 로직을 추가하세요.
+			displayMessage(message, 'server'); // 서버 메시지를 채팅 UI에 표시
+			speakText(message);
 		};
 
 		// 웹 소켓이 닫혔을 때 실행되는 이벤트 핸들러
@@ -85,6 +133,24 @@
 			socket.send(message);
 		}
 
+		// 사용자 메시지와 서버 메시지를 번갈아가며 채팅 UI에 표시하는 함수
+		function displayMessage(message, sender) {
+			const messageContainerClass = sender === 'user' ? 'userMessageContainer' : 'serverMessageContainer';
+			const messageClass = sender === 'user' ? 'userMessage' : 'serverMessage';
+
+			const messageHTML = '<div class="message ' + messageContainerClass + '">' +
+				'<div class="' + messageClass + '">' + message + '</div>' +
+				'</div>';
+
+			$('#chatContainer').append(messageHTML);
+			scrollToBottom();
+		}
+
+		// 채팅 UI를 맨 아래로 스크롤하는 함수
+		function scrollToBottom() {
+			$('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
+		}
+
 		// 음성 인식 시작
 		let recognition;
 
@@ -92,6 +158,7 @@
 			recognition = new webkitSpeechRecognition();
 			recognition.lang = 'ko-KR';
 			recognition.start();
+
 			// Grammar List 생성/
 			const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
 
@@ -104,6 +171,7 @@
 			recognition.onresult = function(event) {
 				const transcript = event.results[0][0].transcript;
 				console.log(transcript);
+				displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
 				sendMessage(transcript);
 			};
 
@@ -118,6 +186,13 @@
 			if (recognition) {
 				recognition.stop();
 			}
+		}
+
+		function speakText(text) {
+			const msg = new SpeechSynthesisUtterance();
+			msg.text = text;
+			msg.lang = 'ko-KR';
+			window.speechSynthesis.speak(msg);
 		}
 	</script>
 

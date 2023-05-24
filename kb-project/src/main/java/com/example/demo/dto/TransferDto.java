@@ -19,7 +19,6 @@ import lombok.Setter;
 public class TransferDto {
 
 	private User user;
-
 	private String recipient_name;
 	private String recipient_banknumber;
 	private String category;

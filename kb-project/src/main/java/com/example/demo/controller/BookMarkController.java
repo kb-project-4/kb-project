@@ -76,7 +76,7 @@ public class BookMarkController {
 		User user1 = userService.getUserByUserId(userid);
 		System.out.println("username" + user1.getUsername());
 
-		bookMark.setUser(user1);
+//		bookMark.setUser(user1);
 
 		model.addAttribute("bookMark", bookMark);
 
