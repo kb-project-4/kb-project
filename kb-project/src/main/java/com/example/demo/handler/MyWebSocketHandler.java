@@ -13,7 +13,6 @@ import com.example.demo.Service.GPTChatRestService;
 import com.example.demo.Service.LogService;
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.GPTResponseDto;
-import com.example.demo.dto.LogDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 
@@ -66,7 +65,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
-				logService.saveLog(null, user);
+				
 				session.sendMessage(new TextMessage(name + "에게 " + amount  + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
 			}

@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.Bank;
 import com.example.demo.entity.BankAccount;
+import com.example.demo.entity.BookMark;
 import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BankAccountRepository;
@@ -67,20 +67,28 @@ public class BankAccountService {
 
 		String userid = user.getUserid();
 
+		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
+		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
-	public List<BankAccount> getBankAccountByuserId(User user) { // User 계좌 리스트
-		Long userId = user.getId();
-		List<BankAccount> userBankAccounts = bankAccountRepository.findByAllUserId(userId);
-		System.out.println(userBankAccounts);
-		return userBankAccounts;
+		if (bankAccounts.isEmpty()) {
+			return null;
+		} else {
+
+			for (BankAccount bankAccount : bankAccounts) {
+				if (bankAccount.getUser().getUserid().equals(userid)) {
+					bankAccounts2.add(bankAccount);
+				}
+			}
+
+			return bankAccounts2;
+		}
 	}
-	
+
 	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);
 		return bankAccountRepository.save(bankAccount);
 	}
-
 
 	@Transactional
 	public BankAccount deleteBankAccount(BankAccount bankAccount) {
@@ -91,86 +99,59 @@ public class BankAccountService {
 	}
 
 	// BookMark User에게 송금
-	public void transferToBookMarkUser(BookMark recepient, User user, Long amount) {
+	// 음성인식 + 즐겨찾기 사용자에게 송금
+	public void transferToBookMarkUser(BookMark bookMark, User sender, Long amount) {
+		// transferDto
+//		private User sender;
+//		private String recipient_name;
+//		private String recipient_banknumber;
+//		private String category;
+//		private String sender_banknumber;
 		
+		String recipient_name = bookMark.getBookMarkName();
+		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
+		String category = "transfer";
+		TransferDto transferDto = new TransferDto(sender, recipient_name, recipient_banknumber, category, recipient_banknumber, amount);
 		
+		transferToUser(transferDto, sender);
 	}
 
+	// 송금
 	@Transactional
-	public void transferToUser(TransferDto log, User me) {
-
-		System.out.println("savelog");
-		System.out.println("user" + me.toString()); // 본인
-		BankAccountDto bankAccountDto = new BankAccountDto();
-
+	public void transferToUser(TransferDto transferDto, User sender) {
+		// TransferDto
+		System.out.println(transferDto.toString());
 		BankAccount mybankAccount = new BankAccount();
 
-		int idx = 0;// 본인계좌 인덱스
-		int i = 0;
-		System.out.println("log.get" + log.getMy_banknumber()); // 내 계좌번호
-
-		mybankAccount = bankAccountRepository.findByAccountNumber(log.getMy_banknumber());
-
-		System.out.println("mybankid1" + mybankAccount.getId());
-
-//
-//		for (BankAccount bankAccounts1 : me.getBankAccounts()) {
-//			System.out.println("bankaccount" + bankAccounts1.getAccountNumber());
-//			if (bankAccounts1.getAccountNumber().equals(log.getMy_banknumber())) {
-//				System.out.println("succ");
-//
-//				mybankAccount = bankAccounts1.toDto(); // 본인계좌
-//				idx = i;
-//			}
-//			i++;
-//		}
-
-		System.out.println("mybankaccount" + mybankAccount.toString());
+		mybankAccount = bankAccountRepository.findByAccountNumber(transferDto.getSender_banknumber());
+		System.out.println(mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
-		System.out.println("amount" + amount);
 
-		Long sendamount = log.getAmount(); // 보낼 돈 액수
+		Long sendamount = transferDto.getAmount(); // 보낼 돈 액수
 
 		if (amount - sendamount < 0) {
 			System.out.println("잔액부족");
-
 		} else {
-
-			System.out.println("remain" + (amount - sendamount));
 
 			mybankAccount.setAmount(amount - sendamount);// 본인계좌
 
-			String name = log.getRecipient_name();
-			User user1 = userService.getUserByUsername(name);// 받는사람
-			System.out.println("rec name" + name);
+			String recepientName = transferDto.getRecipient_name();
+			User user1 = userService.getUserByUsername(recepientName);// 받는사람
 
 			Long recipent_curmoney = 0L;
+
 			BankAccount bankAccount = new BankAccount();
 			for (BankAccount bankAccounts1 : user1.getBankAccounts()) {
-
-				if (bankAccounts1.getAccountNumber().equals(log.getRecipient_banknumber())) {
+				if (bankAccounts1.getAccountNumber().equals(transferDto.getRecipient_banknumber())) {
 					recipent_curmoney = bankAccounts1.getAmount();// 받는사람현재잔액
 					bankAccount = bankAccounts1;// 받는사람 계좌
 				}
-
 			}
 
 			bankAccount.setAmount(recipent_curmoney + sendamount); // 받는사람계좌 돈 증가
-
-			System.out.println("rec amountcur" + recipent_curmoney);// 받는사람 현재잔액
-
-			List<BankAccount> mybankAccountlist = new ArrayList<>(me.getBankAccounts());
-
-//			mybankAccountlist.set(idx, mybankAccount); // 본인계좌 업데이트
-
-			System.out.println("mybaid" + mybankAccount.toDto().getId());
-
 			updateBankAccount(mybankAccount.toDto()); // 내 계좌에 돈 이빠졋으니 업데이트
-
-			Log logentity = log.toEntity();
-
+			Log logentity = transferDto.toEntity();
 			logService.update(logentity);
-
 		}
 
 	}

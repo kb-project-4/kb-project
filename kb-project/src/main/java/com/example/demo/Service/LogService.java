@@ -14,8 +14,6 @@ import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.Log;
-import com.example.demo.entity.User;
-import com.example.demo.repository.BankAccountRepository;
 import com.example.demo.repository.LogRepository;
 
 @Service

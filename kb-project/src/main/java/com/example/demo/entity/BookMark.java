@@ -25,11 +25,11 @@ public class BookMark {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
+	private String bookMarkName;
 
-	private String accountNumber;
+	private String bookMarkAccountNumber;
 
-	private String bankname;
+	private String bookMarkBankname;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user")
@@ -37,9 +37,9 @@ public class BookMark {
 
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
-		dto.setName(this.name);
-		dto.setAccountNumber(this.accountNumber);
-		dto.setBankname(this.bankname);
+		dto.setName(this.bookMarkName);
+		dto.setAccountNumber(this.bookMarkAccountNumber);
+		dto.setBankname(this.bookMarkBankname);
 		dto.setUser(this.user);
 		return dto;
 	}

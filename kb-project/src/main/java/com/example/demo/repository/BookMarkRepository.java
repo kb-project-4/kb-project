@@ -7,12 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.BookMark;
 
-@Repository
 public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
-	BookMark findByAccountNumber(String banknumber);
+	BookMark findByBookMarkAccountNumber(String banknumber);
 
-	BookMark findByName(String name);
+	BookMark findByBookMarkName(String name);
 
 	BookMark deleteByid(Long id);
 

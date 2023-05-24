@@ -32,8 +32,8 @@
  -->
 		<div>
 			<label for="my_banknumber">본인 계좌번호:</label> <select
-				id="my_banknumber" name="my_banknumber" th:field="*{my_banknumber}">
-				<option th:each="bankAccount : ${Log.user.bankAccounts}"
+				id="my_banknumber" name="sender_banknumber" th:field="*{sender_banknumber}">
+				<option th:each="bankAccount : ${Log.sender.bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}"></option>
 			</select>
