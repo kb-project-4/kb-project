@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.Service.BookMarkService;
-import com.example.demo.Service.UserService;
 import com.example.demo.dto.BookMarkDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
+import com.example.demo.service.BookMarkService;
+import com.example.demo.service.UserService;
 
 @Controller
 @RequestMapping("/bookmarks")

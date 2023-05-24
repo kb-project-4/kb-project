@@ -30,17 +30,17 @@ public class BookMark {
 	private String accountNumber;
 
 	private String bankname;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user")
-	private User user;
+//
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "user")
+//	private User user;
 
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
 		dto.setName(this.name);
 		dto.setAccountNumber(this.accountNumber);
 		dto.setBankname(this.bankname);
-		dto.setUser(this.user);
+//		dto.setUser(this.user);
 		return dto;
 	}
 

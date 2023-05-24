@@ -33,7 +33,7 @@ public class BookMarkDto {
 	public BookMark toEntity() {
 
 		BookMark bookMark = new BookMark();
-		bookMark.builder().name(this.name).bankname(this.bankname).accountNumber(this.accountNumber).user(user).build();
+		bookMark.builder().name(this.name).bankname(this.bankname).accountNumber(this.accountNumber).build();
 		return bookMark;
 	}
 

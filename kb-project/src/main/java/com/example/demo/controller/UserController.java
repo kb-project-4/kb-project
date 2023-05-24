@@ -13,9 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Service.BankAccountService;
-import com.example.demo.Service.LogService;
-import com.example.demo.Service.UserService;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.UserDto;
@@ -23,6 +20,10 @@ import com.example.demo.entity.Bank;
 import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.BankAccountService;
+import com.example.demo.service.LogService;
+import com.example.demo.service.UserService;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -183,7 +184,8 @@ public class UserController {
 
 //		model.addAttribute("userid", userid);
 
-		Log log = new Log();
+//		Log log = new Log();
+		TransferDto log = new TransferDto();
 		log.setUser(user);
 
 		System.out.println("log users" + log.getUser().getBankAccounts());

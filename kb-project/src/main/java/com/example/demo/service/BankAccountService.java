@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +81,7 @@ public class BankAccountService {
 
 			return bankAccounts2;
 		}
+
 	}
 
 	//
@@ -109,12 +110,9 @@ public class BankAccountService {
 
 		System.out.println("savelog");
 		System.out.println("user" + me.toString()); // 본인
-		BankAccountDto bankAccountDto = new BankAccountDto();
 
 		BankAccount mybankAccount = new BankAccount();
 
-		int idx = 0;// 본인계좌 인덱스
-		int i = 0;
 		System.out.println("log.get" + log.getMy_banknumber()); // 내 계좌번호
 
 		mybankAccount = bankAccountRepository.findByAccountNumber(log.getMy_banknumber());
@@ -155,7 +153,7 @@ public class BankAccountService {
 
 			System.out.println("rec amountcur" + recipent_curmoney);// 받는사람 현재잔액
 
-			List<BankAccount> mybankAccountlist = new ArrayList<>(me.getBankAccounts());
+//			List<BankAccount> mybankAccountlist = new ArrayList<>(me.getBankAccounts());
 
 //			mybankAccountlist.set(idx, mybankAccount); // 본인계좌 업데이트
 

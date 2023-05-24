@@ -11,10 +11,10 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.example.demo.Service.BankAccountService;
-import com.example.demo.Service.UserService;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
+import com.example.demo.service.BankAccountService;
+import com.example.demo.service.UserService;
 
 @Component
 public class MyWebSocketHandler extends TextWebSocketHandler {

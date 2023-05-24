@@ -18,4 +18,6 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
 	BookMark findByid(Long id);
 
+	List<BookMark> findAllByUserid(String userid);
+
 }
