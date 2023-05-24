@@ -64,12 +64,10 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
-
 		GPTResponseDto gptResponseDto = gptChatRestService.completionChat(payload);
-
 		String action = gptResponseDto.getAction();
-		Long amount = gptResponseDto.getAmount().longValue();
-		String name = gptResponseDto.getName();
+//		Long amount = gptResponseDto.getAmount().longValue();
+//		String name = gptResponseDto.getName();
 
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
@@ -95,21 +93,21 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 			}
 		}
 
-		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
-			if (action.equals("예")) {
-				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
-				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
-				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
-				userState = UserState.INITIAL;
-			} else if (action.equals("아니오")) {
-				session.sendMessage(new TextMessage("다시 말씀해주세요."));
-				userState = UserState.INITIAL;
-			} else {
-				session.sendMessage(new TextMessage("잘못된 입력입니다. 다시 말씀해주세요."));
-			}
-			name = "";
-			amount = 0L;
-		}
+//		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
+//			if (action.equals("예")) {
+//				//BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
+//				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
+//				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
+//				userState = UserState.INITIAL;
+//			} else if (action.equals("아니오")) {
+//				session.sendMessage(new TextMessage("다시 말씀해주세요."));
+//				userState = UserState.INITIAL;
+//			} else {
+//				session.sendMessage(new TextMessage("잘못된 입력입니다. 다시 말씀해주세요."));
+//			}
+//			name = "";
+//			amount = 0L;
+//		}
 	}
 
 	@Override
