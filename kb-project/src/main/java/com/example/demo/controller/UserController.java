@@ -186,7 +186,7 @@ public class UserController {
 		String userid = user.getUserid();
 		TransferDto transferDto = new TransferDto();
 		transferDto.setSender(user);
-		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
 		model.addAttribute("Log", transferDto);
 		return "user/transfer";
 
