@@ -2,203 +2,206 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Bank Account List</title>
+<meta charset="UTF-8">
+<title>Bank Account List</title>
 
-    <style>
-        /* 채팅 UI에 대한 CSS */
-        #chatContainer {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 20px;
-            overflow-y: auto;
-            max-height: 400px;
-        }
+<style>
+/* 채팅 UI에 대한 CSS */
+#chatContainer {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-top: 20px;
+	overflow-y: auto;
+	max-height: 400px;
+}
 
-        .message {
-            margin-bottom: 10px;
-        }
+.message {
+	margin-bottom: 10px;
+}
 
-        .userMessageContainer {
-            display: flex;
-            justify-content: flex-end;
-        }
+.userMessageContainer {
+	display: flex;
+	justify-content: flex-end;
+}
 
-        .userMessage {
-            background-color: #DCF8C6;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 10px;
-            margin-left: 10px;
-        }
+.userMessage {
+	background-color: #DCF8C6;
+	color: #333;
+	padding: 5px 10px;
+	border-radius: 10px;
+	margin-left: 10px;
+}
 
-        .serverMessageContainer {
-            display: flex;
-            justify-content: flex-start;
-        }
+.serverMessageContainer {
+	display: flex;
+	justify-content: flex-start;
+}
 
-        .serverMessage {
-            background-color: #F4F4F4;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 10px;
-            margin-right: 10px;
-            text-align: left;
-        }
-
-    </style>
+.serverMessage {
+	background-color: #F4F4F4;
+	color: #333;
+	padding: 5px 10px;
+	border-radius: 10px;
+	margin-right: 10px;
+	text-align: left;
+}
+</style>
 
 </head>
 
 <body>
-    <h1>계좌</h1>
+	<h1>계좌</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>계좌번호</th>
-                <th>은행명</th>
-                <th>유저이름</th>
-                <th>잔액</th>
-                <th>주계좌</th>
-            </tr>
+	<table>
+		<thead>
+			<tr>
+				<th>계좌번호</th>
+				<th>은행명</th>
+				<th>유저이름</th>
+				<th>잔액</th>
+				<th>주계좌</th>
+			</tr>
 
-        </thead>
+		</thead>
 
-        <tbody>
-            <tr th:each="bankAccount : ${bankAccounts}">
-                <td th:text="${bankAccount.accountNumber}"></td>
-                <td th:text="${bankAccount.bank.bankname}"></td>
-                <td th:text="${bankAccount.user.username}"></td>
-                <td th:text="${bankAccount.amount}"></td>
-                <td><a th:href="@{/bankaccounts/delete}">주계좌설정</a></td>
-            </tr>
+		<tbody>
+			<tr th:each="bankAccount : ${bankAccounts}">
+				<td th:text="${bankAccount.accountNumber}"></td>
+				<td th:text="${bankAccount.bank.bankname}"></td>
+				<td th:text="${bankAccount.user.username}"></td>
+				<td th:text="${bankAccount.amount}"></td>
+				<td><a th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}">주계좌설정</a></td>
+			</tr>
 
-        </tbody>
-
-
-        <tbody th:unless="${bankAccounts != null}">
-            <tr>
-                <td colspan="4">No bank accounts found.</td>
-            </tr>
-
-        </tbody>
-
-    </table>
+		</tbody>
 
 
-    <a href="/bankaccounts/create"> 계좌생성 </a>
-    <a th:href="@{/users/main}"> 메인으로 돌아가기 </a>
+		<tbody th:unless="${bankAccounts != null}">
+			<tr>
+				<td colspan="4">No bank accounts found.</td>
+			</tr>
+
+		</tbody>
+
+	</table>
 
 
-    <h1>음성 인식</h1>
-
-    <div id="result"></div>
-
-    <h1>채팅</h1>
-    <div id="chatContainer"></div>
+	<a href="/bankaccounts/create"> 계좌생성 </a>
+	<a th:href="@{/users/main}"> 메인으로 돌아가기 </a>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<h1>음성 인식</h1>
 
-    <script>
-        const socket = new WebSocket('ws://localhost:8080/socket');
+	<div id="result"></div>
 
-        // 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
-        socket.onopen = function(event) {
-            console.log('WebSocket connection established.');
-        };
+	<h1>채팅</h1>
+	<div id="chatContainer"></div>
 
-        // 웹 소켓으로부터 메시지를 받았을 때 실행되는 이벤트 핸들러
-        socket.onmessage = function(event) {
-            const message = event.data;
-            console.log('Received message:', message);
-            displayMessage(message, 'server'); // 서버 메시지를 채팅 UI에 표시
-            speakText(message);
-        };
 
-        // 웹 소켓이 닫혔을 때 실행되는 이벤트 핸들러
-        socket.onclose = function(event) {
-            console.log('WebSocket connection closed.');
-        };
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        // 에러시 출력 
-        socket.onerror = function(event) {
-            console.error('WebSocket error:', event);
-        };
+	<script>
+		const socket = new WebSocket('ws://localhost:8080/socket');
 
-        // 서버로 메시지를 보내는 함수
-        function sendMessage(message) {
-            socket.send(message);
-        }
+		// 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
+		socket.onopen = function(event) {
+			console.log('WebSocket connection established.');
+		};
 
-        // 사용자 메시지와 서버 메시지를 번갈아가며 채팅 UI에 표시하는 함수
-        function displayMessage(message, sender) {
-            const messageContainerClass = sender === 'user' ? 'userMessageContainer' : 'serverMessageContainer';
-            const messageClass = sender === 'user' ? 'userMessage' : 'serverMessage';
+		// 웹 소켓으로부터 메시지를 받았을 때 실행되는 이벤트 핸들러
+		socket.onmessage = function(event) {
+			const message = event.data;
+			console.log('Received message:', message);
+			displayMessage(message, 'server'); // 서버 메시지를 채팅 UI에 표시
+			speakText(message);
+		};
 
-            const messageHTML = '<div class="message ' + messageContainerClass + '">' +
-                '<div class="' + messageClass + '">' + message + '</div>' +
-                '</div>';
+		// 웹 소켓이 닫혔을 때 실행되는 이벤트 핸들러
+		socket.onclose = function(event) {
+			console.log('WebSocket connection closed.');
+		};
 
-            $('#chatContainer').append(messageHTML);
-            scrollToBottom();
-        }
+		// 에러시 출력 
+		socket.onerror = function(event) {
+			console.error('WebSocket error:', event);
+		};
 
-        // 채팅 UI를 맨 아래로 스크롤하는 함수
-        function scrollToBottom() {
-            $('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
-        }
+		// 서버로 메시지를 보내는 함수
+		function sendMessage(message) {
+			socket.send(message);
+		}
 
-        // 음성 인식 시작
-        let recognition;
+		// 사용자 메시지와 서버 메시지를 번갈아가며 채팅 UI에 표시하는 함수
+		function displayMessage(message, sender) {
+			const messageContainerClass = sender === 'user' ? 'userMessageContainer'
+					: 'serverMessageContainer';
+			const messageClass = sender === 'user' ? 'userMessage'
+					: 'serverMessage';
 
-        $(document).ready(function() {
-            startRecognition(); // 페이지 로딩이 완료되면 음성 인식을 자동으로 시작
-        });
+			const messageHTML = '<div class="message ' + messageContainerClass + '">'
+					+ '<div class="' + messageClass + '">'
+					+ message
+					+ '</div>'
+					+ '</div>';
 
-        function startRecognition() {
-            recognition = new webkitSpeechRecognition();
-            recognition.lang = 'ko-KR';
-            recognition.continuous = true; // 지속적인 음성 인식 시작
+			$('#chatContainer').append(messageHTML);
+			scrollToBottom();
+		}
 
-            // Grammar List 생성/
-            const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
+		// 채팅 UI를 맨 아래로 스크롤하는 함수
+		function scrollToBottom() {
+			$('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
+		}
 
-            const speechRecognitionList = new webkitSpeechGrammarList();
-            speechRecognitionList.addFromString(grammar, 1);
-            console.log(speechRecognitionList[0].src);
+		// 음성 인식 시작
+		let recognition;
 
-            recognition.grammars = speechRecognitionList;
+		$(document).ready(function() {
+			startRecognition(); // 페이지 로딩이 완료되면 음성 인식을 자동으로 시작
+		});
 
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                console.log(transcript);
-                displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
-                sendMessage(transcript);
-            };
+		function startRecognition() {
+			recognition = new webkitSpeechRecognition();
+			recognition.lang = 'ko-KR';
+			recognition.continuous = true; // 지속적인 음성 인식 시작
 
-            recognition.onerror = function(event) {
-                console.error('음성 인식 오류:', event.error);
-            };
+			// Grammar List 생성/
+			const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
 
-            recognition.start();
-        }
+			const speechRecognitionList = new webkitSpeechGrammarList();
+			speechRecognitionList.addFromString(grammar, 1);
+			console.log(speechRecognitionList[0].src);
 
-        // 음성 인식 멈춤
-        function stopRecognition() {
-            if (recognition) {
-                recognition.stop();
-            }
-        }
+			recognition.grammars = speechRecognitionList;
 
-        function speakText(text) {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'ko-KR';
-            window.speechSynthesis.speak(msg);
-        }
-    </script>
+			recognition.onresult = function(event) {
+				const transcript = event.results[0][0].transcript;
+				console.log(transcript);
+				displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
+				sendMessage(transcript);
+			};
+
+			recognition.onerror = function(event) {
+				console.error('음성 인식 오류:', event.error);
+			};
+
+			recognition.start();
+		}
+
+		// 음성 인식 멈춤
+		function stopRecognition() {
+			if (recognition) {
+				recognition.stop();
+			}
+		}
+
+		function speakText(text) {
+			const msg = new SpeechSynthesisUtterance();
+			msg.text = text;
+			msg.lang = 'ko-KR';
+			window.speechSynthesis.speak(msg);
+		}
+	</script>
 
 </body>
 

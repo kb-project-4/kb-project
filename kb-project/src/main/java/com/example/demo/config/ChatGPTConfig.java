@@ -19,6 +19,7 @@ public class ChatGPTConfig {
   @Value("${gpt.token}")
   private String token;
 
+  
   @Bean
   public OpenAiService openAiService() {
     log.info("token : {}을 활용한 OpenAiService 을 생성합니다.", token);

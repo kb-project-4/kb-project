@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -84,6 +85,12 @@ public class BankAccountService {
 		}
 	}
 
+	public BankAccount getBankAccountByAccountId(Long id) {
+
+		return bankAccountRepository.findById(id).orElseThrow(null);
+
+	}
+
 	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);
@@ -156,4 +163,30 @@ public class BankAccountService {
 		}
 
 	}
+
+	public void setmainAccount(BankAccountDto bankAccountDto) {
+		System.out.println("mainaccount");
+		System.out.println("mainaccount test " + bankAccountDto.toString());
+
+		List<BankAccount> bankAccounts = new ArrayList();
+		bankAccounts = bankAccountRepository.findAll();
+
+		for (BankAccount bankAccount : bankAccounts) {
+			if (bankAccount.isMainAccount()) {
+				bankAccount.setMainAccount(false);
+				bankAccountRepository.save(bankAccount);
+			}
+
+		}
+
+		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow();
+		System.out.println("bankaccount service" + bankAccount.toString());
+		bankAccount.setMainAccount(true);
+		System.out.println("bankaccount service modified" + bankAccount.toString());
+
+		bankAccountRepository.save(bankAccount);
+		System.out.println("fin");
+
+	}
+
 }

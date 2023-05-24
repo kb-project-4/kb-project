@@ -41,10 +41,14 @@ public class BankAccount extends BaseEntity {
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
 
+	private boolean mainAccount;
+
 	public BankAccountDto toDto() {
 
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)
-				.user(this.user).bank(this.bank).build();
+				.user(this.user).bank(this.bank)
+				.mainAccount(this.mainAccount)
+				.build();
 
 		return dto;
 	}

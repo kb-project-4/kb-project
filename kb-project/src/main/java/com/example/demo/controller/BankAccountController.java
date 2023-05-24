@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.BankAccountDto;
 import com.example.demo.entity.Bank;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
@@ -70,6 +71,7 @@ public class BankAccountController {
 		return "bankaccount/create";
 
 	}
+
 //계좌 생성
 	@PostMapping("/bankaccounts/create")
 	public String createBankAccount(HttpServletRequest request,
@@ -99,6 +101,19 @@ public class BankAccountController {
 		System.out.println(bankAccount.getId());
 		bankAccountService.deleteBankAccount(bankAccount);
 		System.out.println("delete");
+
+		return "redirect:/bankaccounts";
+
+	}
+
+	@GetMapping("/bankaccounts/mainAccount/{id}") // 주계좌설정
+	public String setMainAccount(@PathVariable("id") Long id) {
+
+		BankAccountDto bankAccountDto = bankAccountService.getBankAccountByAccountId(id).toDto();
+		System.out.println("controller bankaccount" + bankAccountDto.toString());
+		bankAccountService.setmainAccount(bankAccountDto);
+		System.out.println("success modify");
+		
 		
 		return "redirect:/bankaccounts";
 

@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.example.demo.entity.Bank;
+import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -30,5 +31,11 @@ public class BankAccountDto {
 	private User user;
 
 	private Bank bank;
+	private boolean mainAccount;
+
+	public BankAccount toEntity() {
+		return BankAccount.builder().accountNumber(this.accountNumber).amount(this.amount).bank(this.bank).id(this.id)
+				.build();
+	}
 
 }
