@@ -67,7 +67,7 @@ public class BankAccountService {
 	public List<BankAccount> getBankAccountByuserId(User user) {
 
 		String userid = user.getUserid();
-
+		System.out.println(userid);
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
 		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
@@ -78,6 +78,7 @@ public class BankAccountService {
 			for (BankAccount bankAccount : bankAccounts) {
 				if (bankAccount.getUser().getUserid().equals(userid)) {
 					bankAccounts2.add(bankAccount);
+					System.out.println("용화용화");
 				}
 			}
 

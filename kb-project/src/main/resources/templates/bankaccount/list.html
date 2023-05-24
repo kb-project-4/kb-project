@@ -70,7 +70,8 @@
 				<td th:text="${bankAccount.bank.bankname}"></td>
 				<td th:text="${bankAccount.user.username}"></td>
 				<td th:text="${bankAccount.amount}"></td>
-				<td><a th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}">주계좌설정</a></td>
+				<td><a
+					th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}">주계좌설정</a></td>
 			</tr>
 
 		</tbody>
