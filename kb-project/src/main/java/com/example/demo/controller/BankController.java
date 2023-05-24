@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Service.BankService;
 import com.example.demo.entity.Bank;
+import com.example.demo.service.BankService;
 
 @RestController
 @RequestMapping("/banks")

@@ -24,8 +24,8 @@ td {
 		</thead>
 		<tbody>
 			<tr th:each="bookMark : ${bookMarks}">
-				<td th:text="${bookMark.name}"></td>
-				<td th:text="${bookMark.banknumber}"></td>
+				<td th:text="${bookMark.bookMarkName}"></td>
+				<td th:text="${bookMark.bookMarkAccountNumber}"></td>
 				<td th:text="${bookMark.user != null ? bookMark.user.userid : ''}"></td>
 				<td><a th:href="@{/bookmarks/edit/{id}(id=${bookMark.id})}">수정</a></td>
 				<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}">삭제</a></td>

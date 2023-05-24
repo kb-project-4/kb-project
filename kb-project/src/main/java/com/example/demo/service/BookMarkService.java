@@ -1,4 +1,4 @@
-package com.example.demo.Service;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +33,24 @@ public class BookMarkService {
 		return bookMarkRepository.findAll();
 	}
 
-	public List<BookMark> getUserAllBookmarks(String userid) {
+	public List<BookMark> getUserAllBookmarks(String userid,User user) {
 
-		List<BookMark> bookMarks = bookMarkRepository.findAll();
-		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
+		
+		List<BookMark> bookMarks = bookMarkRepository.findAllByUser(user);
+//		List<BookMark> bookMarks = bookMarkRepository.findAll();
+//
+//		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
+//
+//		System.out.println("userid bookmark" + userid);
+//
+//		for (BookMark bookMark : bookMarks) {
+//			if (userid.equals(bookMark.getUser().getUserid())) {
+//				System.out.println("if ");
+//				bookMarks2.add(bookMark);
+//			}
+//		}
 
-		for (BookMark bookMark : bookMarks) {
-			if (userid.equals(bookMark.getUser().getUserid()))
-				bookMarks2.add(bookMark);
-
-		}
-
-		return bookMarks2;
+		return bookMarks;
 
 	}
 
@@ -60,9 +66,9 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
-			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getAccountNumber());
-			existingBookMark.setBookMarkBankname(updatedBookMark.getName());
-					
+			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getBookMarkAccountNumber());
+			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkName());
+
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
 		}

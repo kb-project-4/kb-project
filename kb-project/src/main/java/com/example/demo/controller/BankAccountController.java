@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.Service.BankAccountService;
-import com.example.demo.Service.BankService;
-import com.example.demo.Service.UserService;
 import com.example.demo.entity.Bank;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BankAccountRepository;
+import com.example.demo.service.BankAccountService;
+import com.example.demo.service.BankService;
+import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,7 +70,7 @@ public class BankAccountController {
 		return "bankaccount/create";
 
 	}
-
+//계좌 생성
 	@PostMapping("/bankaccounts/create")
 	public String createBankAccount(HttpServletRequest request,
 			@ModelAttribute("bankaccount") BankAccount bankAccount) {

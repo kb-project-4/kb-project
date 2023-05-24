@@ -13,11 +13,15 @@ import com.example.demo.dto.BookMarkDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookMark {
@@ -37,9 +41,9 @@ public class BookMark {
 
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
-		dto.setName(this.bookMarkName);
-		dto.setAccountNumber(this.bookMarkAccountNumber);
-		dto.setBankname(this.bookMarkBankname);
+		dto.setBookMarkName(this.bookMarkName);
+		dto.setBookMarkAccountNumber(this.bookMarkAccountNumber);
+		dto.setBookMarkBankname(this.bookMarkBankname);
 		dto.setUser(this.user);
 		return dto;
 	}
