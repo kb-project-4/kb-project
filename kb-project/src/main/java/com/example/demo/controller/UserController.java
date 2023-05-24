@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,6 +63,8 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
+		System.out.println(user.getAddress());
+		System.out.println(user.getPassword());
 //
 //		User defaultuser = new User();
 //		defaultuser.setAddress("잠원");
@@ -180,35 +183,24 @@ public class UserController {
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
-
-//		model.addAttribute("userid", userid);
-
-		Log log = new Log();
-		log.setUser(user);
-
-		System.out.println("log users" + log.getUser().getBankAccounts());
-
-//		model.addAttribute("Log", new Log());
-
-		model.addAttribute("Log", log);
-
-		System.out.println("useriddd" + userid);
-
+		TransferDto transferDto = new TransferDto();
+		transferDto.setSender(user);
+		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+		model.addAttribute("Log", transferDto);
 		return "user/transfer";
 
 	}
 
 	@PostMapping("/transfer")
-	public String transfer(HttpSession session, HttpServletRequest request, @ModelAttribute("Log") TransferDto log) {
+	public String transfer(HttpSession session, @ModelAttribute("Log") TransferDto log) {
 
-		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
-		log.setUser(user);
+		log.setSender(user);
 		log.setCategory("transfer");
 		System.out.println(log);
-		System.out.println("user" + log.getUser().getUsername());
+		System.out.println("user" + log.getSender().getUsername());
 		System.out.println("flag");
 
 		bankaccountservice.transferToUser(log, user);

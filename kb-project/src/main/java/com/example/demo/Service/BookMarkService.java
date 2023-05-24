@@ -16,7 +16,6 @@ public class BookMarkService {
 
 	private final BookMarkRepository bookMarkRepository;
 
-	@Autowired
 	public BookMarkService(BookMarkRepository bookMarkRepository) {
 		this.bookMarkRepository = bookMarkRepository;
 	}
@@ -50,7 +49,7 @@ public class BookMarkService {
 	}
 
 	public BookMark getBookmarkByBankNumber(String accountnumber) {
-		return bookMarkRepository.findByAccountNumber(accountnumber);
+		return bookMarkRepository.findByBookMarkAccountNumber(accountnumber);
 	}
 
 	public BookMark getBookMarkById(Long id) {
@@ -61,8 +60,9 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
-			existingBookMark.setAccountNumber(updatedBookMark.getAccountNumber());
-			existingBookMark.setName(updatedBookMark.getName());
+			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getAccountNumber());
+			existingBookMark.setBookMarkBankname(updatedBookMark.getName());
+					
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
 		}

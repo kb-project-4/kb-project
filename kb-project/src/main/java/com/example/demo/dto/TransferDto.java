@@ -9,29 +9,30 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@ToString
 public class TransferDto {
 
-	private User user;
+	private User sender;
 	private String recipient_name;
 	private String recipient_banknumber;
 	private String category;
-	private String my_banknumber;
+	private String sender_banknumber;
 
 	private Long amount;
 
 	public Log toEntity() {
 
 		Log log = new Log();
-		log.setUser(user);
+		log.setUser(sender);
 		log.setAmount(amount);
-		log.setMy_banknumber(my_banknumber);
+		log.setMy_banknumber(sender_banknumber);
 		log.setRecipient_banknumber(recipient_banknumber);
 		log.setRecipient_name(recipient_name);
 		log.setCategory(category);

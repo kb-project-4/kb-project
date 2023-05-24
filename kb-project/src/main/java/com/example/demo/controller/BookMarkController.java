@@ -31,20 +31,6 @@ public class BookMarkController {
 
 	@Autowired
 	private UserService userService;
-//
-//	@GetMapping
-//	public String getAllBookMarks(Model model, HttpServletRequest request, HttpSession session) {
-//		session = request.getSession();
-//		User user = (User) session.getAttribute("user");
-//		String userid = user.getUserid();
-//
-//		List<BookMark> bookMarks = bookMarkService.getAllBookmarks();
-//		model.addAttribute("bookMarks", bookMarks);
-//		model.addAttribute("userid", userid);
-//
-//		return "BookMark/bookMarks";
-//
-//	}
 
 	@GetMapping
 	public String getUserBookMarks(Model model, HttpServletRequest request, HttpSession session) {
@@ -96,12 +82,12 @@ public class BookMarkController {
 
 		BookMark bookMark2 = bookMark.toEntity();
 
-		if (userService.getUserByUsername(bookMark2.getName()) != null) {// db에 잇는 유저
+		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) {// db에 잇는 유저
 
-			User user1 = userService.getUserByUsername(bookMark2.getName());
+			User user1 = userService.getUserByUsername(bookMark2.getBookMarkName());
 
 			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.getBank().getBankname().equals(bookMark2.getBankname())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
+				if (bankAccount.getBank().getBankname().equals(bookMark2.getBookMarkName())) {// 해당유저의 계좌가 폼에서 입력한 계좌 이름과
 																							// 같은경우
 
 					bookMarkService.createBookMark(bookMark);
