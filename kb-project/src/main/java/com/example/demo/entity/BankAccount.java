@@ -14,15 +14,16 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-
 @Getter
-
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+// account number 로 변수명 바꾸기(banknumber)
 public class BankAccount extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

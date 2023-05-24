@@ -24,7 +24,6 @@ public class UserService {
 	public User createUser(UserDto user) {
 
 		User user2 = user.toEntity();
-
 		return userRepository.save(user2);
 	}
 

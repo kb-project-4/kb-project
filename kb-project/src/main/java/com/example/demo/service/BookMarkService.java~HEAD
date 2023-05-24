@@ -33,21 +33,16 @@ public class BookMarkService {
 		return bookMarkRepository.findAll();
 	}
 
-	public List<BookMark> getUserAllBookmarks(String userid,User user) {
+	public List<BookMark> getUserAllBookmarks(String userid) {
 
-		
-		List<BookMark> bookMarks = bookMarkRepository.findAllByUser(user);
-//		List<BookMark> bookMarks = bookMarkRepository.findAll();
-//
+		List<BookMark> bookMarks = bookMarkRepository.findAllByUserid(userid);
+
 //		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
 //
-//		System.out.println("userid bookmark" + userid);
-//
 //		for (BookMark bookMark : bookMarks) {
-//			if (userid.equals(bookMark.getUser().getUserid())) {
-//				System.out.println("if ");
+//			if (userid.equals(bookMark.getUser().getUserid()))
 //				bookMarks2.add(bookMark);
-//			}
+//
 //		}
 
 		return bookMarks;
@@ -66,9 +61,9 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
-			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getBookMarkAccountNumber());
-			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkName());
-
+			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getAccountNumber());
+			existingBookMark.setBookMarkBankname(updatedBookMark.getName());
+					
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
 		}

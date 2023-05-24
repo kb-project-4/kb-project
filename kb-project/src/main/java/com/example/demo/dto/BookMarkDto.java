@@ -22,18 +22,22 @@ import lombok.Setter;
 
 public class BookMarkDto {
 
-	private String name;
+	private String bookMarkName;
 
-	private String accountNumber;
+	private String bookMarkAccountNumber;
 
-	private String bankname;
+	private String bookMarkBankname;
 
 	private User user;
 
 	public BookMark toEntity() {
 
-		BookMark bookMark = new BookMark();
-		bookMark.builder().name(this.name).bankname(this.bankname).accountNumber(this.accountNumber).build();
+		BookMark bookMark = BookMark.builder().
+				bookMarkName(this.bookMarkName).
+				bookMarkBankname(this.bookMarkBankname)
+				.bookMarkAccountNumber(this.bookMarkAccountNumber).user(user).
+				
+				build();
 		return bookMark;
 	}
 
