@@ -1,0 +1,13 @@
+.chat-window {
+  width: 600px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  width: 600px;
+  height: 100px;
+}
+.card {
+  margin-top: 15px;
+}

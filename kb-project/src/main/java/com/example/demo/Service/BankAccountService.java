@@ -3,11 +3,10 @@ package com.example.demo.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+
 
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
@@ -18,6 +17,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.BankAccountRepository;
 import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.LogRepository;
+
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -30,6 +30,7 @@ public class BankAccountService {
 	private final UserService userService;
 	private final BankService bankService;
 	private final LogService logService;
+
 	private final LogRepository logRepository;
 
 	public BankAccountService(BankAccountRepository bankAccountRepository, UserRepository userRepository,
@@ -66,42 +67,33 @@ public class BankAccountService {
 
 		String userid = user.getUserid();
 
-		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
-		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
-		if (bankAccounts.isEmpty()) {
-			return null;
-		} else {
-
-			for (BankAccount bankAccount : bankAccounts) {
-				if (bankAccount.getUser().getUserid().equals(userid)) {
-					bankAccounts2.add(bankAccount);
-				}
-			}
-
-			return bankAccounts2;
-		}
+	public List<BankAccount> getBankAccountByuserId(User user) { // User 계좌 리스트
+		Long userId = user.getId();
+		List<BankAccount> userBankAccounts = bankAccountRepository.findByAllUserId(userId);
+		System.out.println(userBankAccounts);
+		return userBankAccounts;
 	}
-
-	//
+	
 	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
-
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);
 		return bankAccountRepository.save(bankAccount);
 	}
 
-	//
 
 	@Transactional
 	public BankAccount deleteBankAccount(BankAccount bankAccount) {
-		Long bankaccountid = bankAccount.getId();
-		System.out.println("bankaccountid" + bankaccountid);
 		String accountnumber = bankAccount.getAccountNumber();
-		System.out.println("accountnum" + accountnumber);
 		bankAccountRepository.deleteByAccountNumber(accountnumber);
 
 		return bankAccount;
+	}
+
+	// BookMark User에게 송금
+	public void transferToBookMarkUser(BookMark recepient, User user, Long amount) {
+		
+		
 	}
 
 	@Transactional
