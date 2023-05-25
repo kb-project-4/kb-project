@@ -40,7 +40,7 @@ public class BankAccountController {
 	public String getBankAccounts(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByuserId(user);
+		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByUser(user);
 
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "bankaccount/list";
@@ -88,14 +88,12 @@ public class BankAccountController {
 
 	}
 
-	@GetMapping("/bankaccounts/delete") // 삭제
-	public String deleteBankAccount(HttpServletRequest request) {
-
+	@GetMapping("/bankaccounts/delete/{id}") // 삭제
+	public String deleteBankAccount(@PathVariable Long id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		String userid = user.getUserid();
-		BankAccount bankAccount = bankAccountService.getBankAccountByuserId(user).get(0);
+		BankAccount bankAccount = bankAccountService.getBankAccountById(id);
 		Long bankid = bankAccount.getBank().getId();
 		Bank bankById = bankService.getBankById(bankid);
 		System.out.println(bankAccount.getId());

@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+
+//<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,18 +11,20 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+//=======
+//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
-import com.example.demo.entity.Bank;
-import com.example.demo.entity.BankAccount;
-import com.example.demo.entity.BookMark;
-import com.example.demo.entity.Log;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.repository.BankAccountRepository;
-import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.LogRepository;
-
 import com.example.demo.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,7 +69,7 @@ public class BankAccountService {
 		return null; // 계좌가 존재하지 않을 경우 null 반환
 	}
 
-	public List<BankAccount> getBankAccountByuserId(User user) {
+	public List<BankAccount> getBankAccountByUser(User user) {
 
 		String userid = user.getUserid();
 		System.out.println(userid);
@@ -170,6 +175,9 @@ public class BankAccountService {
 		}
 
 	}
+	
+
+//<<<<<<< HEAD
 
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
@@ -195,5 +203,15 @@ public class BankAccountService {
 		System.out.println("fin");
 
 	}
+
+//=======
+
+	public BankAccount getBankAccountById(Long id) {
+		return bankAccountRepository.findById(id).orElse(null);
+	}
+
+
+//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
+
 
 }

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.example.demo.entity.BankAccount;
+import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,8 @@ public class UserController {
 
 	@Autowired
 	private BankAccountService bankaccountservice;
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping("/users")
 	public String getUsers(Model model) {
@@ -184,13 +188,15 @@ public class UserController {
 
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		String userid = user.getUserid();
+		Long userId = user.getId();
+		System.out.println("유저 아이디" + userId);
 		TransferDto transferDto = new TransferDto();
 		transferDto.setSender(user);
-		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(userId);
+//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
 		model.addAttribute("Log", transferDto);
+		model.addAttribute("bankAccounts", bankAccounts);
 		return "user/transfer";
-
 	}
 
 	@PostMapping("/transfer")

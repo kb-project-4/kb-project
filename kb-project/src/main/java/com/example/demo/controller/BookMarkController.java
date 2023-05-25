@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ public class BookMarkController {
 	private UserService userService;
 	@Autowired
 	private BankAccountService bankaccountservice;
+	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping
 	public String getUserBookMarks(Model model, HttpServletRequest request, HttpSession session) {
@@ -94,24 +96,20 @@ public class BookMarkController {
 
 		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) {// db에 잇는 유저
 
-			User user1 = userService.getUserByUsername(bookMark2.getBookMarkName());
+			User targetUser = userService.getUserByUsername(bookMark2.getBookMarkName());
+			List<BankAccount> bankAccounts = targetUser.getBankAccounts();
+			BankAccount targetBankAccount = bankAccountRepository
+					.findByAccountNumber(bookMark2.getBookMarkAccountNumber());
 
-			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.getBank().getBankname().equals(bookMark2.getBookMarkBankname())) {// 해당유저의 계좌가 폼에서 입력한
-																									// 계좌
-																									// 이름과
-																									// 같은경우
-
-					bookMarkService.createBookMark(bookMark);
-
-					return "redirect:/bookmarks";
-				}
+			if (bankAccounts.indexOf(targetBankAccount) == -1) { // 계좌가 존재하지 않을 경우
+				System.out.println("계좌를 똑바로 입력");
+				return "redirect:create";
+			} else { // 등록 성공
+				bookMarkService.createBookMark(bookMark);
+				return "redirect:/bookmarks";
 			}
-
-			System.out.println("계좌를 똑바로 입력");
-
 		}
-
+		// 사용자가 없을 경우
 		System.out.println("해당사용자 없음");
 		return "redirect:create";
 	}
@@ -160,7 +158,7 @@ public class BookMarkController {
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
-		
+
 		System.out.println("log users" + transferDto.getSender().getBankAccounts());
 		model.addAttribute("Log", transferDto);
 		return "BookMark/transfer";
