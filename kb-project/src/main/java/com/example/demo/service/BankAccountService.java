@@ -92,6 +92,12 @@ public class BankAccountService {
 
 	}
 
+	public BankAccount getBankAccountByAccountnumber(String accountnumber) {
+
+		return bankAccountRepository.findByAccountNumber(accountnumber);
+
+	}
+
 	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
 		bankAccount.setUser(user);
 		bankAccount.setBank(bank);

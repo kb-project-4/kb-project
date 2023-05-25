@@ -20,6 +20,7 @@ td {
 				<th>내 아이디</th>
 				<th>수정</th>
 				<th>삭제</th>
+				<th>송금</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +30,8 @@ td {
 				<td th:text="${bookMark.user != null ? bookMark.user.userid : ''}"></td>
 				<td><a th:href="@{/bookmarks/edit/{id}(id=${bookMark.id})}">수정</a></td>
 				<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}">삭제</a></td>
+				<td><a
+					th:href="@{/transfer/{recepientAccountNumber}(recepientAccountNumber=${bookMark.bookMarkAccountNumber})}">송금</a></td>
 			</tr>
 		</tbody>
 	</table>

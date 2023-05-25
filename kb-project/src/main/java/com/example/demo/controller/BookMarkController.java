@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.BookMarkDto;
+import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
+import com.example.demo.service.BankAccountService;
 import com.example.demo.service.BookMarkService;
 import com.example.demo.service.UserService;
 
@@ -31,6 +33,8 @@ public class BookMarkController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BankAccountService bankaccountservice;
 
 	@GetMapping
 	public String getUserBookMarks(Model model, HttpServletRequest request, HttpSession session) {
@@ -141,5 +145,46 @@ public class BookMarkController {
 
 		return "redirect:/bookmarks";
 	}
+
+	@GetMapping("/transfer/{recepientAccountNumber}")
+	public String transferform(HttpSession session, HttpServletRequest request, Model model,
+			@PathVariable("recepientAccountNumber") String recepientAccountNumber) {
+
+		session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+		TransferDto transferDto = new TransferDto();
+		transferDto.setSender(user);
+		transferDto.setRecipient_banknumber(recepientAccountNumber);
+
+		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
+		String recipient_name = bankAccount.getUser().getUsername();
+		transferDto.setRecipient_name(recipient_name);
+		
+		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+		model.addAttribute("Log", transferDto);
+		return "BookMark/transfer";
+
+	}
+//
+//	@PostMapping("/transfer")
+//	public String transfer(HttpSession session, @ModelAttribute("Log") TransferDto log) {
+//
+//		User user = (User) session.getAttribute("user");
+//		String userid = user.getUserid();
+//
+//		log.setSender(user);
+//		log.setCategory("transfer");
+//		System.out.println(log);
+//		System.out.println("user" + log.getSender().getUsername());
+//		System.out.println("flag");
+//
+//		bankaccountservice.transferToUser(log, user);
+//
+//		System.out.println("userid" + userid);
+//
+//		return "redirect:/users/main";
+//
+//	}
 
 }
