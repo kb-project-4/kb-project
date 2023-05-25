@@ -14,16 +14,21 @@ public class MyHandshakeInterceptor implements HandshakeInterceptor { // 3 hands
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
-
+		
+		
 		HttpSessionHandshakeInterceptor httpSessionInterceptor = new HttpSessionHandshakeInterceptor();
+		
 		if (httpSessionInterceptor.beforeHandshake(request, response, wsHandler, attributes)) {
 			HttpSession httpSession = (HttpSession) attributes.get("javax.servlet.http.HttpSession");
 			attributes.put("HTTP_SESSION", httpSession);
 			return true;
-		} else {
+		}
+		
+		else {
 			return false;
 		}
 
+		
 	}
 
 	@Override

@@ -39,9 +39,8 @@ public class BookMarkService {
 		return null;
 	}
 
-	public List<BookMark> getUserAllBookmarks(String userid,User user) {
+	public List<BookMark> getUserAllBookmarks(String userid, User user) {
 
-		
 		List<BookMark> bookMarks = bookMarkRepository.findAllByUser(user);
 		return bookMarks;
 
@@ -76,7 +75,5 @@ public class BookMarkService {
 	public BookMark findByUserAndBookMarkName(User user, String bookMarkName) {
 		return bookMarkRepository.findByUserAndBookMarkName(user, bookMarkName);
 	}
-	
-	
 
 }

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class CompletionChatResponse {
 
   private String id;
@@ -27,6 +28,7 @@ public class CompletionChatResponse {
 
   private Usage usage;
 
+  
   @Getter
   @NoArgsConstructor
   @AllArgsConstructor

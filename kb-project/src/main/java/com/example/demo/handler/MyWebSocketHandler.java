@@ -101,7 +101,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 			}
 
 			else if (action.equals("조회")) {
-				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
+				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByUser(user);
 				Long balance = bankAccountByuserId.get(0).getAmount();
 				String username = user.getUsername();
 				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";
@@ -135,7 +135,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
-				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
+				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByUser(user);
 				Long balance = bankAccountByuserId.get(0).getAmount();
 				String username = user.getUsername();
 				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";
