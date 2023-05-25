@@ -19,5 +19,7 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 	BookMark findByid(Long id);
 
 	List<BookMark> findAllByUser(User user);
+	
+	BookMark findByUserAndBookMarkName(User user, String bookMarkName); // 사용의 북마크 리스트에 특정 이름이 있는지 찾는 쿼리
 
 }

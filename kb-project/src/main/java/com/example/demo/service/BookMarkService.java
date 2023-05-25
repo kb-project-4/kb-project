@@ -34,6 +34,10 @@ public class BookMarkService {
 	public List<BookMark> getAllBookmarks() {
 		return bookMarkRepository.findAll();
 	}
+	
+	public List<String> getAllBookMarkUserName(){
+		return null;
+	}
 
 	public List<BookMark> getUserAllBookmarks(String userid,User user) {
 
@@ -66,8 +70,13 @@ public class BookMarkService {
 
 	@Transactional
 	public BookMark findBookMarkByName(String name) {
-		System.out.println(bookMarkRepository.findByBookMarkName(name));
 		return bookMarkRepository.findByBookMarkName(name);
 	}
+	
+	public BookMark findByUserAndBookMarkName(User user, String bookMarkName) {
+		return bookMarkRepository.findByUserAndBookMarkName(user, bookMarkName);
+	}
+	
+	
 
 }
