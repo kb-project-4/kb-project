@@ -109,6 +109,9 @@
         // 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
         socket.onopen = function(event) {
             console.log('WebSocket connection established.');
+            message = "무엇을 도와드릴까요?"
+            speakText(message)
+            displayMessage(message, 'server'); 
         };
 
         // 웹 소켓으로부터 메시지를 받았을 때 실행되는 이벤트 핸들러
@@ -163,14 +166,6 @@
             recognition.lang = 'ko-KR';
             recognition.continuous = true;
 
-            // Grammar List 생성
-            const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
-
-            const speechRecognitionList = new webkitSpeechGrammarList();
-            speechRecognitionList.addFromString(grammar, 1);
-            console.log(speechRecognitionList[0].src);
-
-            recognition.grammars = speechRecognitionList;
 
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript;
@@ -200,6 +195,7 @@
             const msg = new SpeechSynthesisUtterance();
             msg.text = text;
             msg.lang = 'ko-KR';
+            msg.rate= 0.9
             window.speechSynthesis.speak(msg);
         }
     </script>
