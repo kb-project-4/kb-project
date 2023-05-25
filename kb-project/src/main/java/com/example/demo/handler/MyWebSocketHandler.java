@@ -71,7 +71,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 			}
 
 			else if (action.equals("조회")) {
-				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
+				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByUser(user);
 				Long balance = bankAccountByuserId.get(0).getAmount();
 				String username = user.getUsername();
 				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";

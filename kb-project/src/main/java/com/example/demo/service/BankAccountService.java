@@ -56,7 +56,7 @@ public class BankAccountService {
 		return null; // 계좌가 존재하지 않을 경우 null 반환
 	}
 
-	public List<BankAccount> getBankAccountByuserId(User user) {
+	public List<BankAccount> getBankAccountByUser(User user) {
 
 		String userid = user.getUserid();
 

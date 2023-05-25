@@ -39,7 +39,7 @@ public class BankAccountController {
 	public String getBankAccounts(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByuserId(user);
+		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByUser(user);
 
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "bankaccount/list";
