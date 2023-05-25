@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +64,9 @@ public class BookMarkService {
 		return null;
 	}
 
+	@Transactional
 	public BookMark findBookMarkByName(String name) {
+		System.out.println(bookMarkRepository.findByBookMarkName(name));
 		return bookMarkRepository.findByBookMarkName(name);
 	}
 

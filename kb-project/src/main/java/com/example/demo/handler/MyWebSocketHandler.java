@@ -51,6 +51,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결 시도중");
+		userState = UserState.INITIAL; // 현재는 초기상태
 	}
 
 	@Override
@@ -59,21 +60,32 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
+		System.out.println(payload);
 		GPTResponseDto gptResponseDto = gptChatRestService.completionChat(payload);
-		System.out.println(gptResponseDto.getAction());
 		System.out.println("Current State: " + userState);
 		
 		if(gptResponseDto.getAction().equals("송금")) {
 			action="송금";
 			amount = gptResponseDto.getAmount().longValue();
 			name = gptResponseDto.getName();
-			System.out.println("AAAAA");
 		}
 
 		else if(gptResponseDto.getAction().equals("조회")) {
 			action = "조회";
-			System.out.println("AAAAA");
 		}
+		
+		else if(gptResponseDto.getAction().equals("예")) {
+			action = "예";
+		}
+		
+		else if(gptResponseDto.getAction().equals("아니오")) {
+			action = "아니오";
+		}
+		
+		else
+			action="etc";
+		
+		System.out.println("socket received action : " + action);
 		
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
@@ -103,6 +115,11 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
+				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
+				Long balance = bankAccountByuserId.get(0).getAmount();
+				String username = user.getUsername();
+				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";
+				session.sendMessage(new TextMessage(msg));
 				userState = UserState.INITIAL;
 			} else if (action.equals("아니오")) {
 				session.sendMessage(new TextMessage("다시 말씀해주세요."));

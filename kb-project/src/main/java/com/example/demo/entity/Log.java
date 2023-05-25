@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,7 +27,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-@ToString
 public class Log {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

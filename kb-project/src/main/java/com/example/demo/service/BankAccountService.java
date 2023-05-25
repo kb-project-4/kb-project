@@ -94,19 +94,19 @@ public class BankAccountService {
 	// BookMark User에게 송금
 	// 음성인식 + 즐겨찾기 사용자에게 송금
 	public void transferToBookMarkUser(BookMark bookMark, User sender, Long amount) {
-		// transferDto
-//		private User sender;
-//		private String recipient_name;
-//		private String recipient_banknumber;
-//		private String category;
-//		private String sender_banknumber;
-
 		String recipient_name = bookMark.getBookMarkName();
 		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
 		String category = "transfer";
-		TransferDto transferDto = new TransferDto(sender, recipient_name, recipient_banknumber, category,
-				recipient_banknumber, amount);
-
+		
+		TransferDto transferDto = new TransferDto(); // transfer Dto Create
+		transferDto.setAmount(amount);
+		transferDto.setCategory(category);
+		transferDto.setRecipient_banknumber(recipient_banknumber);
+		transferDto.setRecipient_name(recipient_name);
+		transferDto.setSender(sender);
+		transferDto.setSender_banknumber(sender.getBankAccounts().get(0).getAccountNumber());
+		
+		System.out.println(transferDto);
 		transferToUser(transferDto, sender);
 	}
 

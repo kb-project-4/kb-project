@@ -85,7 +85,6 @@ public class UserController {
 		model.addAttribute("user", user.get());
 //		model.addAttribute("user.id", id);
 		model.addAttribute("user.id", user.get().getId());
-		System.out.println("sssss" + user.toString());
 		return "user/edit";
 
 	}
@@ -121,16 +120,11 @@ public class UserController {
 			HttpSession session) {
 
 		User userByUserId = userService.getUserByUserId(login.getUserid());
-		System.out.println("AAA");
-		System.out.println("ssss" + userByUserId.toString());
 
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
-
-			System.out.println("success");
 			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 
 			if (userByUserId.isDisabled() == false) {
-				System.out.println("비장애인");
 
 				return "redirect:/users/main";
 
