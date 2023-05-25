@@ -97,11 +97,14 @@
     <h1>채팅</h1>
     <div id="chatContainer"></div>
 
+    <button id="startBtn">Start</button>
+    <button id="stopBtn">Stop</button>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         const socket = new WebSocket('ws://localhost:8080/socket');
+        let recognition;
 
         // 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
         socket.onopen = function(event) {
@@ -150,10 +153,9 @@
         }
 
         // 음성 인식 시작
-        let recognition;
-
         $(document).ready(function() {
-            startRecognition(); // 페이지 로딩이 완료되면 음성 인식을 자동으로 시작
+            $('#startBtn').click(startRecognition);
+            $('#stopBtn').click(stopRecognition);
         });
 
         function startRecognition() {
@@ -182,6 +184,12 @@
             };
 
             recognition.start();
+        }
+
+        function stopRecognition() {
+            if (recognition) {
+                recognition.stop();
+            }
         }
 
         function processMessage(message) {
