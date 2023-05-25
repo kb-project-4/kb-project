@@ -8,8 +8,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.example.demo.service.*;
-
 import com.example.demo.service.BankAccountService;
 import com.example.demo.service.BookMarkService;
 import com.example.demo.service.GPTChatRestService;
@@ -38,19 +36,16 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	GPTChatRestService gptChatRestService; // chat gpt rest api
-
+	
+	static long amount;
 	static String name;
-	static Long amount;
-
-	private enum Command {
-		송금, 조회,
-	}
-
+	static String action;
+	
 	private enum UserState {
 		INITIAL, WAITING_CONFIRMATION // 초기 상태 및 확인(예/아니오) 기다리는 상태
 	}
 
-	private UserState userState = UserState.INITIAL; // 현재는 초기상
+	private UserState userState = UserState.INITIAL; // 현재는 초기상태
 	private User user = new User(); // HttpSession에서 가져온 user정보를 담을 객체
 
 	@Override
@@ -65,13 +60,23 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
 		GPTResponseDto gptResponseDto = gptChatRestService.completionChat(payload);
-		String action = gptResponseDto.getAction();
-//		Long amount = gptResponseDto.getAmount().longValue();
-//		String name = gptResponseDto.getName();
+		System.out.println(gptResponseDto.getAction());
+		System.out.println("Current State: " + userState);
+		
+		if(gptResponseDto.getAction().equals("송금")) {
+			action="송금";
+			amount = gptResponseDto.getAmount().longValue();
+			name = gptResponseDto.getName();
+			System.out.println("AAAAA");
+		}
 
+		else if(gptResponseDto.getAction().equals("조회")) {
+			action = "조회";
+			System.out.println("AAAAA");
+		}
+		
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
-
 				session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
 			}
@@ -93,21 +98,21 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 			}
 		}
 
-//		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
-//			if (action.equals("예")) {
-//				//BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
-//				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
-//				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
-//				userState = UserState.INITIAL;
-//			} else if (action.equals("아니오")) {
-//				session.sendMessage(new TextMessage("다시 말씀해주세요."));
-//				userState = UserState.INITIAL;
-//			} else {
-//				session.sendMessage(new TextMessage("잘못된 입력입니다. 다시 말씀해주세요."));
-//			}
-//			name = "";
-//			amount = 0L;
-//		}
+		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
+			if (action.equals("예")) {
+				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
+				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
+				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
+				userState = UserState.INITIAL;
+			} else if (action.equals("아니오")) {
+				session.sendMessage(new TextMessage("다시 말씀해주세요."));
+				userState = UserState.INITIAL;
+			} else {
+				session.sendMessage(new TextMessage("잘못된 입력입니다. 다시 말씀해주세요."));
+			}
+			name = "";
+			amount = 0L;
+		}
 	}
 
 	@Override

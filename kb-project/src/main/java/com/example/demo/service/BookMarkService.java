@@ -37,19 +37,6 @@ public class BookMarkService {
 
 		
 		List<BookMark> bookMarks = bookMarkRepository.findAllByUser(user);
-//		List<BookMark> bookMarks = bookMarkRepository.findAll();
-//
-//		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
-//
-//		System.out.println("userid bookmark" + userid);
-//
-//		for (BookMark bookMark : bookMarks) {
-//			if (userid.equals(bookMark.getUser().getUserid())) {
-//				System.out.println("if ");
-//				bookMarks2.add(bookMark);
-//			}
-//		}
-
 		return bookMarks;
 
 	}
@@ -73,6 +60,10 @@ public class BookMarkService {
 			return bookMarkRepository.save(existingBookMark);
 		}
 		return null;
+	}
+
+	public BookMark findBookMarkByName(String name) {
+		return bookMarkRepository.findByBookMarkName(name);
 	}
 
 }
