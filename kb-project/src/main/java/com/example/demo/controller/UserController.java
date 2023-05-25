@@ -174,6 +174,8 @@ public class UserController {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+		
+		System.out.println("usercontroller" + user);
 		String userid = user.getUserid();
 
 		model.addAttribute("userid", userid);
@@ -182,7 +184,6 @@ public class UserController {
 
 	}
 
-	
 	@GetMapping("/transfer")
 	public String transferform(HttpSession session, HttpServletRequest request, Model model) {
 
@@ -216,7 +217,6 @@ public class UserController {
 		System.out.println("userid" + userid);
 
 		return "redirect:/users/main";
-
 	}
 
 }

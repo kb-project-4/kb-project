@@ -12,7 +12,7 @@ import com.example.demo.entity.User;
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 	void deleteByAccountNumber(String accountnumber);
 
-	BankAccount findByAccountNumber(String bankname);
+	BankAccount findByAccountNumber(String accountnumber);
 
 	List<BankAccount> findAllByUserId(Long userid);
 

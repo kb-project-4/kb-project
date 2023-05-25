@@ -36,6 +36,7 @@ public class BookMarkController {
 	private UserService userService;
 	@Autowired
 	private BankAccountService bankaccountservice;
+	@Autowired
 	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping
@@ -61,7 +62,7 @@ public class BookMarkController {
 
 		BookMarkDto bookMark = new BookMarkDto();
 		session = request.getSession();
-
+		System.out.println("create");
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
@@ -83,6 +84,7 @@ public class BookMarkController {
 
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
+
 		System.out.println(user.toString());
 		String userid = user.getUserid();
 
@@ -90,14 +92,20 @@ public class BookMarkController {
 
 		System.out.println("bookmark1 name" + bookMark.getBookMarkName());
 
-		BookMark bookMark2 = bookMark.toEntity();
+		BookMark bookMark2 = bookMark.toEntity();// 폼에서 입력한 북마크 내용
 
-		System.out.println("bookmark getname" + bookMark2.getBookMarkName());
+		System.out.println("bookmark getname " + bookMark2.getBookMarkName());
 
-		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) {// db에 잇는 유저
+		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) { // db에 잇는 유저
 
 			User targetUser = userService.getUserByUsername(bookMark2.getBookMarkName());
+			System.out.println("targetuser" + targetUser.toString());
+
 			List<BankAccount> bankAccounts = targetUser.getBankAccounts();
+
+			System.out.println("bankaccounts" + bankAccounts.toString());
+			System.out.println("bookMark2.getBookMarkAccountNumber " + bookMark2.getBookMarkAccountNumber());
+
 			BankAccount targetBankAccount = bankAccountRepository
 					.findByAccountNumber(bookMark2.getBookMarkAccountNumber());
 
@@ -109,6 +117,7 @@ public class BookMarkController {
 				return "redirect:/bookmarks";
 			}
 		}
+
 		// 사용자가 없을 경우
 		System.out.println("해당사용자 없음");
 		return "redirect:create";
@@ -143,12 +152,34 @@ public class BookMarkController {
 
 		return "redirect:/bookmarks";
 	}
+//
+//	@GetMapping("/transferbookmark/{recepientAccountNumber}")
+//	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
+//			HttpServletRequest request) {
+//
+//		System.out.println("transferbookmark");
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("user");
+//		String userid = user.getUserid();
+//		TransferDto transferDto = new TransferDto();
+//		transferDto.setSender(user);
+//		transferDto.setRecipient_banknumber(recepientAccountNumber);
+//
+//		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
+//		String recipient_name = bankAccount.getUser().getUsername();
+//		transferDto.setRecipient_name(recipient_name);
+//
+//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+//
+//		model.addAttribute("Log", transferDto);
+//		return "BookMark/transfer";
+//	}
 
-	@GetMapping("/transfer/{recepientAccountNumber}")
-	public String transferform(HttpSession session, HttpServletRequest request, Model model,
-			@PathVariable("recepientAccountNumber") String recepientAccountNumber) {
+	@GetMapping("/transferbookmark/{recepientAccountNumber}")
+	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
+			HttpServletRequest request) {
 
-		session = request.getSession();
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 		TransferDto transferDto = new TransferDto();
@@ -159,30 +190,8 @@ public class BookMarkController {
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
 
-		System.out.println("log users" + transferDto.getSender().getBankAccounts());
 		model.addAttribute("Log", transferDto);
 		return "BookMark/transfer";
-
 	}
-//
-//	@PostMapping("/transfer")
-//	public String transfer(HttpSession session, @ModelAttribute("Log") TransferDto log) {
-//
-//		User user = (User) session.getAttribute("user");
-//		String userid = user.getUserid();
-//
-//		log.setSender(user);
-//		log.setCategory("transfer");
-//		System.out.println(log);
-//		System.out.println("user" + log.getSender().getUsername());
-//		System.out.println("flag");
-//
-//		bankaccountservice.transferToUser(log, user);
-//
-//		System.out.println("userid" + userid);
-//
-//		return "redirect:/users/main";
-//
-//	}
 
 }
