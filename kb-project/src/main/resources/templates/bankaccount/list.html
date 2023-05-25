@@ -64,7 +64,6 @@
             </tr>
 
         </thead>
-
         <tbody>
             <tr th:each="bankAccount : ${bankAccounts}">
                 <td th:text="${bankAccount.accountNumber}"></td>
@@ -160,9 +159,9 @@
         function startRecognition() {
             recognition = new webkitSpeechRecognition();
             recognition.lang = 'ko-KR';
-            recognition.continuous = true; // 지속적인 음성 인식 시작
+            recognition.continuous = true;
 
-            // Grammar List 생성/
+            // Grammar List 생성
             const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
 
             const speechRecognitionList = new webkitSpeechGrammarList();
@@ -175,7 +174,7 @@
                 const transcript = event.results[0][0].transcript;
                 console.log(transcript);
                 displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
-                sendMessage(transcript);
+                processMessage(transcript);
             };
 
             recognition.onerror = function(event) {
@@ -185,11 +184,8 @@
             recognition.start();
         }
 
-        // 음성 인식 멈춤
-        function stopRecognition() {
-            if (recognition) {
-                recognition.stop();
-            }
+        function processMessage(message) {
+            sendMessage(message); // 메시지를 서버로 전송
         }
 
         function speakText(text) {

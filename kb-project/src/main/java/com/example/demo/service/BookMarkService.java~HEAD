@@ -24,6 +24,10 @@ public class BookMarkService {
 		BookMark bookMark2 = bookMark.toEntity();
 		return bookMarkRepository.save(bookMark2);
 	}
+	
+	public BookMark findBookMarkByName(String name) {
+		return bookMarkRepository.findByBookMarkName(name);
+	}
 
 	public void deleteBookMark(Long id) {
 		bookMarkRepository.deleteById(id);
