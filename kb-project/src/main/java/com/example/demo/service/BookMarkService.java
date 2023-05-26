@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BookMarkDto;
@@ -35,8 +33,8 @@ public class BookMarkService {
 		return bookMarkRepository.findAll();
 	}
 	
-	public List<String> getAllBookMarkUserName(){
-		return null;
+	public List<BookMark> getAllBookMarkUserName(User user){
+		return bookMarkRepository.findAllByUser(user);
 	}
 
 	public List<BookMark> getUserAllBookmarks(String userid, User user) {
