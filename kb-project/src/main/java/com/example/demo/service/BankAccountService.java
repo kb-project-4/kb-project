@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-
 //<<<<<<< HEAD
 
 import java.util.ArrayList;
@@ -120,19 +119,19 @@ public class BankAccountService {
 	// BookMark User에게 송금
 	// 음성인식 + 즐겨찾기 사용자에게 송금
 	public void transferToBookMarkUser(BookMark bookMark, User sender, Long amount) {
-		// transferDto
-//		private User sender;
-//		private String recipient_name;
-//		private String recipient_banknumber;
-//		private String category;
-//		private String sender_banknumber;
-
 		String recipient_name = bookMark.getBookMarkName();
 		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
 		String category = "transfer";
-		TransferDto transferDto = new TransferDto(sender, recipient_name, recipient_banknumber, category,
-				recipient_banknumber, amount);
 
+		TransferDto transferDto = new TransferDto(); // transfer Dto Create
+		transferDto.setAmount(amount);
+		transferDto.setCategory(category);
+		transferDto.setRecipient_banknumber(recipient_banknumber);
+		transferDto.setRecipient_name(recipient_name);
+		transferDto.setSender(sender);
+		transferDto.setSender_banknumber(sender.getBankAccounts().get(0).getAccountNumber());
+
+		System.out.println(transferDto);
 		transferToUser(transferDto, sender);
 	}
 
@@ -175,7 +174,6 @@ public class BankAccountService {
 		}
 
 	}
-	
 
 //<<<<<<< HEAD
 
@@ -210,8 +208,27 @@ public class BankAccountService {
 		return bankAccountRepository.findById(id).orElse(null);
 	}
 
+	public List<BankAccount> getBankAccountByuserId(User user) {
+
+		String userid = user.getUserid();
+
+		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
+		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
+
+		if (bankAccounts.isEmpty()) {
+			return null;
+		} else {
+
+			for (BankAccount bankAccount : bankAccounts) {
+				if (bankAccount.getUser().getUserid().equals(userid)) {
+					bankAccounts2.add(bankAccount);
+				}
+			}
+
+			return bankAccounts2;
+		}
+	}
 
 //>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
-
 
 }

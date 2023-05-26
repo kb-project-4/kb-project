@@ -52,7 +52,6 @@
 <body>
 	<h1>계좌</h1>
 
-
 	<table>
 		<thead>
 			<tr>
@@ -61,13 +60,9 @@
 				<th>유저이름</th>
 				<th>잔액</th>
 				<th>삭제</th>
-				<th>주계좌</th>
-
 			</tr>
 
 		</thead>
-
-
 		<tbody>
 			<tr th:each="bankAccount : ${bankAccounts}">
 				<td th:text="${bankAccount.accountNumber}"></td>
@@ -76,9 +71,6 @@
 				<td th:text="${bankAccount.amount}"></td>
 				<td><a
 					th:href="@{/bankaccounts/delete/{id}(id=${bankAccount.id})}">삭제</a></td>
-				<td><a
-					th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}">주계좌설정</a></td>
-
 			</tr>
 
 		</tbody>
@@ -105,11 +97,14 @@
 	<h1>채팅</h1>
 	<div id="chatContainer"></div>
 
+	<button id="startBtn">Start</button>
+	<button id="stopBtn">Stop</button>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<script>
 		const socket = new WebSocket('ws://localhost:8080/socket');
+		let recognition;
 
 		// 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
 		socket.onopen = function(event) {
@@ -162,18 +157,17 @@
 		}
 
 		// 음성 인식 시작
-		let recognition;
-
 		$(document).ready(function() {
-			startRecognition(); // 페이지 로딩이 완료되면 음성 인식을 자동으로 시작
+			$('#startBtn').click(startRecognition);
+			$('#stopBtn').click(stopRecognition);
 		});
 
 		function startRecognition() {
 			recognition = new webkitSpeechRecognition();
 			recognition.lang = 'ko-KR';
-			recognition.continuous = true; // 지속적인 음성 인식 시작
+			recognition.continuous = true;
 
-			// Grammar List 생성/
+			// Grammar List 생성
 			const grammar = '#JSGF V1.0; grammar commands; public <command> = <recipient>에게 <action>해줘; <recipient> = (정준원 | 가족 | 동료 | 형제 | 자매); <action> = (송금 | 조회);';
 
 			const speechRecognitionList = new webkitSpeechGrammarList();
@@ -186,7 +180,7 @@
 				const transcript = event.results[0][0].transcript;
 				console.log(transcript);
 				displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
-				sendMessage(transcript);
+				processMessage(transcript);
 			};
 
 			recognition.onerror = function(event) {
@@ -196,11 +190,14 @@
 			recognition.start();
 		}
 
-		// 음성 인식 멈춤
 		function stopRecognition() {
 			if (recognition) {
 				recognition.stop();
 			}
+		}
+
+		function processMessage(message) {
+			sendMessage(message); // 메시지를 서버로 전송
 		}
 
 		function speakText(text) {
@@ -209,8 +206,8 @@
 			msg.lang = 'ko-KR';
 			window.speechSynthesis.speak(msg);
 		}
-		
 	</script>
+
 </body>
 
 </html>

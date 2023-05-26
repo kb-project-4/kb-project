@@ -16,9 +16,10 @@ import com.example.demo.service.UserService;
 import com.example.demo.dto.GPTResponseDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
-
+ 
 import com.example.demo.entity.User;
 
+ 
 @Component
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
@@ -36,11 +37,11 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	GPTChatRestService gptChatRestService; // chat gpt rest api
-
+	
 	static long amount;
 	static String name;
 	static String action;
-
+	
 	private enum UserState {
 		INITIAL, WAITING_CONFIRMATION // 초기 상태 및 확인(예/아니오) 기다리는 상태
 	}
@@ -48,9 +49,11 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	private UserState userState = UserState.INITIAL; // 현재는 초기상태
 	private User user = new User(); // HttpSession에서 가져온 user정보를 담을 객체
 
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결 시도중");
+		userState = UserState.INITIAL; // 현재는 초기상태
 	}
 
 	@Override
@@ -59,23 +62,36 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String payload = message.getPayload(); // message(Client textMessage), 사용자의 메세지
 		user = (User) session.getAttributes().get("user"); // Session으로부터 유저 정보 가져옴
+		
+ 
+		System.out.println(payload);
 		GPTResponseDto gptResponseDto = gptChatRestService.completionChat(payload);
-		System.out.println(gptResponseDto.getAction());
 		System.out.println("Current State: " + userState);
-
-		if (gptResponseDto.getAction().equals("송금")) {
-			action = "송금";
+		
+		if(gptResponseDto.getAction().equals("송금")) {
+			action="송금";
 			amount = gptResponseDto.getAmount().longValue();
 			name = gptResponseDto.getName();
-			System.out.println("AAAAA");
 		}
 
-		else if (gptResponseDto.getAction().equals("조회")) {
+		else if(gptResponseDto.getAction().equals("조회")) {
 			action = "조회";
-			System.out.println("AAAAA");
 		}
-
-		if (userState == UserState.INITIAL) {
+		
+		else if(gptResponseDto.getAction().equals("예")) {
+			action = "예";
+		}
+		
+		else if(gptResponseDto.getAction().equals("아니오")) {
+			action = "아니오";
+		}
+		
+		else
+			action="etc";
+		
+		System.out.println("socket received action : " + action);
+		
+ 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
 				session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 				userState = UserState.WAITING_CONFIRMATION;
@@ -103,6 +119,11 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
+				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByuserId(user);
+				Long balance = bankAccountByuserId.get(0).getAmount();
+				String username = user.getUsername();
+				String msg = username + "의 잔액은 " + balance.toString() + "원 입니다.";
+				session.sendMessage(new TextMessage(msg));
 				userState = UserState.INITIAL;
 			} else if (action.equals("아니오")) {
 				session.sendMessage(new TextMessage("다시 말씀해주세요."));
@@ -113,6 +134,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 			name = "";
 			amount = 0L;
 		}
+ 		
 	}
 
 	@Override

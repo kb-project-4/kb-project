@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,19 +38,6 @@ public class BookMarkService {
 	public List<BookMark> getUserAllBookmarks(String userid, User user) {
 
 		List<BookMark> bookMarks = bookMarkRepository.findAllByUser(user);
-//		List<BookMark> bookMarks = bookMarkRepository.findAll();
-//
-//		List<BookMark> bookMarks2 = new ArrayList<BookMark>();
-//
-//		System.out.println("userid bookmark" + userid);
-//
-//		for (BookMark bookMark : bookMarks) {
-//			if (userid.equals(bookMark.getUser().getUserid())) {
-//				System.out.println("if ");
-//				bookMarks2.add(bookMark);
-//			}
-//		}
-
 		return bookMarks;
 
 	}
@@ -74,8 +63,10 @@ public class BookMarkService {
 		return null;
 	}
 
+ 	@Transactional
 	public BookMark findBookMarkByName(String name) {
-		return bookMarkRepository.findByBookMarkName(name);
+		System.out.println(bookMarkRepository.findByBookMarkName(name));
+ 		return bookMarkRepository.findByBookMarkName(name);
 	}
 
 }
