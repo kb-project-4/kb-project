@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -189,8 +190,10 @@ public class BookMarkController {
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
+		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(user.getId());
 
 		model.addAttribute("Log", transferDto);
+		model.addAttribute("bankAccounts", bankAccounts);
 		return "BookMark/transfer";
 	}
 
