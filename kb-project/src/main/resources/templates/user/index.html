@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<!-- 
+
+	<!-- 
 	<div th:if="${errorMessage}" style="color: red;">
 		<p th:text="${errorMessage}"></p>
 	</div> -->
@@ -48,7 +49,11 @@
 					placeholder="전화번호" class="input" id="phone" th:field="*{phone}"
 					required /> <input type="text" placeholder="주소" class="input"
 					style="outline: 2px solid #e9e9e9; border-radius: 5px;"
-					id="address" th:field="*{address}" required />
+					id="address" th:field="*{address}" required /> <input type="text"
+					placeholder="계좌비밀번호" class="input"
+					style="outline: 2px solid #e9e9e9; border-radius: 5px;"
+					id="address" th:field="*{account_password}" required />
+
 				<div style="margin-top: 10px;">
 					<input type="radio" id="disabled" required
 						th:checked="${user.disabled}" th:onclick="toggleDisabled()"
@@ -63,6 +68,7 @@
 						else
 							radio.value = "0";
 					}
+					
 				</script>
 					<input type="radio" id="disabled2" required
 						th:checked="${user.disabled}" th:onclick="toggleDisabled2()"

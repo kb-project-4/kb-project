@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-//<<<<<<< HEAD
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +8,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-//=======
-//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.*;
@@ -82,7 +78,6 @@ public class BankAccountService {
 			for (BankAccount bankAccount : bankAccounts) {
 				if (bankAccount.getUser().getUserid().equals(userid)) {
 					bankAccounts2.add(bankAccount);
-					System.out.println("용화용화");
 				}
 			}
 
@@ -175,8 +170,6 @@ public class BankAccountService {
 
 	}
 
-//<<<<<<< HEAD
-
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -228,7 +221,5 @@ public class BankAccountService {
 			return bankAccounts2;
 		}
 	}
-
-//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 
 }

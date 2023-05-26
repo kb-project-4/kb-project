@@ -20,24 +20,36 @@ import com.example.demo.repository.LogRepository;
 public class LogService {
 
 	private final LogRepository logRepository;
-//	private final BankAccountRepository bankAccountRepository;
 	private final UserService userService;
+//	private final BankAccountService bankAccountService;
 
 	@Autowired
 	public LogService(LogRepository logRepository, UserService userService) {
 		this.logRepository = logRepository;
 		this.userService = userService;
+//		this.bankAccountService = bankAccountService;
 //		this.bankAccountRepository = bankAccountRepository;
 	}
 
-	
 	public void update(Log logentity) {
-
 
 		logRepository.save(logentity); // 계좌 내역 저장
 	}
-	
 
+	public List<Log> getlogs(String mybanknumber) {
+		List<Log> logs = logRepository.findAll();
+		List<Log> logsList = new ArrayList<Log>();
+
+		for (Log log : logs) {
+			if (log.getMy_banknumber().equals(mybanknumber)) {
+
+				logsList.add(log);
+			}
+
+		}
+
+		return logsList;
+	}
 
 	// Add other methods as needed
 

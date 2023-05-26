@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>BookMarks</title>
+<style>
+td {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+</style>
+</head>
+<body>
+	<h1>계좌내역</h1>
+	<table>
+
+		<thead>
+			<tr>
+				<th>내 계좌번호</th>
+				<th>받는사람 계좌번호</th>
+				<th>카테고리</th>
+				<th>금액</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+			<tr th:each="log : ${Log}">
+				<td th:text="${log.my_banknumber}"></td>
+				<td th:text="${log.recipient_banknumber}"></td>
+				<td th:text="${log.category}"></td>
+				<td th:text="${log.amount!= null ? log.amount: ''}"></td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
+
+	<a th:href="@{/users/main}">메인으로 돌아가기</a>
+</body>
+</html>
