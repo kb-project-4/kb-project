@@ -1,8 +1,5 @@
 package com.example.demo.service;
 
-
-//<<<<<<< HEAD
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,8 +8,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-//=======
-//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.*;
@@ -176,9 +171,6 @@ public class BankAccountService {
 
 	}
 	
-
-//<<<<<<< HEAD
-
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -194,7 +186,7 @@ public class BankAccountService {
 
 		}
 
-		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow();
+		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow(null);
 		System.out.println("bankaccount service" + bankAccount.toString());
 		bankAccount.setMainAccount(true);
 		System.out.println("bankaccount service modified" + bankAccount.toString());
@@ -204,14 +196,11 @@ public class BankAccountService {
 
 	}
 
-//=======
-
 	public BankAccount getBankAccountById(Long id) {
 		return bankAccountRepository.findById(id).orElse(null);
 	}
 
 
-//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 
 
 }
