@@ -34,6 +34,7 @@ public class GPTChatRestService {
 						+ "만약 'action'에 해당하지 않는 값을 입력한다면, 'action' 의 value를  'etc', name은 \" \", 'amount'는 0으로 해줘. "));
 		messages.add(new ChatMessage("user", content));
 
+
 		GPTCompletionChatRequest gptCompletionChatRequest = new GPTCompletionChatRequest("gpt-3.5-turbo", messages,
 				100);
 		ChatCompletionResult chatCompletion = openAiService
@@ -56,5 +57,4 @@ public class GPTChatRestService {
 
 		return gptResponseDto;
 	}
-
 }

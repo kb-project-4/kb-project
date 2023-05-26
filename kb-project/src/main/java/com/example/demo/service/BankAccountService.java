@@ -1,5 +1,18 @@
 package com.example.demo.service;
 
+
+//<<<<<<< HEAD
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+//=======
+//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
 import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.*;
@@ -56,10 +69,10 @@ public class BankAccountService {
 		return null; // 계좌가 존재하지 않을 경우 null 반환
 	}
 
-	public List<BankAccount> getBankAccountByuserId(User user) {
+	public List<BankAccount> getBankAccountByUser(User user) {
 
 		String userid = user.getUserid();
-
+		System.out.println(userid);
 		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
 		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
 
@@ -70,11 +83,24 @@ public class BankAccountService {
 			for (BankAccount bankAccount : bankAccounts) {
 				if (bankAccount.getUser().getUserid().equals(userid)) {
 					bankAccounts2.add(bankAccount);
+					System.out.println("용화용화");
 				}
 			}
 
 			return bankAccounts2;
 		}
+	}
+
+	public BankAccount getBankAccountByAccountId(Long id) {
+
+		return bankAccountRepository.findById(id).orElseThrow(null);
+
+	}
+
+	public BankAccount getBankAccountByAccountnumber(String accountnumber) {
+
+		return bankAccountRepository.findByAccountNumber(accountnumber);
+
 	}
 
 	public BankAccount createBankAccount(BankAccount bankAccount, Bank bank, User user) {
@@ -149,8 +175,43 @@ public class BankAccountService {
 		}
 
 	}
+	
+
+//<<<<<<< HEAD
+
+	public void setmainAccount(BankAccountDto bankAccountDto) {
+		System.out.println("mainaccount");
+		System.out.println("mainaccount test " + bankAccountDto.toString());
+
+		List<BankAccount> bankAccounts = new ArrayList();
+		bankAccounts = bankAccountRepository.findAll();
+
+		for (BankAccount bankAccount : bankAccounts) {
+			if (bankAccount.isMainAccount()) {
+				bankAccount.setMainAccount(false);
+				bankAccountRepository.save(bankAccount);
+			}
+
+		}
+
+		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow();
+		System.out.println("bankaccount service" + bankAccount.toString());
+		bankAccount.setMainAccount(true);
+		System.out.println("bankaccount service modified" + bankAccount.toString());
+
+		bankAccountRepository.save(bankAccount);
+		System.out.println("fin");
+
+	}
+
+//=======
 
 	public BankAccount getBankAccountById(Long id) {
 		return bankAccountRepository.findById(id).orElse(null);
 	}
+
+
+//>>>>>>> cbe326a1b244d7eb5b7efc9a80d8eb2ada64623f
+
+
 }

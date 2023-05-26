@@ -26,7 +26,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+ public class User extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,8 +35,9 @@ public class User extends BaseEntity {
 
 	@Column(unique = true)
 	private String userid;
-
+	@Column(nullable = false)
 	private String password;
+
 	private String phone;
 	private String address;
 	private boolean disabled;

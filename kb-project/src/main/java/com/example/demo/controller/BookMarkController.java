@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.BookMarkDto;
+import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.BookMark;
 import com.example.demo.entity.User;
+import com.example.demo.service.BankAccountService;
 import com.example.demo.service.BookMarkService;
 import com.example.demo.service.UserService;
 
@@ -31,6 +35,10 @@ public class BookMarkController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BankAccountService bankaccountservice;
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping
 	public String getUserBookMarks(Model model, HttpServletRequest request, HttpSession session) {
@@ -55,7 +63,7 @@ public class BookMarkController {
 
 		BookMarkDto bookMark = new BookMarkDto();
 		session = request.getSession();
-
+		System.out.println("create");
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
@@ -77,6 +85,7 @@ public class BookMarkController {
 
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
+
 		System.out.println(user.toString());
 		String userid = user.getUserid();
 
@@ -84,30 +93,33 @@ public class BookMarkController {
 
 		System.out.println("bookmark1 name" + bookMark.getBookMarkName());
 
-		BookMark bookMark2 = bookMark.toEntity();
+		BookMark bookMark2 = bookMark.toEntity();// 폼에서 입력한 북마크 내용
 
-		System.out.println("bookmark getname" + bookMark2.getBookMarkName());
+		System.out.println("bookmark getname " + bookMark2.getBookMarkName());
 
-		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) {// db에 잇는 유저
+		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) { // db에 잇는 유저
 
-			User user1 = userService.getUserByUsername(bookMark2.getBookMarkName());
+			User targetUser = userService.getUserByUsername(bookMark2.getBookMarkName());
+			System.out.println("targetuser" + targetUser.toString());
 
-			for (BankAccount bankAccount : user1.getBankAccounts()) {
-				if (bankAccount.getBank().getBankname().equals(bookMark2.getBookMarkBankname())) {// 해당유저의 계좌가 폼에서 입력한
-																									// 계좌
-																									// 이름과
-																									// 같은경우
+			List<BankAccount> bankAccounts = targetUser.getBankAccounts();
 
-					bookMarkService.createBookMark(bookMark);
+			System.out.println("bankaccounts" + bankAccounts.toString());
+			System.out.println("bookMark2.getBookMarkAccountNumber " + bookMark2.getBookMarkAccountNumber());
 
-					return "redirect:/bookmarks";
-				}
+			BankAccount targetBankAccount = bankAccountRepository
+					.findByAccountNumber(bookMark2.getBookMarkAccountNumber());
+
+			if (bankAccounts.indexOf(targetBankAccount) == -1) { // 계좌가 존재하지 않을 경우
+				System.out.println("계좌를 똑바로 입력");
+				return "redirect:create";
+			} else { // 등록 성공
+				bookMarkService.createBookMark(bookMark);
+				return "redirect:/bookmarks";
 			}
-
-			System.out.println("계좌를 똑바로 입력");
-
 		}
 
+		// 사용자가 없을 경우
 		System.out.println("해당사용자 없음");
 		return "redirect:create";
 	}
@@ -140,6 +152,49 @@ public class BookMarkController {
 		bookMarkService.deleteBookMark(id);
 
 		return "redirect:/bookmarks";
+	}
+//
+//	@GetMapping("/transferbookmark/{recepientAccountNumber}")
+//	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
+//			HttpServletRequest request) {
+//
+//		System.out.println("transferbookmark");
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("user");
+//		String userid = user.getUserid();
+//		TransferDto transferDto = new TransferDto();
+//		transferDto.setSender(user);
+//		transferDto.setRecipient_banknumber(recepientAccountNumber);
+//
+//		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
+//		String recipient_name = bankAccount.getUser().getUsername();
+//		transferDto.setRecipient_name(recipient_name);
+//
+//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+//
+//		model.addAttribute("Log", transferDto);
+//		return "BookMark/transfer";
+//	}
+
+	@GetMapping("/transferbookmark/{recepientAccountNumber}")
+	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
+			HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+		TransferDto transferDto = new TransferDto();
+		transferDto.setSender(user);
+		transferDto.setRecipient_banknumber(recepientAccountNumber);
+
+		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
+		String recipient_name = bankAccount.getUser().getUsername();
+		transferDto.setRecipient_name(recipient_name);
+		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(user.getId());
+
+		model.addAttribute("Log", transferDto);
+		model.addAttribute("bankAccounts", bankAccounts);
+		return "BookMark/transfer";
 	}
 
 }

@@ -11,6 +11,7 @@ import com.example.demo.handler.MyWebSocketHandler;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+	
 
 	private final MyWebSocketHandler myWebSocketHandler;
 
@@ -18,10 +19,13 @@ public class WebSocketConfig implements WebSocketConfigurer {
 		this.myWebSocketHandler = myWebSocketHandler;
 	}
 
+	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(myWebSocketHandler, "/socket").addInterceptors(new HttpSessionHandshakeInterceptor())
 				.setAllowedOrigins("*"); // 허용할 origin 설정 (필요에 따라 수정)
 	}
 
+	
+	
 }
