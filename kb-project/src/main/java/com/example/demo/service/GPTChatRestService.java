@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GPTChatRestService {
-
+ 
 	private final OpenAiService openAiService;
 	
 
@@ -57,4 +57,4 @@ public class GPTChatRestService {
 
 		return gptResponseDto;
 	}
-}
+ }

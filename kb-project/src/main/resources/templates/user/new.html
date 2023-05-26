@@ -1,81 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<!-- Bootstrap CSS -->
+<link href="/css/button.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 <meta charset="UTF-8">
 <title>User List</title>
 </head>
 <body>
-	<h1>User List</h1>
-	<table>
+	<div class="container">
+		<div class="input-form-backgroud row">
+			<div class="input-form col-md-10 mx-auto">
+				<h4 class="mb-3">회원가입</h4>
+				<form action="#" th:action="@{/users/new}" th:object="${user}"
+					method="post" class="validation-form" novalidate>
+					<div class="row">
+						<div class="col-md-6">
+							<label for="username">이름</label> <input type="text"
+								class="form-control" id="username" th:field="*{username}"
+								required>
+							<div class="invalid-feedback">이름을 입력해주세요.</div>
+						</div>
+						<div class="col-md-6">
+							<label for="userid">아이디</label> <input type="text"
+								class="form-control" id="userid" th:field="*{userid}" required>
+							<div class="invalid-feedback">아이디를 입력해주세요.</div>
+						</div>
+					</div>
 
+					<div>
+						<label for="account_password">account_password:</label> <input
+							type="text" id="account_password" th:field="*{account_password}" />
+					</div>
 
-		<tbody>
-			<form action="#" th:action="@{/users/new}" th:object="${user}"
-				method="post">
+					<div class="mb-3">
+						<label for="password">비밀번호</label> <input type="password"
+							class="form-control" id="password" th:field="*{password}"
+							required>
+						<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+					</div>
+					<div class="mb-3">
+						<label for="phone">전화번호</label> <input type="text"
+							class="form-control" id="phone" th:field="*{phone}" required>
+						<div class="invalid-feedback">전화번호를 입력해주세요.</div>
+					</div>
 
-				<div>
-					<label for="username">Name:</label> <input type="text"
-						id="username" th:field="*{username}" />
-				</div>
-				<div>
-					<label for="userid">userid:</label> <input type="text" id="userid"
-						th:field="*{userid}" />
-				</div>
-				<div>
-					<label for="password">Password:</label> <input type="password"
-						id="password" th:field="*{password}" />
-				</div>
-				<div>
-					<label for="phone">Phone:</label> <input type="text" id="phone"
-						th:field="*{phone}" />
-				</div>
-				<div>
-					<label for="address">Address:</label> <input type="text"
-						id="address" th:field="*{address}" />
-				</div>
-				<div>
-					<label for="disabled">Disabled:</label> <input type="radio"
-						id="disabled" name="disabled" th:checked="${user.disabled}"
-						th:onclick="toggleDisabled()" />
-				</div>
+					<div class="mb-3">
+						<label for="address">주소</label> <input type="text"
+							class="form-control" id="address" th:field="*{address}" required>
+						<div class="invalid-feedback">주소를 입력해주세요.</div>
+					</div>
+					<h6 class="mb-3">장애여부 확인</h6>
+					<hr class="mb-4">
 
-				<script th:inline="javascript">
-					function toggleDisabled() {
-						var radio = document.getElementById("disabled");
-						if (radio.checked)
-							radio.value = "1";
-						else
-							radio.value = "0";
-					}
-				</script>
+					<div class="custom-control custom-radio">
+						<input type="radio" class="custom-control-input" id="disabled"
+							required th:checked="${user.disabled}"
+							th:onclick="toggleDisabled()" name="disabled"> <label
+							class="custom-control-label" for="disabled"> 장애</label>
+					</div>
+					<script th:inline="javascript">
+						function toggleDisabled() {
+							var radio = document.getElementById("disabled");
+							if (radio.checked)
+								radio.value = "1";
+							else
+								radio.value = "0";
+						}
+					</script>
 
+					<div class="custom-control custom-radio">
+						<input type="radio" class="custom-control-input" id="disabled2"
+							required th:checked="${user.disabled}"
+							th:onclick="toggleDisabled2()" name="disabled"> <label
+							class="custom-control-label" for="disabled2"> 비장애</label>
+					</div>
 
+					<script th:inline="javascript">
+						function toggleDisabled2() {
+							var radio = document.getElementById("disabled2");
+							if (radio.checked)
+								radio.value = "0";
+							else
+								radio.value = "1";
+						}
+					</script>
 
-				<div>
-					<label for="disabled">abled:</label> <input type="radio"
-						id="disabled2" name="disabled" th:checked="${user.disabled}"
-						th:onclick="toggleDisabled2()" />
-				</div>
-
-				<script th:inline="javascript">
-					function toggleDisabled2() {
-						var radio = document.getElementById("disabled2");
-						if (radio.checked)
-							radio.value = "0";
-						else
-							radio.value = "1";
-					}
-				</script>
-
-
-				<div>
-					<button type="submit">Submit</button>
-				</div>
-
-
-			</form>
-
-		</tbody>
-	</table>
+					<div class="mb-4"></div>
+					<button class="custom-btn btn-3" type="submit">
+						<span>가입완료</span>
+					</button>
+				</form>
 </body>
 </html>

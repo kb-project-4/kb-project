@@ -118,7 +118,7 @@ public class BankAccountService {
 		String recipient_name = bookMark.getBookMarkName();
 		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
 		String category = "transfer";
-		
+
 		TransferDto transferDto = new TransferDto(); // transfer Dto Create
 		transferDto.setAmount(amount);
 		transferDto.setCategory(category);
@@ -126,7 +126,7 @@ public class BankAccountService {
 		transferDto.setRecipient_name(recipient_name);
 		transferDto.setSender(sender);
 		transferDto.setSender_banknumber(sender.getBankAccounts().get(0).getAccountNumber());
-		
+
 		System.out.println(transferDto);
 		transferToUser(transferDto, sender);
 	}
@@ -170,7 +170,6 @@ public class BankAccountService {
 		}
 
 	}
-	
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -200,7 +199,26 @@ public class BankAccountService {
 		return bankAccountRepository.findById(id).orElse(null);
 	}
 
+	public List<BankAccount> getBankAccountByuserId(User user) {
 
+		String userid = user.getUserid();
+
+		List<BankAccount> bankAccounts = bankAccountRepository.findAll();
+		List<BankAccount> bankAccounts2 = new ArrayList<BankAccount>();
+
+		if (bankAccounts.isEmpty()) {
+			return null;
+		} else {
+
+			for (BankAccount bankAccount : bankAccounts) {
+				if (bankAccount.getUser().getUserid().equals(userid)) {
+					bankAccounts2.add(bankAccount);
+				}
+			}
+
+			return bankAccounts2;
+		}
+	}
 
 
 }
