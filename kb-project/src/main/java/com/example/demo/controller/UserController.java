@@ -113,6 +113,7 @@ public class UserController {
 	@GetMapping("/users/index")
 	public String mainpageForm(Model model) {
 		model.addAttribute("login", new Login());
+		model.addAttribute("user", new UserDto());
 		return "user/index";
 	}
 

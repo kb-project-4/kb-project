@@ -3,7 +3,6 @@
 <head th:fragment="head">
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Login</title>
 	
 	<meta content="" name="description">
 	<meta content="" name="keywords">
@@ -58,21 +57,22 @@
 	<div
 		class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-		<a href="index.html" class="logo d-flex align-items-center"> <!-- Uncomment the line below if you also wish to use an image logo -->
+		<a href="" class="logo d-flex align-items-center"> 
+		<!-- Uncomment the line below if you also wish to use an image logo -->
 			<!-- <img src="assets/img/logo.png" alt=""> -->
 			<h1>
-				4조<span>.</span>
+				<span style="font-size:1.5em;">A.</span>
 			</h1>
 		</a> <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i> <i
 			class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 		<nav id="navbar" class="navbar">
 			<ul>
-				<li><a href="/users/main">Main</a></li>
-				<li><a th:href="@{/transfer}">송금</a></li>
-				<li><a th:href="@{/bankaccounts}">계좌조회</a></li>
-				<li><a th:href="@{/bookmarks}">즐겨찾기</a></li>
-				<li><a href="">뉴스</a></li>
-				<li><a th:href="@{/logout}">로그아웃</a></li>
+				<li><a href="/users/main"><span style="font-size:1.5em;">Main</span></a></li>
+				<li><a th:href="@{/transfer}"><span style="font-size:1.5em;">송금</span></a></li>
+				<li><a th:href="@{/bankaccounts}"><span style="font-size:1.5em;">계좌조회</span></a></li>
+				<li><a th:href="@{/bookmarks}"><span style="font-size:1.5em;">즐겨찾기</span></a></li>
+				<li><a href=""><span style="font-size:1.5em;">뉴스</span></a></li>
+				<li><a th:href="@{/logout}"><span style="font-size:1.5em;">로그아웃</span></a></li>
 			</ul>
 		</nav>
 		<!-- .navbar -->

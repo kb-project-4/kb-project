@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Bank Account List</title>
 
-    <style>
+  <!--   <style>
         /* 채팅 UI에 대한 CSS */
         #chatContainer {
             border: 1px solid #ccc;
@@ -46,14 +46,15 @@
             text-align: left;
         }
 
-    </style>
+    </style> -->
 
 </head>
 
 <body>
     <h1>계좌</h1>
-
-    <table>
+	<div class="container" >
+    <table th:each="bankAccount : ${bankAccounts}"
+     style="border: 1px solid black; width:300px; height:50px; margin:15px;">
         <thead>
             <tr>
                 <th>계좌번호</th>
@@ -66,7 +67,7 @@
         </thead>
 
         <tbody>
-            <tr th:each="bankAccount : ${bankAccounts}">
+            <tr>
                 <td th:text="${bankAccount.accountNumber}"></td>
                 <td th:text="${bankAccount.bank.bankname}"></td>
                 <td th:text="${bankAccount.user.username}"></td>
@@ -76,7 +77,6 @@
 
         </tbody>
 
-
         <tbody th:unless="${bankAccounts != null}">
             <tr>
                 <td colspan="4">No bank accounts found.</td>
@@ -85,21 +85,22 @@
         </tbody>
 
     </table>
+    </div>
 
 
     <a href="/bankaccounts/create"> 계좌생성 </a>
     <a th:href="@{/users/main}"> 메인으로 돌아가기 </a>
 
 
-    <h1>음성 인식</h1>
+    <!-- <h1>음성 인식</h1>
 
     <div id="result"></div>
 
     <h1>채팅</h1>
-    <div id="chatContainer"></div>
+    <div id="chatContainer"></div> -->
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         const socket = new WebSocket('ws://localhost:8080/socket');
@@ -198,7 +199,7 @@
             msg.lang = 'ko-KR';
             window.speechSynthesis.speak(msg);
         }
-    </script>
+    </script> -->
 
 </body>
 
