@@ -7,24 +7,23 @@
 <body>
 	<h2>송금 폼</h2>
 
-	<form action="#" th:action="@{/transfer}" th:object="${Log}"
-		method="post">
+	<form action="#" th:action="@{/bookmarks/transferbookmark}"
+		th:object="${Log}" method="post">
 
 		<div>
-			  <input type="hidden"
-				id="recipient_name" th:field="*{recipient_name}" />
+			<input type="hidden" id="recipient_name" th:field="*{recipient_name}" />
 		</div>
 
 		<div>
-			 </label> <input
-				type="hidden" id="recipient_banknumber"
+			</label> <input type="hidden" id="recipient_banknumber"
 				th:field="*{recipient_banknumber}" />
 		</div>
 
 
 		<div>
 			<label for="my_banknumber">본인 계좌번호:</label> <select
-				id="my_banknumber" name="sender_banknumber" th:field="*{sender_banknumber}">
+				id="my_banknumber" name="sender_banknumber"
+				th:field="*{sender_banknumber}">
 				<option th:each="bankAccount : ${bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}"></option>
@@ -37,6 +36,15 @@
 				th:field="*{amount}" />
 		</div>
 
+
+		<div>
+			<label for="account_password">계좌 비밀번호:</label> <input type="text"
+				id="account_password" th:field="*{account_password}" />
+
+
+
+		</div>
+
 		<div>
 			<input type="hidden" id="category" th:field="*{category}"
 				th:value="송금" />
@@ -45,6 +53,11 @@
 
 		<div>
 			<button type="submit">송금</button>
+		</div>
+
+
+		<div th:if="${errorMessage}" style="color: red;">
+			<p th:text="${errorMessage}"></p>
 		</div>
 
 	</form>

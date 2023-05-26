@@ -30,6 +30,7 @@ public class UserDto {
 	private String password;
 	private String phone;
 	private String address;
+	private String account_password;
 
 	private boolean disabled;
 
@@ -37,7 +38,7 @@ public class UserDto {
 
 	public User toEntity() {
 		return User.builder().username(username).userid(userid).password(password).phone(phone).address(address)
-				.disabled(disabled).bankAccounts(bankAccounts).build();
+				.disabled(disabled).bankAccounts(bankAccounts).account_password(account_password).build();
 
 	}
 }

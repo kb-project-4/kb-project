@@ -10,12 +10,14 @@ import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.BookMarkDto;
 import com.example.demo.dto.TransferDto;
@@ -195,6 +197,56 @@ public class BookMarkController {
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "BookMark/transfer";
+	}
+
+	@PostMapping("/transferbookmark")
+	public String transfer(HttpSession session, @ModelAttribute("Log") TransferDto log, BindingResult result,
+			RedirectAttributes redirectAttributes) {
+
+		User user = (User) session.getAttribute("user");
+		String userid = user.getUserid();
+
+		log.setSender(user);
+		log.setCategory("transfer");
+		System.out.println(log);
+		System.out.println("user" + log.getSender().getUsername());
+		System.out.println("flag");
+
+		String account_password = log.getAccount_password();
+
+		boolean iscorrect = verifypassword(user, account_password);
+
+		if (!iscorrect) {
+			result.rejectValue("account_password", "password.mismatch", "비밀번호가 틀렸습니다.");
+			redirectAttributes.addFlashAttribute("errorMessage", "계좌번호비밀번호 오류");
+
+			System.out.println("계좌비밀번호가 일치하지않음.");
+			System.out.println("recipient banknumber" + log.getRecipient_banknumber());
+			return "redirect:/bookmarks/transferbookmark/" + log.getRecipient_banknumber();
+		}
+
+		// if (account_password.equals(user.getAccount_password())) {
+//
+//			bankaccountservice.transferToUser(log, user);
+//			return "redirect:/users/main";
+//		}
+
+		else {
+			System.out.println("계좌비밀번호가 일치.");
+			bankaccountservice.transferToUser(log, user);
+			return "redirect:/users/main";
+		}
+
+	}
+
+	static boolean verifypassword(User user, String account_password) {
+
+		if (account_password.equals(user.getAccount_password())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

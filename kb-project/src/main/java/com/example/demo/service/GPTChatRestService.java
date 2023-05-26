@@ -9,6 +9,8 @@ import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,8 +21,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GPTChatRestService {
-
+ 
 	private final OpenAiService openAiService;
+	
 
 	public GPTResponseDto completionChat(String content) {
 		List<ChatMessage> messages = new ArrayList<>();
@@ -54,4 +57,4 @@ public class GPTChatRestService {
 
 		return gptResponseDto;
 	}
-}
+ }

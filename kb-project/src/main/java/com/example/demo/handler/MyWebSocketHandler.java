@@ -88,7 +88,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		else
 			action = "etc";
 
-		System.out.println("socket received action : " + action);
+ 		System.out.println("socket received action : " + action);
 
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
@@ -97,7 +97,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				} else {
 					session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 					userState = UserState.WAITING_CONFIRMATION;
-				}
+				} 
 			}
 
 			else if (action.equals("조회")) {
@@ -115,7 +115,9 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				List<BookMark> bookMarkUsers = bookMarkService.getAllBookMarkUserName(user);
 				String msg = "현재 즐겨찾기에 추가된 사용자는 ";
 				for (BookMark bookMarkUser : bookMarkUsers) {
-					msg += " " + bookMarkUser.getBookMarkBankname() + "은행의 " + bookMarkUser.getBookMarkName();
+					if(bookMarkService.findByUserAndBookMarkName(user, bookMarkUser.getBookMarkName()) != null){
+						msg += " " + bookMarkUser.getBookMarkBankname() + "은행의 " + bookMarkUser.getBookMarkName();
+					}
 				}
 				msg += " 입니다.";
 				session.sendMessage(new TextMessage(msg));
