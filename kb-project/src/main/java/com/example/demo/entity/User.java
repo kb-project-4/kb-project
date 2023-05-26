@@ -35,7 +35,7 @@ import lombok.ToString;
 
 	@Column(unique = true)
 	private String userid;
-	@Column(nullable = false)
+	@Column(nullable = false) 
 	private String password;
 
 	private String account_password;

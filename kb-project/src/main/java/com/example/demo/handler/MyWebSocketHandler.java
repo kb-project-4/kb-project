@@ -47,7 +47,6 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	private UserState userState = UserState.INITIAL; // 현재는 초기상태
 	private User user = new User(); // HttpSession에서 가져온 user정보를 담을 객체
 
-	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결 시도중");
@@ -89,7 +88,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		else
 			action = "etc";
 
-		System.out.println("socket received action : " + action);
+ 		System.out.println("socket received action : " + action);
 
 		if (userState == UserState.INITIAL) {
 			if (action.equals("송금")) {
@@ -98,7 +97,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				} else {
 					session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 					userState = UserState.WAITING_CONFIRMATION;
-				}
+				} 
 			}
 
 			else if (action.equals("조회")) {
