@@ -56,8 +56,9 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
+			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkBankname());
 			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getBookMarkAccountNumber());
-			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkName());
+			existingBookMark.setBookMarkName(updatedBookMark.getBookMarkName());
 
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
