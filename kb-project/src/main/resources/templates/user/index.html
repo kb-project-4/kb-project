@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link href="/css/login.css" rel="stylesheet">
 <link href="/css/button.css" rel="stylesheet">
+<link href="/css/login.css" rel="stylesheet">
+
 </head>
 <body>
 
-<!-- 
+	<!-- 
 	<div th:if="${errorMessage}" style="color: red;">
 		<p th:text="${errorMessage}"></p>
 	</div> -->
-
-
 	<div class="container right-panel-active">
 		<!-- Sign In -->
 		<div class="container__form container--signin">
@@ -53,33 +52,10 @@
 					<input type="radio" id="disabled" required
 						th:checked="${user.disabled}" th:onclick="toggleDisabled()"
 						name="disabled"> <label class="custom-control-label"
-						for="disabled">장애</label>
-
-					<script th:inline="javascript">
-					function toggleDisabled() {
-						var radio = document.getElementById("disabled");
-						if (radio.checked)
-							radio.value = "1";
-						else
-							radio.value = "0";
-					}
-				</script>
-					<input type="radio" id="disabled2" required
-						th:checked="${user.disabled}" th:onclick="toggleDisabled2()"
-						name="disabled"> <label class="custom-control-label"
-						for="disabled2"> 비장애</label>
-
-
-					<script th:inline="javascript">
-					function toggleDisabled2() {
-						var radio = document.getElementById("disabled2");
-						if (radio.checked)
-							radio.value = "0";
-						else
-							radio.value = "1";
-					}
-					
-				</script>
+						for="disabled">장애</label> <input type="radio" id="disabled2"
+						required th:checked="${user.disabled}"
+						th:onclick="toggleDisabled2()" name="disabled"> <label
+						class="custom-control-label" for="disabled2"> 비장애</label>
 				</div>
 				<button class="custom-btn btn-3" type="submit">
 					<span>회원가입</span>
@@ -105,6 +81,16 @@
 		</div>
 	</div>
 
+
+	<script th:inline="javascript">
+					function toggleDisabled() {
+						var radio = document.getElementById("disabled");
+						if (radio.checked)
+							radio.value = "1";
+						else
+							radio.value = "0";
+					}
+				</script>
 	<script>
     const signInBtn = document.getElementById("signIn");
     const signUpBtn = document.getElementById("signUp");
@@ -119,8 +105,29 @@
     signUpBtn.addEventListener("click", () => {
       container.classList.add("right-panel-active");
     });
-
     </script>
+
+	<script th:inline="javascript">
+					function toggleDisabled2() {
+						var radio = document.getElementById("disabled2");
+						if (radio.checked)
+							radio.value = "0";
+						else
+							radio.value = "1";
+					}
+					
+				</script>
+	<script th:inline="javascript">
+					function toggleDisabled2() {
+						var radio = document.getElementById("disabled2");
+						if (radio.checked)
+							radio.value = "0";
+						else
+							radio.value = "1";
+					}
+					
+				</script>
+
 
 </body>
 </html>
