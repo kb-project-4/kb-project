@@ -112,7 +112,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 			else if (action.equals("즐겨찾기")) {
 
-				List<BookMark> bookMarkUsers = bookMarkService.getAllBookmarks();
+				List<BookMark> bookMarkUsers = bookMarkService.getAllBookMarkUserName(user);
 				String msg = "현재 즐겨찾기에 추가된 사용자는 ";
 				for (BookMark bookMarkUser : bookMarkUsers) {
 					msg += " " + bookMarkUser.getBookMarkBankname() + "은행의 " + bookMarkUser.getBookMarkName();
