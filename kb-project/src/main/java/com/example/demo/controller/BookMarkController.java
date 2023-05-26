@@ -145,6 +145,7 @@ public class BookMarkController {
 		}
 		return "error";
 	}
+	
 
 	@GetMapping("/delete/{id}")
 	public String deleteBookMark(@PathVariable("id") Long id) {
@@ -196,5 +197,6 @@ public class BookMarkController {
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "BookMark/transfer";
 	}
+	
 
 }

@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BookMarkDto;
@@ -35,8 +33,8 @@ public class BookMarkService {
 		return bookMarkRepository.findAll();
 	}
 	
-	public List<String> getAllBookMarkUserName(){
-		return null;
+	public List<BookMark> getAllBookMarkUserName(User user){
+		return bookMarkRepository.findAllByUser(user);
 	}
 
 	public List<BookMark> getUserAllBookmarks(String userid, User user) {
@@ -58,19 +56,20 @@ public class BookMarkService {
 		BookMark existingBookMark = bookMarkRepository.findById(id).orElse(null);
 
 		if (existingBookMark != null) {
+			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkBankname());
 			existingBookMark.setBookMarkAccountNumber(updatedBookMark.getBookMarkAccountNumber());
-			existingBookMark.setBookMarkBankname(updatedBookMark.getBookMarkName());
+			existingBookMark.setBookMarkName(updatedBookMark.getBookMarkName());
 
 			// Set other properties as needed
 			return bookMarkRepository.save(existingBookMark);
 		}
 		return null;
 	}
- 
+
 	@Transactional
 	public BookMark findBookMarkByName(String name) {
 		return bookMarkRepository.findByBookMarkName(name);
- 	}
+	}
 	
 	public BookMark findByUserAndBookMarkName(User user, String bookMarkName) {
 		return bookMarkRepository.findByUserAndBookMarkName(user, bookMarkName);
