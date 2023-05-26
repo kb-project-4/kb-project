@@ -24,7 +24,8 @@
 
 		<div>
 			<label for="my_banknumber">본인 계좌번호:</label> <select
-				id="my_banknumber" name="sender_banknumber" th:field="*{sender_banknumber}">
+				id="my_banknumber" name="sender_banknumber"
+				th:field="*{sender_banknumber}">
 				<option th:each="bankAccount : ${bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}"></option>
@@ -42,9 +43,19 @@
 				th:value="송금" />
 		</div>
 
+		<div>
+			<label for="account_password">계좌 비밀번호:</label> <input type="text"
+				id="account_password" th:field="*{account_password}" />
+		</div>
+
 
 		<div>
 			<button type="submit">송금</button>
+		</div>
+
+
+		<div th:if="${errorMessage}" style="color: red;">
+			<p th:text="${errorMessage}"></p>
 		</div>
 
 	</form>

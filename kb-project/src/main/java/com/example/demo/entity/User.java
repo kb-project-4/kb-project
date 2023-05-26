@@ -38,8 +38,11 @@ import lombok.ToString;
 	@Column(nullable = false)
 	private String password;
 
+	private String account_password;
+
 	private String phone;
 	private String address;
+
 	private boolean disabled;
 
 	public boolean isDisabled() {
@@ -53,4 +56,6 @@ import lombok.ToString;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<BankAccount> bankAccounts = new ArrayList<>();
 
+	
+	
 }

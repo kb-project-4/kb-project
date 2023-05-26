@@ -8,7 +8,6 @@
 	<h1>User List</h1>
 	<table>
 
-
 		<tbody>
 			<form action="#" th:action="@{/users/new}" th:object="${user}"
 				method="post">
@@ -33,11 +32,18 @@
 					<label for="address">Address:</label> <input type="text"
 						id="address" th:field="*{address}" />
 				</div>
+				
+				<div>
+					<label for="account_password">account_password:</label> <input
+						type="text" id="account_password" th:field="*{account_password}" />
+				</div>
+
 				<div>
 					<label for="disabled">Disabled:</label> <input type="radio"
 						id="disabled" name="disabled" th:checked="${user.disabled}"
 						th:onclick="toggleDisabled()" />
 				</div>
+				
 
 				<script th:inline="javascript">
 					function toggleDisabled() {
