@@ -11,7 +11,6 @@ import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,14 +23,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-// account number 로 변수명 바꾸기(banknumber)
 public class BankAccount extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private Long amount;
-
+	
+	@Column(unique = true)
 	private String accountNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,9 +46,7 @@ public class BankAccount extends BaseEntity {
 	public BankAccountDto toDto() {
 
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)
-				.user(this.user).bank(this.bank)
-				.mainAccount(this.mainAccount)
-				.build();
+				.user(this.user).bank(this.bank).mainAccount(this.mainAccount).build();
 
 		return dto;
 	}

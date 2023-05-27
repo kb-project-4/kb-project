@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,21 @@ public class UserService {
 		User user = userRepository.findByUsername(username);
 		return user;
 
+	}
+
+	// User Ip get
+	public String getClientIp(HttpServletRequest request) {
+		String clientIp = request.getHeader("X-Forwarded-For");
+		if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
+			clientIp = request.getHeader("Proxy-Client-IP");
+		}
+		if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
+			clientIp = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
+			clientIp = request.getRemoteAddr();
+		}
+		return clientIp;
 	}
 
 }

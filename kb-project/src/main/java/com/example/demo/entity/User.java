@@ -42,7 +42,8 @@ import lombok.ToString;
 
 	private String phone;
 	private String address;
-
+	private String clientSafeIp; //사용자의 IP를 저장
+	
 	private boolean disabled;
 
 	public boolean isDisabled() {
