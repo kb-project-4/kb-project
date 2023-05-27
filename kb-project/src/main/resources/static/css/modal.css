@@ -1,0 +1,57 @@
+
+#myModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 9999;
+  left: 25%; /* Adjust the left and top values to center the modal */
+  top: 10%;
+  width: 50%; /* Reduce the width to 50% */
+  height: 500px; /* Reduce the height to 50% */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: 20px;
+}
+
+#modalIframe {
+  width: 500px;
+  height: 420px;
+  margin-top:40px;
+  border: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius: 20px;
+}
+
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  width: 100%; /* Set width to 100% */
+  max-width: 600px;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Close button */
+.close {
+  color: #FFFFFF;
+  position: absolute;
+  top: 5px;
+  right: 40px;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+}

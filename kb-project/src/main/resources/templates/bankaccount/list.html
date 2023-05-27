@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-
 <head>
-
 <meta charset="UTF-8">
 <title>Bank Account List</title>
 
@@ -63,11 +60,6 @@
 	</tbody>
 
 	</table>
-
-
-	<a href="/bankaccounts/create"> 계좌생성 </a>
-	<a th:href="@{/users/main}"> 메인으로 돌아가기 </a>
-
 
 	<h1>음성 인식</h1>
 
@@ -198,41 +190,37 @@
 	<link href="/css/table.css" rel="stylesheet">
 	<div id="box" class="container"
 		style="margin-top: 105px; background-color: #FFFFFF; width: 800px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
+			<div class="p-2 text-center">
+				<h2>계좌조회</h2>
+			</div>
 		<div class="container"
 			style="overflow: auto; width: 500px; height: 480px;">
 			<table th:each="bankAccount : ${bankAccounts}"
-				style="border: 1px solid black; width: 300px; height: 50px; margin: 15px; margin-left: auto; margin-right: auto;">
+				style="border: 1px solid black; margin: 15px; margin-left: auto; margin-right: auto;">
 				<thead>
 					<tr>
-						<th>은행</th>
-						<th th:text="${bankAccount.bank.bankname}"></th>
+						<th><span>은행</span></th>
+						<th><span th:text="${bankAccount.bank.bankname}"></span></th>
 
-						<th>계좌번호</th>
+						<th><span>계좌번호</span></th>
 						<th><a
 							th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}"
 							style="color: red;"> <span
 								th:text="${bankAccount.accountNumber}"></span>
 						</a></th>
-
-
-
-
-						<!-- 						<th th:text="${bankAccount.accountNumber}"></th>
- -->
-
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td></td>
-						<td>잔액</td>
-						<td></td>
-						<td th:text="${bankAccount.amount}"></td>
+						<td><span></span></td>
+						<td><span>잔액</span></td>
+						<td><span></span></td>
+						<td><span th:text="${bankAccount.amount}"></span></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td>주계좌설정</td>
-						<td></td>
+						<td><span></span></td>
+						<td><span>주계좌설정</span></td>
+						<td><span></span></td>
 						<th><a
 							th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}"
 							style="color: red;"> <span

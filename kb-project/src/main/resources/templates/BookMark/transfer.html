@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="/fragments/header.html :: head">
 <meta charset="UTF-8">
-<title>송금 폼</title>
+<title>송금(즐겨찾기)</title>
 </head>
 <body>
-	<h2>송금 폼</h2>
-
-	<form action="#" th:action="@{/bookmarks/transferbookmark}"
-		th:object="${Log}" method="post">
-
+	<form class="col-6" action="#"
+		th:action="@{/bookmarks/transferbookmark}" th:object="${Log}"
+		method="post"
+		style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 		<div>
 			<input type="hidden" id="recipient_name" th:field="*{recipient_name}" />
 		</div>
@@ -19,27 +18,33 @@
 				th:field="*{recipient_banknumber}" />
 		</div>
 
+		<div class="p-4 text-center">
+			<h2>송금</h2>
+		</div>
 
-		<div>
-			<label for="my_banknumber">본인 계좌번호:</label> <select
+		<div class="mb-3">
+			<label for="my_banknumber" class="form-label">본인 계좌번호:</label> <select
+				class="form-select" aria-label="Floating label select example"
 				id="my_banknumber" name="sender_banknumber"
 				th:field="*{sender_banknumber}">
-				<option th:each="bankAccount : ${bankAccounts}"
+				<option th:each="bankAccount : ${Log.sender.bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}"></option>
 			</select>
 		</div>
 
 
-		<div>
-			<label for="amount">송금액:</label> <input type="text" id="amount"
-				th:field="*{amount}" />
+		<div class="mb-3">
+			<label for="amount" class="form-label">송금액:</label> <input
+				type="text" class="form-control" id="amount" th:field="*{amount}"
+				maxlength="20">
 		</div>
 
 
 		<div>
 			<label for="account_password">계좌 비밀번호:</label> <input type="text"
-				id="account_password" th:field="*{account_password}" />
+				id="account_password" class="form-control"
+				th:field="*{account_password}" />
 
 
 
@@ -51,8 +56,10 @@
 		</div>
 
 
-		<div>
-			<button type="submit">송금</button>
+		<div class="frame">
+			<button type="submit" class="custom-btn btn-3">
+				<span>송금</span>
+			</button>
 		</div>
 
 
