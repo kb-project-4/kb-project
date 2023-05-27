@@ -171,7 +171,7 @@ public class BankAccountService {
 		}
 
 	}
-
+ 
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -187,10 +187,11 @@ public class BankAccountService {
 
 		}
 
-		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
+ 		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
 		System.out.println("bankaccount service" + bankAccount.get().toString());
 		bankAccount.get().setMainAccount(true);
 		System.out.println("bankaccount service modified" + bankAccount.get().toString());
+ 
 
 		bankAccountRepository.save(bankAccount.get());
 		System.out.println("fin");
@@ -222,4 +223,5 @@ public class BankAccountService {
 		}
 	}
 
+ 
 }
