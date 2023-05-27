@@ -229,6 +229,17 @@
 						<td></td>
 						<td th:text="${bankAccount.amount}"></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td>주계좌설정</td>
+						<td></td>
+						<th><a
+							th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}"
+							style="color: red;"> <span
+								th:text="${bankAccount.accountNumber}"></span>
+						</a></th>
+					</tr>
+
 				</tbody>
 			</table>
 		</div>
