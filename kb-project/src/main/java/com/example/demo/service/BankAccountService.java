@@ -78,7 +78,6 @@ public class BankAccountService {
 			for (BankAccount bankAccount : bankAccounts) {
 				if (bankAccount.getUser().getUserid().equals(userid)) {
 					bankAccounts2.add(bankAccount);
-					System.out.println("용화용화");
 				}
 			}
 

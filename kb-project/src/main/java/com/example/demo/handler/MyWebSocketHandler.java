@@ -1,6 +1,10 @@
 package com.example.demo.handler;
 
+import java.net.InetSocketAddress;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -35,10 +39,13 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	GPTChatRestService gptChatRestService; // chat gpt rest api
+	
+	static private HttpServletRequest request;
 
 	static long amount;
 	static String name;
 	static String action;
+	static String clientIp;
 
 	private enum UserState {
 		INITIAL, WAITING_CONFIRMATION // 초기 상태 및 확인(예/아니오) 기다리는 상태
@@ -50,7 +57,10 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결 시도중");
-		userState = UserState.INITIAL; // 현재는 초기상태
+		userState = UserState.INITIAL; // 현재는 초기상태    
+	    InetSocketAddress clientAddress = session.getRemoteAddress();
+		clientIp = clientAddress.getAddress().getHostAddress();
+		System.out.println("clientIp: " + clientIp);
 	}
 
 	@Override
@@ -91,10 +101,17 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
  		System.out.println("socket received action : " + action);
 
 		if (userState == UserState.INITIAL) {
+			System.out.println(clientIp);
+			System.out.println(user.getClientSafeIp());
+			
 			if (action.equals("송금")) {
 				if (bookMarkService.findByUserAndBookMarkName(user, name) == null) {
 					session.sendMessage(new TextMessage(name + "은 즐겨찾기에 존재하지 않는 사용자입니다. 다시 말씀해주세요."));
-				} else {
+				}
+				else if(!clientIp.equals(user.getClientSafeIp())) {
+					session.sendMessage(new TextMessage("인가되지 않은 사용자의 PC 입니다."));
+				}
+				else {
 					session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 					userState = UserState.WAITING_CONFIRMATION;
 				} 
@@ -134,7 +151,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
 			if (action.equals("예")) {
-				BookMark bookMarkUser = bookMarkService.findBookMarkByName(name); // BookMark user 검사
+				BookMark bookMarkUser = bookMarkService.findByUserAndBookMarkName(user, name);
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
 				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByUser(user);
@@ -160,5 +177,4 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		// 클라이언트와의 연결이 종료되었을 때 실행되는 메소드
 		System.out.println("WebSocket connection closed.");
 	}
-
 }
