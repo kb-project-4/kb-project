@@ -138,6 +138,7 @@ public class BankAccountService {
 		System.out.println(transferDto.toString());
 		BankAccount mybankAccount = new BankAccount();
 
+		System.out.println("senderbanknum" + transferDto.getSender_banknumber().toString());
 		mybankAccount = bankAccountRepository.findByAccountNumber(transferDto.getSender_banknumber());
 		System.out.println(mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
