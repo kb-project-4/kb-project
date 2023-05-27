@@ -13,6 +13,8 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 	BookMark findByBookMarkAccountNumber(String banknumber);
 
 	BookMark findByBookMarkName(String name);
+
+	
 	
 	BookMark deleteByid(Long id);
 

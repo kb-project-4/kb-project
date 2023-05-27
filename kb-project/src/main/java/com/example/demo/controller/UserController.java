@@ -40,6 +40,7 @@ public class UserController {
 
 	@Autowired
 	private BankAccountService bankaccountservice;
+
 	@Autowired
 	private BankAccountRepository bankAccountRepository;
 
@@ -80,6 +81,7 @@ public class UserController {
 	public String editUserForm(@PathVariable("id") Long id, Model model) {
 
 		Optional<User> user = userService.getUserById(id);
+
 		model.addAttribute("user", user.get());
 		model.addAttribute("user.id", user.get().getId());
 		return "user/edit";
@@ -163,16 +165,18 @@ public class UserController {
 	}
 
 	@GetMapping("/transfer")
-	public String transferform(HttpSession session, HttpServletRequest request, Model model) {
-
-		session = request.getSession();
+	public String transferform(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+		Long id = user.getId();//세션갱신이 안되기 땜에 갱신하기 위해서 유저 아이디를 받아오고 밑에 유저값을 다시 받아온다.
+		Optional<User> user2 = userService.getUserById(id);
 		Long userId = user.getId();
 		System.out.println("유저 아이디" + userId);
 		TransferDto transferDto = new TransferDto();
-		transferDto.setSender(user);
+		transferDto.setSender(user2.get());
 		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(userId);
-//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
+		System.out.println(bankAccounts);
+
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
 		return "user/transfer";
@@ -186,7 +190,7 @@ public class UserController {
 		String userid = user.getUserid();
 
 		log.setSender(user);
-		log.setCategory("transfer");
+		log.setCategory("송금");
 		System.out.println(log);
 		System.out.println("user" + log.getSender().getUsername());
 		System.out.println("flag");

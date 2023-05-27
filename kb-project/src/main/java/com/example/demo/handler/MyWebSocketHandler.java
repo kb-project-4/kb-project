@@ -152,6 +152,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
 			if (action.equals("예")) {
 				BookMark bookMarkUser = bookMarkService.findByUserAndBookMarkName(user, name);
+
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));
 				List<BankAccount> bankAccountByuserId = bankAccountService.getBankAccountByUser(user);

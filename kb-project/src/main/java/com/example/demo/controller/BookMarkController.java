@@ -207,7 +207,7 @@ public class BookMarkController {
 		String userid = user.getUserid();
 
 		log.setSender(user);
-		log.setCategory("transfer");
+		log.setCategory("송금");
 		System.out.println(log);
 		System.out.println("user" + log.getSender().getUsername());
 		System.out.println("flag");
