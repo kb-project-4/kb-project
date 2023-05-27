@@ -8,16 +8,18 @@
 
 	<h1>계좌생성</h1>
 	<form action="/bankaccounts" method="post">
-		<label for="accountNumber">계좌번호</label>
-		<input type="text" id="accountNumber" name="accountNumber" required th:field="${bankAccount.accountNumber}"><br>
-		<label for="bankName">은행명</label>
-		<input type="text" id="bankName" name="bankName" required th:field="${bankAccount.bank.bankname}"><br>
-	<!-- 	<label for="userId">유저 아이디:</label> -->
-<!-- 		<input type="text" id="userId" name="userId" required th:field="${bankAccount.userId}"><br>
- -->		<label for="amount">액수</label>
-		<input type="text" id="amount" name="amount" required th:field="${bankAccount.amount}"><br>
+		<label for="accountNumber">계좌번호</label> <input type="text"
+			id="accountNumber" name="accountNumber" required
+			th:field="${bankAccount.accountNumber}"><br> <label
+			for="bankName">은행명</label> <input type="text" id="bankName"
+			name="bankName" required th:field="${bankAccount.bank.bankname}"><br>
+		<!-- 	<label for="userId">유저 아이디:</label> -->
+		<!-- 		<input type="text" id="userId" name="userId" required th:field="${bankAccount.userId}"><br>
+ -->
+		<label for="amount">액수</label> <input type="text" id="amount"
+			name="amount" required th:field="${bankAccount.amount}"><br>
 		<input type="submit" value="Create">
 	</form>
-	
+
 </body>
 </html>
