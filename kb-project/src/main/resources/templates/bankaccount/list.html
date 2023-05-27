@@ -196,7 +196,8 @@
 	<header th:replace="/fragments/header.html :: header"></header>
 	<!-- End Header -->
 	<link href="/css/table.css" rel="stylesheet">
-	<div id="box" class="container"
+
+	<div th:if="${bankAccounts != null}" id="box" class="container"
 		style="margin-top: 105px; background-color: #FFFFFF; width: 800px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
 		<div class="container"
 			style="overflow: auto; width: 500px; height: 480px;">
@@ -229,7 +230,6 @@
 						<td></td>
 						<td th:text="${bankAccount.amount}"></td>
 					</tr>
-					
 					<tr>
 						<td></td>
 						<td>주계좌설정</td>
@@ -250,7 +250,9 @@
 				<span> 메인으로 돌아가기 </span>
 			</button></a>
 	</div>
-
+	<div th:unless="${bankAccounts != null}">
+		<p>No bank accounts found.</p>
+	</div>
 	<div id="preloader"></div>
 
 	<script
