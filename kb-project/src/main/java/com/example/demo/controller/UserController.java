@@ -65,21 +65,14 @@ public class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String createUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
+	public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
-
-		System.out.println(user.getAddress());
-		System.out.println(user.getPassword());
-		System.out.println("user.accountnumber" + user.getAccount_password());
-
-		//
-//		User defaultuser = new User();
-//		defaultuser.setAddress("잠원");
-//		defaultuser.setAddress("잠원");
-
-		userService.createUser(user);
+		String clientIp = userService.getClientIp(request);
+		System.out.println("user Client ip : " + clientIp);
+		userDto.setClientSafeIp(clientIp);
+		userService.createUser(userDto);
 		return "redirect:/users/index";
 
 	}
@@ -103,7 +96,6 @@ public class UserController {
 			return "user/edit";
 		}
 
-		System.out.println("ddddd" + id);
 		userService.updateUser(id, user);
 		return "redirect:/users";
 
@@ -125,29 +117,20 @@ public class UserController {
 	@PostMapping("/users/index")
 	public String mainpage(@ModelAttribute("login") Login login, RedirectAttributes redirectAttributes,
 			HttpSession session) {
-
 		User userByUserId = userService.getUserByUserId(login.getUserid());
-
 		if (userByUserId != null && login.getPassword().equals(userByUserId.getPassword())) {
 			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
-
 			if (userByUserId.isDisabled() == false) {
-
 				return "redirect:/users/main";
-
 			}
-
 			else {
-				// 장애인이동
 				System.out.println("장애인");
 				return "redirect:/users/main";
-
 			}
 		}
 
 		else {
 			redirectAttributes.addFlashAttribute("errorMessage", "회원정보 오류");
-
 			return "redirect:/users/index";
 		}
 
@@ -247,5 +230,7 @@ public class UserController {
 
 		return false;
 	}
+
+
 
 }
