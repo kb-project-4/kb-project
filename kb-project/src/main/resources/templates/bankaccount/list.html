@@ -190,6 +190,7 @@
 <meta charset="UTF-8">
 <title>계좌조회</title>
 </head>
+
 <body>
 	<!-- ======= Header ======= -->
 	<header th:replace="/fragments/header.html :: header"></header>
@@ -205,8 +206,19 @@
 					<tr>
 						<th>은행</th>
 						<th th:text="${bankAccount.bank.bankname}"></th>
+
 						<th>계좌번호</th>
-						<th th:text="${bankAccount.accountNumber}"></th>
+						<th><a
+							th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}"
+							style="color: red;"> <span
+								th:text="${bankAccount.accountNumber}"></span>
+						</a></th>
+
+
+
+
+						<!-- 						<th th:text="${bankAccount.accountNumber}"></th>
+ -->
 
 					</tr>
 				</thead>
@@ -217,6 +229,17 @@
 						<td></td>
 						<td th:text="${bankAccount.amount}"></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td>주계좌설정</td>
+						<td></td>
+						<th><a
+							th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}"
+							style="color: red;"> <span
+								th:text="${bankAccount.accountNumber}"></span>
+						</a></th>
+					</tr>
+
 				</tbody>
 			</table>
 		</div>
@@ -233,6 +256,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 		crossorigin="anonymous"></script>
+
 	<!-- Vendor JS Files -->
 	<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="/assets/vendor/aos/aos.js"></script>

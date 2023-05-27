@@ -12,6 +12,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**") // 모든 경로에 대해 인터셉터 적용
                 .excludePathPatterns("/users/index", "/users/new") // 인덱스 페이지는 예외로 처리
                 .excludePathPatterns("/assets/*", "/css/*", "/js/*");
-    }
+     }
     
 }

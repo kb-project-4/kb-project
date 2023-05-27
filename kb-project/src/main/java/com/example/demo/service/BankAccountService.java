@@ -78,7 +78,6 @@ public class BankAccountService {
 			for (BankAccount bankAccount : bankAccounts) {
 				if (bankAccount.getUser().getUserid().equals(userid)) {
 					bankAccounts2.add(bankAccount);
-					System.out.println("용화용화");
 				}
 			}
 
@@ -88,7 +87,8 @@ public class BankAccountService {
 
 	public BankAccount getBankAccountByAccountId(Long id) {
 
-		return bankAccountRepository.findById(id).orElseThrow(null);
+		Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
+		return bankAccount.get();
 
 	}
 
@@ -138,6 +138,7 @@ public class BankAccountService {
 		System.out.println(transferDto.toString());
 		BankAccount mybankAccount = new BankAccount();
 
+		System.out.println("senderbanknum" + transferDto.getSender_banknumber().toString());
 		mybankAccount = bankAccountRepository.findByAccountNumber(transferDto.getSender_banknumber());
 		System.out.println(mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
@@ -170,6 +171,7 @@ public class BankAccountService {
 		}
 
 	}
+ 
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -185,12 +187,13 @@ public class BankAccountService {
 
 		}
 
-		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow(null);
-		System.out.println("bankaccount service" + bankAccount.toString());
-		bankAccount.setMainAccount(true);
-		System.out.println("bankaccount service modified" + bankAccount.toString());
+ 		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
+		System.out.println("bankaccount service" + bankAccount.get().toString());
+		bankAccount.get().setMainAccount(true);
+		System.out.println("bankaccount service modified" + bankAccount.get().toString());
+ 
 
-		bankAccountRepository.save(bankAccount);
+		bankAccountRepository.save(bankAccount.get());
 		System.out.println("fin");
 
 	}
@@ -220,5 +223,5 @@ public class BankAccountService {
 		}
 	}
 
-
+ 
 }

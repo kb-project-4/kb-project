@@ -31,7 +31,8 @@ public class BankAccount extends BaseEntity {
 	private Long id;
 
 	private Long amount;
-
+	
+	@Column(unique = true)
 	private String accountNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -47,9 +48,7 @@ public class BankAccount extends BaseEntity {
 	public BankAccountDto toDto() {
 
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)
-				.user(this.user).bank(this.bank)
-				.mainAccount(this.mainAccount)
-				.build();
+				.user(this.user).bank(this.bank).mainAccount(this.mainAccount).build();
 
 		return dto;
 	}
