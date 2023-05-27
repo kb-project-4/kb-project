@@ -45,27 +45,55 @@ public class UserController {
 	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping("/users")
-	public String getUsers(Model model) {
+	public String getUsers(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		List<User> userList = userService.getAllUsers();
 		model.addAttribute("users", userList);
-		return "user/list";
+
+		if (user.isDisabled()) {// 장애인
+
+			return "user/list2";
+
+		} else {// 비장애인
+			return "user/list";
+
+		}
+
 	}
 
 	@GetMapping("/users/{id}")
 	public String getUser(@PathVariable("id") Long id, Model model) {
+
 		Optional<User> user = userService.getUserById(id);
 		model.addAttribute("user", user);
 		return "user/view";
 	}
 
 	@GetMapping("/users/new")
-	public String createUserForm(Model model) {
+	public String createUserForm(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		model.addAttribute("user", new User());
-		return "user/new";
+
+		if (user.isDisabled()) {// 장애인
+
+			return "user/new2";
+
+		} else {// 비장애인
+			return "user/new";
+
+		}
+
 	}
 
 	@PostMapping("/users/new")
-	public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, HttpServletRequest request) {
+	public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result,
+			HttpServletRequest request) {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
@@ -84,7 +112,15 @@ public class UserController {
 
 		model.addAttribute("user", user.get());
 		model.addAttribute("user.id", user.get().getId());
-		return "user/edit";
+
+		if (user.get().isDisabled()) {// 장애인
+
+			return "user/edit2";
+
+		} else {// 비장애인
+			return "user/edit";
+
+		}
 
 	}
 
@@ -93,7 +129,16 @@ public class UserController {
 			BindingResult result) {
 
 		if (result.hasErrors()) {
-			return "user/edit";
+
+			if (user.isDisabled()) {// 장애인
+
+				return "user/edit2";
+
+			} else {// 비장애인
+				return "user/edit";
+
+			}
+
 		}
 
 		userService.updateUser(id, user);
@@ -108,10 +153,16 @@ public class UserController {
 	}
 
 	@GetMapping("/users/index")
-	public String mainpageForm(Model model) {
+	public String mainpageForm(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		model.addAttribute("login", new Login());
 		model.addAttribute("user", new UserDto());
+
 		return "user/index";
+
 	}
 
 	@PostMapping("/users/index")
@@ -122,8 +173,7 @@ public class UserController {
 			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 			if (userByUserId.isDisabled() == false) {
 				return "redirect:/users/main";
-			}
-			else {
+			} else {
 				System.out.println("장애인");
 				return "redirect:/users/main";
 			}
@@ -160,7 +210,14 @@ public class UserController {
 
 		model.addAttribute("userid", userid);
 
-		return "user/main";
+		if (user.isDisabled()) {// 장애인
+
+			return "user/main2";
+
+		} else {// 비장애인
+			return "user/main";
+
+		}
 
 	}
 
@@ -168,7 +225,7 @@ public class UserController {
 	public String transferform(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		Long id = user.getId();//세션갱신이 안되기 땜에 갱신하기 위해서 유저 아이디를 받아오고 밑에 유저값을 다시 받아온다.
+		Long id = user.getId();// 세션갱신이 안되기 땜에 갱신하기 위해서 유저 아이디를 받아오고 밑에 유저값을 다시 받아온다.
 		Optional<User> user2 = userService.getUserById(id);
 		Long userId = user.getId();
 		System.out.println("유저 아이디" + userId);
@@ -179,7 +236,15 @@ public class UserController {
 
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
-		return "user/transfer";
+
+		if (user.isDisabled()) {// 장애인
+
+			return "user/transfer2";
+
+		} else {// 비장애인
+			return "user/transfer";
+
+		}
 	}
 
 	@PostMapping("/transfer")
@@ -230,7 +295,5 @@ public class UserController {
 
 		return false;
 	}
-
-
 
 }
