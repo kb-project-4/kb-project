@@ -87,7 +87,8 @@ public class BankAccountService {
 
 	public BankAccount getBankAccountByAccountId(Long id) {
 
-		return bankAccountRepository.findById(id).orElseThrow(null);
+		Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
+		return bankAccount.get();
 
 	}
 
@@ -185,17 +186,15 @@ public class BankAccountService {
 
 		}
 
-		BankAccount bankAccount = bankAccountRepository.findById(bankAccountDto.getId()).orElseThrow();
-		System.out.println("bankaccount service" + bankAccount.toString());
-		bankAccount.setMainAccount(true);
-		System.out.println("bankaccount service modified" + bankAccount.toString());
+		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
+		System.out.println("bankaccount service" + bankAccount.get().toString());
+		bankAccount.get().setMainAccount(true);
+		System.out.println("bankaccount service modified" + bankAccount.get().toString());
 
-		bankAccountRepository.save(bankAccount);
+		bankAccountRepository.save(bankAccount.get());
 		System.out.println("fin");
 
 	}
-
-//=======
 
 	public BankAccount getBankAccountById(Long id) {
 		return bankAccountRepository.findById(id).orElse(null);
