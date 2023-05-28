@@ -12,7 +12,8 @@
 			th:object="${Log}" method="post">
 
 			<div class="p-4 text-center">
-				<h2>송금</h2>>
+				<h2>송금</h2>
+				>
 			</div>
 			<div class="mb-3">
 				<label for="recipient_name" class="form-label">받는사람 이름: </label> <input
@@ -35,7 +36,7 @@
 						th:text="${bankAccount.accountNumber}"></option>
 				</select>
 			</div>
-			<div class="mb-3"> 
+			<div class="mb-3">
 				<label for="amount" class="form-label">송금액:</label> <input
 					type="text" class="form-control" id="amount" th:field="*{amount}"
 					maxlength="20">
@@ -80,9 +81,6 @@
 	<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
 	<script src="/assets/vendor/php-email-form/validate.js"></script>
 
-
-	<!-- Template Main JS File -->
-	<script src="/assets/js/main.js"></script>
 
 </body>
 </html>
