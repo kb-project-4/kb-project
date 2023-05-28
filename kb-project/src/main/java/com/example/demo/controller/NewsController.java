@@ -49,7 +49,7 @@ public class NewsController {
 		newsService.savenews();
 		List<News> news = newsService.getallnews();
 
-		model.addAttribute("news", news);
+		model.addAttribute("$newsList", news);
 
 		if (user.isDisabled()) {// 장애인
 

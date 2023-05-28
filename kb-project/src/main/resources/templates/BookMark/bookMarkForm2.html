@@ -1,42 +1,48 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="/fragments/header.html :: head">
 <meta charset="UTF-8">
-<title>Bookmark Form</title>
+<title>즐겨찾기 추가</title>
 </head>
-<body>
-	<h1>북마크 등록</h1>
-	<form action="#" th:action="@{/bookmarks/create}"
-		th:object="${bookMark}" method="post">
+<body style = "background-color: black; overflow: auto;">
+	<form class="col-6" action="#" th:action="@{/bookmarks/create}"
+		th:object="${bookMark}" method="post"
+		style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+		
+		<div class="p-4 text-center">
+			<h2 style= "font-size: 60px; color:yellow">즐겨찾기 추가</h2>
+		</div>
 
 
-		<div>
-			<label>은행명:</label> <input type="text" th:field="*{bookMarkBankname}">
+		<div class="mb-3">
+			<label for="bankname" class="form-label" style= "font-size: 60px; color:yellow">은행명:</label> <input
+				id="bankname" class="form-control" type="text"
+				th:field="*{bookMarkBankname}" style= "height:100px; font-size:60px; border-color:yellow; background-color:black; color:yellow">
+		</div>
+
+		<div class="mb-3">
+			<label for="banknumber" class="form-label" style= "font-size: 60px; color:yellow">계좌번호:</label> <input
+				type="text" id="banknumber" class="form-control"
+				th:field="*{bookMarkAccountNumber}" style= "height:100px; font-size:60px; border-color:yellow; background-color:black; color:yellow">
+		</div>
+
+		<div class="mb-3">
+			<label for="name" class="form-label" style= "font-size: 60px; color:yellow">이름</label> <input type="text"
+				class="form-control" id="name" th:field="*{bookMarkName}" required style= "height:100px; font-size:60px; border-color:yellow; background-color:black; color:yellow">
 		</div>
 
 		<div>
-			<label>계좌번호:</label> <input type="text"
-				th:field="*{bookMarkAccountNumber}">
-		</div>
-
-		<div class="form-group">
-			<label for="name">이름</label> <input type="text" class="form-control"
-				id="name" th:field="*{bookMarkName}" required>
-		</div>
-
-		<div>
-			<input type="hidden" th:field="*{user}">
+			<input type="hidden" th:field="*{user}" style= "height:100px; font-size:60px; border-color:yellow; background-color:black; color:yellow">
 		</div>
 
 
-
-		<div>
-			<button type="submit">Submit</button>
+		<div class="frame">
+			<button type="submit" style= "font-size: 60px; color:yellow; background-color: black;  border-color :yellow">
+				<span>추가하기</span>
+			</button>
 		</div>
-
 	</form>
-	<a th:href="@{/users/main}">메인으로 돌아가기</a>
 
 </body>
 </html>

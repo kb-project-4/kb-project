@@ -2,67 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>User List</title>
-
+<title>News List</title>
 <style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-css
-Copy code
-	th, td {
-	padding: 10px;
-	text-align: center;
-}
-
-th {
-	background-color: #C0C0C0;
-}
-
-tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-
-a {
-	margin-right: 10px;
-}
-
-.btn-edit {
-	background-color: #4CAF50;
-	color: white;
-	padding: 5px 10px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-}
-
-.btn-delete {
-	background-color: #f44336;
-	color: white;
-	padding: 5px 10px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-}
+/* CSS 스타일은 필요에 따라 추가하세요 */
 </style>
 </head>
 <body>
-	<h1>news</h1>
+	<h1>News</h1>
 	<table>
 		<thead>
 			<tr>
 				<th>ID</th>
-				 
+				<th>Title</th>
+				<th>Content</th>
+				<th>Date</th>
 			</tr>
 		</thead>
-
 		<tbody>
-			 
-
+			<tr th:each="news : ${newsList}">
+				<td th:text="${news.id}"></td>
+				<td th:text="${news.title}"></td>
+				<td th:text="${news.content}"></td>
+				<td th:text="${news.date}"></td>
+			</tr>
 		</tbody>
 	</table>
-
- </body>
+</body>
 </html>

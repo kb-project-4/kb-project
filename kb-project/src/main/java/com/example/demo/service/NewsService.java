@@ -51,13 +51,13 @@ public class NewsService {
 
 			for (Element element : newsElements) {
 				// 뉴스 기사 제목 추출
-				String title = element.select(".news-title").text();
+				String title = element.select(".tit-news").text();
 
 				// 뉴스 기사 내용 추출
 				String content = element.select(".news-content").text();
 
 				// 뉴스 작성일 추출
-				String date = element.select(".news-date").text();
+				String date = element.select(".txt-time").text();
 				System.out.println("title" + title);
 				System.out.println("content" + content);
 
