@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.Bank;
-import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BankAccountService;
 import com.example.demo.service.LogService;
 import com.example.demo.service.UserService;
@@ -45,23 +41,50 @@ public class UserController {
 	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping("/users")
-	public String getUsers(Model model) {
+	public String getUsers(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		List<User> userList = userService.getAllUsers();
 		model.addAttribute("users", userList);
-		return "user/list";
+
+		if (user.isDisabled()) {// 장애인
+
+			return "user/list2";
+
+		} else {// 비장애인
+			return "user/list";
+
+		}
+
 	}
 
 	@GetMapping("/users/{id}")
 	public String getUser(@PathVariable("id") Long id, Model model) {
+
 		Optional<User> user = userService.getUserById(id);
 		model.addAttribute("user", user);
 		return "user/view";
 	}
 
 	@GetMapping("/users/new")
-	public String createUserForm(Model model) {
+	public String createUserForm(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		model.addAttribute("user", new User());
-		return "user/new";
+
+		if (user.isDisabled()) {// 장애인
+
+			return "user/new2";
+
+		} else {// 비장애인
+			return "user/new";
+
+		}
+
 	}
 
 	@PostMapping("/users/new")
@@ -85,7 +108,15 @@ public class UserController {
 
 		model.addAttribute("user", user.get());
 		model.addAttribute("user.id", user.get().getId());
-		return "user/edit";
+
+		if (user.get().isDisabled()) {// 장애인
+
+			return "user/edit2";
+
+		} else {// 비장애인
+			return "user/edit";
+
+		}
 
 	}
 
@@ -94,7 +125,16 @@ public class UserController {
 			BindingResult result) {
 
 		if (result.hasErrors()) {
-			return "user/edit";
+
+			if (user.isDisabled()) {// 장애인
+
+				return "user/edit2";
+
+			} else {// 비장애인
+				return "user/edit";
+
+			}
+
 		}
 
 		userService.updateUser(id, user);
@@ -109,10 +149,16 @@ public class UserController {
 	}
 
 	@GetMapping("/users/index")
-	public String mainpageForm(Model model) {
+	public String mainpageForm(Model model, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
 		model.addAttribute("login", new Login());
 		model.addAttribute("user", new UserDto());
+
 		return "user/index";
+
 	}
 
 	@PostMapping("/users/index")
@@ -160,7 +206,14 @@ public class UserController {
 
 		model.addAttribute("userid", userid);
 
-		return "user/main";
+		if (user.isDisabled()) {// 장애인
+
+			return "user/main2";
+
+		} else {// 비장애인
+			return "user/main";
+
+		}
 
 	}
 
@@ -179,7 +232,14 @@ public class UserController {
 
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
-		return "user/transfer2";
+		if (user.isDisabled()) {// 장애인
+
+			return "user/transfer2";
+
+		} else {// 비장애인
+			return "user/transfer";
+
+		}
 	}
 
 	@PostMapping("/transfer")

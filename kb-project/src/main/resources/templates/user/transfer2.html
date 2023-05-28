@@ -11,33 +11,38 @@
 		<form class="col-6" action="#" th:action="@{/transfer}"
 			th:object="${Log}" method="post">
 			<div class="p-4 text-center">
-				<h2 style="font-size:60px; color:yellow">송금</h2>
+				<h2 style="font-size: 60px; color: yellow">송금</h2>
 			</div>
-			<div class="mb-3" style="font-size:40px; color:yellow">
+			<div class="mb-3" style="font-size: 40px; color: yellow">
 				<label for="recipient_name" class="form-label">받는사람 이름 </label> <input
 					type="text" class="form-control" id="recipient_name"
-					th:field="*{recipient_name}" style="width:1000px; height:100px; font-size: 60px">
+					th:field="*{recipient_name}"
+					style="width: 1000px; height: 100px; font-size: 60px">
 			</div>
-			<div class="mb-3" style="font-size:40px; color:yellow">
+			<div class="mb-3" style="font-size: 40px; color: yellow">
 				<label for="recipient_banknumber" class="form-label">받는사람
 					계좌번호:</label> <input type="text" class="form-control"
 					id="recipient_banknumber" th:field="*{recipient_banknumber}"
-					maxlength="20" style="width:1000px; height:100px; font-size: 60px">
+					maxlength="20"
+					style="width: 1000px; height: 100px; font-size: 60px">
 			</div>
-			<div class="mb-3" style="font-size:40px;">
-				<label for="my_banknumber" class="form-label" style="width:1000px; height:100px; font-size: 40px; color:yellow">본인 계좌번호:</label> <select
-					class="form-select" aria-label="Floating label select example"
-					id="my_banknumber" name="sender_banknumber"
-					th:field="*{sender_banknumber}" style="width:1000px; height:100px; font-size: 60px">
+			<div class="mb-3" style="font-size: 40px;">
+				<label for="my_banknumber" class="form-label"
+					style="width: 1000px; height: 100px; font-size: 40px; color: yellow">본인
+					계좌번호:</label> <select class="form-select"
+					aria-label="Floating label select example" id="my_banknumber"
+					name="sender_banknumber" th:field="*{sender_banknumber}"
+					style="width: 1000px; height: 100px; font-size: 60px">
 					<option th:each="bankAccount : ${Log.sender.bankAccounts}"
 						th:value="${bankAccount.accountNumber}"
 						th:text="${bankAccount.accountNumber}"></option>
 				</select>
 			</div>
-			<div class="mb-3" style="font-size:40px; color:yellow">
+			<div class="mb-3" style="font-size: 40px; color: yellow">
 				<label for="amount" class="form-label">송금액:</label> <input
 					type="text" class="form-control" id="amount" th:field="*{amount}"
-					maxlength="20" style="width:1000px; height:100px; font-size: 40px">
+					maxlength="20"
+					style="width: 1000px; height: 100px; font-size: 40px">
 			</div>
 			<div>
 				<input type="hidden" id="category" th:field="*{category}"
@@ -45,12 +50,15 @@
 			</div>
 
 			<div>
-				<label for="account_password" style="font-size:40px; color:yellow">계좌 비밀번호:</label> <input type="text"
-					id="account_password" th:field="*{account_password}" style="width:1000px; height:100px; font-size: 60px"/>
+				<label for="account_password" style="font-size: 40px; color: yellow">계좌
+					비밀번호:</label> <input type="text" id="account_password"
+					th:field="*{account_password}"
+					style="width: 1000px; height: 100px; font-size: 60px" />
 			</div>
 			<div class="frame">
-				<button type="submit" style="background-color:black; width:400px; height:100px; font-size: 40px; color:yellow; border-color:yellow">
-					<span >송금</span>
+				<button type="submit"
+					style="background-color: black; width: 400px; height: 100px; font-size: 40px; color: yellow; border-color: yellow">
+					<span>송금</span>
 				</button>
 			</div>
 
