@@ -276,6 +276,7 @@ public class UserController {
 		else {
 			System.out.println("계좌비밀번호가 일치.");
 			bankaccountservice.transferToUser(log, user);
+			redirectAttributes.addFlashAttribute("successMessage", "송금이 완료되었습니다."); // 송금 완료 메시지를 추가합니다.
 			return "redirect:/users/main";
 		}
 	}
