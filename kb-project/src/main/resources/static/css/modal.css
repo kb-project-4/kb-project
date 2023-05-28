@@ -6,7 +6,7 @@
   position: fixed;
   z-index: 9999;
   left: 25%; /* Adjust the left and top values to center the modal */
-  top: 10%;
+  top: 15%;
   width: 50%; /* Reduce the width to 50% */
   height: 500px; /* Reduce the height to 50% */
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
