@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.Bank;
-import com.example.demo.entity.Log;
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BankAccountService;
 import com.example.demo.service.LogService;
 import com.example.demo.service.UserService;
@@ -236,7 +232,6 @@ public class UserController {
 
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
-
 		if (user.isDisabled()) {// 장애인
 
 			return "user/transfer2";
@@ -283,7 +278,6 @@ public class UserController {
 			bankaccountservice.transferToUser(log, user);
 			return "redirect:/users/main";
 		}
-
 	}
 
 	static boolean verifypassword(User user, String account_password) {
