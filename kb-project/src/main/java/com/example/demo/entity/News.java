@@ -20,6 +20,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class News {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class News {
 	@Column(nullable = false, unique = true)
 	private String title;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50000000) // 최대 길이를 5000으로 설정 (필요에 따라 조정 가능)
 	private String content;
 
 	@Column(nullable = false)

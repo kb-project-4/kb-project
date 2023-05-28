@@ -48,8 +48,8 @@ public class NewsController {
 
 		newsService.savenews();
 		List<News> news = newsService.getallnews();
-
-		model.addAttribute("$newsList", news);
+		System.out.println("newsList" + news.toString());
+		model.addAttribute("newsList", news);
 
 		if (user.isDisabled()) {// 장애인
 
