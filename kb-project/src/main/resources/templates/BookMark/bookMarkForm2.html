@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Bookmark Form</title>
+</head>
+<body>
+	<h1>북마크 등록</h1>
+	<form action="#" th:action="@{/bookmarks/create}"
+		th:object="${bookMark}" method="post">
+
+
+		<div>
+			<label>은행명:</label> <input type="text" th:field="*{bookMarkBankname}">
+		</div>
+
+		<div>
+			<label>계좌번호:</label> <input type="text"
+				th:field="*{bookMarkAccountNumber}">
+		</div>
+
+		<div class="form-group">
+			<label for="name">이름</label> <input type="text" class="form-control"
+				id="name" th:field="*{bookMarkName}" required>
+		</div>
+
+		<div>
+			<input type="hidden" th:field="*{user}">
+		</div>
+
+
+
+		<div>
+			<button type="submit">Submit</button>
+		</div>
+
+	</form>
+	<a th:href="@{/users/main}">메인으로 돌아가기</a>
+
+</body>
+</html>
