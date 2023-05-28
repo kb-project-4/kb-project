@@ -46,8 +46,7 @@
 		</dependency>
 
 
-		<!-- <dependency> <groupId>com.mysql</groupId>
-		<artifactId>mysql-connector-j</artifactId> 
+		<!-- <dependency> <groupId>com.mysql</groupId> <artifactId>mysql-connector-j</artifactId> 
 			<scope>runtime</scope> </dependency> -->
 
 		<dependency>
@@ -69,7 +68,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Web Socket-->
+		<!-- Web Socket -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
@@ -79,12 +78,20 @@
 			<groupId>com.theokanning.openai-gpt3-java</groupId>
 			<artifactId>service</artifactId>
 			<version>0.12.0</version>
-			</dependency>
+		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.14.1</version> <!-- Replace with the latest version -->
+		</dependency>
+
 	</dependencies>
 
 	<build>
