@@ -55,18 +55,19 @@
 				th:value="송금" />
 		</div>
 
-		<div th:if="${errorMessage}" style="margin-top: 10px; margin-bottom: 0px;">
-			<p style="color:#FE3004;" th:text="${errorMessage}"></p>
-		</div>
 
-		<div class="frame" style="margin-top: 10px;">
+		<div class="frame">
 			<button type="submit" class="custom-btn btn-3">
 				<span>송금</span>
 			</button>
 		</div>
 
 
+		<div th:if="${errorMessage}" style="color: red;">
+			<p th:text="${errorMessage}"></p>
+		</div>
 
 	</form>
+
 </body>
 </html>

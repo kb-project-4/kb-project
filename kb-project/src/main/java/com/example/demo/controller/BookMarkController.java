@@ -56,7 +56,15 @@ public class BookMarkController {
 		model.addAttribute("userid", userid);
 
 		System.out.println("here2");
-		return "BookMark/bookMark";
+		
+		if (user.isDisabled()) {//장애인
+
+			return "BookMark/bookMark2";
+
+		} else {//비장애인
+			return "BookMark/bookMark";
+
+		}
 
 	}
 
@@ -78,7 +86,14 @@ public class BookMarkController {
 		bookMark.setUser(user);
 		model.addAttribute("bookMark", bookMark);
 
-		return "BookMark/bookMarkForm";
+		if (user.isDisabled()) {//장애인
+
+			return "BookMark/bookMarkForm2";
+
+		} else {//비장애인
+			return "BookMark/bookMarkForm";
+
+		}
 	}
 
 	@PostMapping("/create")
@@ -196,7 +211,15 @@ public class BookMarkController {
 
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
-		return "BookMark/transfer";
+
+		if (user.isDisabled()) {//장애인
+
+			return "BookMark/transfer2";
+
+		} else {//비장애인
+			return "BookMark/transfer";
+
+		}
 	}
 
 	@PostMapping("/transferbookmark")

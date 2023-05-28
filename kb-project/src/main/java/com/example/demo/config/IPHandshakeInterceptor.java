@@ -14,14 +14,17 @@ import java.util.Map;
 @Component
 public class IPHandshakeInterceptor implements HandshakeInterceptor {
 
+	
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
                                    WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
         if (request instanceof ServletServerHttpRequest) {
             HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
             String clientIp = servletRequest.getRemoteAddr();
+            
             attributes.put("clientIp", clientIp);
         }
+        
         return true;
     }
 
@@ -30,4 +33,5 @@ public class IPHandshakeInterceptor implements HandshakeInterceptor {
                                WebSocketHandler wsHandler, Exception exception) {
         // Do nothing
     }
+    
 }
