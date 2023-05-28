@@ -6,22 +6,21 @@
 <title>BookMarks</title>
 
 </head>
-<body>
+<body style="background-color: black;">
 	<!-- ======= Header ======= -->
-	<header th:replace="/fragments/header.html :: header"></header>
+	<header th:replace="/fragments/header2.html :: header"></header>
 	<!-- End Header -->
-	<link href="/css/modal.css" rel="stylesheet">
-	<link href="/css/table.css" rel="stylesheet">
+	<link href="/css/modal2.css" rel="stylesheet">
 	<div id="box" class="container"
-		style="margin-top: 105px; background-color: #FFFFFF; width: 800px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
+		style="margin-top: 250px; margin-left: 250px; background-color: #000000; width: 1000px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
 		<div class="p-2 text-center">
-				<h2>즐겨찾기</h2>
+				<h2 style="font-size: 60px; color: yellow">즐겨찾기</h2>
 			</div>
 		<div class="container"
-			style="overflow: auto; width: 500px; height: 480px;">
+			style="overflow: auto; width: 1000px; height: 480px;">
 			<table th:each="bookMark : ${bookMarks}"
-				style="border: 1px solid black; margin: 15px; margin-left: auto; margin-right: auto;">
-				<thead>
+				style="border: 1px solid black; margin: 15px; margin-left: auto; margin-right: auto; width:1000px">
+				<thead style="font-size: 60px; color: yellow">
 					<tr>
 						<th>이름</th>
 						<th>계좌번호</th>
@@ -29,7 +28,7 @@
 						<th>송금</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody style="font-size: 60px; color: yellow">
 					<tr>
 						<td th:text="${bookMark.bookMarkName}"></td>
 						<td th:text="${bookMark.bookMarkAccountNumber}"></td>
@@ -41,18 +40,18 @@
 				</tbody>
 			</table>
 		</div>
-		<a th:href="@{/bookmarks/create}"><button class="custom-btn btn-3">
+		<a th:href="@{/bookmarks/create}"><button style="background-color: black; width: 400px; height: 100px; font-size: 40px; color: yellow; border-color: yellow">
 				<span>즐겨찾기 추가</span>
-			</button></a> <a th:href="@{/users/main}"><button class="custom-btn btn-3">
+			</button></a> <a th:href="@{/users/main}"><button style="background-color: black; width: 400px; height: 100px; font-size: 40px; color: yellow; border-color: yellow; margin-left: 50px;">
 				<span>메인으로 돌아가기</span>
 			</button></a>
 	</div>
 	
 	<div id="preloader"></div>
 	<!-- 모달 창 -->
-	<div id="myModal" style="display: none;">
+	<div id="myModal" style="display: none; width: 800px; height: 800px; margin-left: 0px">
 		<span class="close" onclick="closeModal()">&times;</span>
-		<iframe id="modalIframe" src="" frameborder="0"></iframe>
+		<iframe id="modalIframe" src="" frameborder="0" style="margin-left: 50px; width: 1000px"></iframe>
 	</div>
 
 	<script
