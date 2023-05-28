@@ -61,6 +61,14 @@
 
 	<!-- Template Main JS File -->
 	<script src="/assets/js/main.js"></script>
-
-</body>
+ 
+	
+	<script th:inline="javascript">
+    /* 송금 완료 메시지 표시 */
+    var successMessage = /*[[${successMessage}]]*/ null;
+    if (successMessage) {
+        alert(successMessage);
+    }
+</script>
+ </body>
 </html>
