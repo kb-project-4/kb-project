@@ -218,7 +218,7 @@ public class BookMarkController {
 
 		if (!iscorrect) {
 			result.rejectValue("account_password", "password.mismatch", "비밀번호가 틀렸습니다.");
-			redirectAttributes.addFlashAttribute("errorMessage", "계좌번호비밀번호 오류");
+			redirectAttributes.addFlashAttribute("errorMessage", "비밀번호 오류");
 
 			System.out.println("계좌비밀번호가 일치하지않음.");
 			System.out.println("recipient banknumber" + log.getRecipient_banknumber());

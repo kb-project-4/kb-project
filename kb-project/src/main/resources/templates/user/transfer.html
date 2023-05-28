@@ -49,6 +49,12 @@
 				<label for="account_password">계좌 비밀번호:</label> <input type="text"
 					id="account_password" th:field="*{account_password}" />
 			</div>
+
+			<div th:if="${errorMessage}"
+				style="margin-top: 10px; margin-bottom: 0px;">
+				<p style="color: #FE3004;" th:text="${errorMessage}"></p>
+			</div>
+
 			<div class="frame">
 				<button type="submit" class="custom-btn btn-3">
 					<span>송금</span>
