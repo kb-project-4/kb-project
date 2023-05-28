@@ -65,7 +65,8 @@ public class UserController {
 	}
 
 	@PostMapping("/users/new")
-	public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, HttpServletRequest request) {
+	public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result,
+			HttpServletRequest request) {
 		if (result.hasErrors()) {
 			return "user/new";
 		}
@@ -122,8 +123,7 @@ public class UserController {
 			session.setAttribute("user", userByUserId); // 세션에 사용자 정보 저장
 			if (userByUserId.isDisabled() == false) {
 				return "redirect:/users/main";
-			}
-			else {
+			} else {
 				System.out.println("장애인");
 				return "redirect:/users/main";
 			}
@@ -168,7 +168,7 @@ public class UserController {
 	public String transferform(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		Long id = user.getId();//세션갱신이 안되기 땜에 갱신하기 위해서 유저 아이디를 받아오고 밑에 유저값을 다시 받아온다.
+		Long id = user.getId();// 세션갱신이 안되기 땜에 갱신하기 위해서 유저 아이디를 받아오고 밑에 유저값을 다시 받아온다.
 		Optional<User> user2 = userService.getUserById(id);
 		Long userId = user.getId();
 		System.out.println("유저 아이디" + userId);
@@ -179,7 +179,7 @@ public class UserController {
 
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
-		return "user/transfer";
+		return "user/transfer2";
 	}
 
 	@PostMapping("/transfer")
@@ -218,7 +218,6 @@ public class UserController {
 			bankaccountservice.transferToUser(log, user);
 			return "redirect:/users/main";
 		}
-
 	}
 
 	static boolean verifypassword(User user, String account_password) {
@@ -230,7 +229,5 @@ public class UserController {
 
 		return false;
 	}
-
-
 
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<head th:fragment="head" >
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	
@@ -53,7 +53,7 @@
 
 <!-- ======= Header ======= -->
 <header th:fragment="header" id="header" class="header d-flex align-items-center"
-	style="background: rgb(0, 172, 238); background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);">
+	style="background-color: black">
 	<div
 		class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
@@ -65,14 +65,14 @@
 			</h1>
 		</a> <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i> <i
 			class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-		<nav id="navbar" class="navbar">
+		<nav id="navbar" class="navbar" >
 			<ul>
-				<li><a href="/users/main"><span style="font-size:1.5em;">Main</span></a></li>
-				<li><a th:href="@{/transfer}"><span style="font-size:1.5em;">송금</span></a></li>
-				<li><a th:href="@{/bankaccounts}"><span style="font-size:1.5em;">계좌조회</span></a></li>
-				<li><a th:href="@{/bookmarks}"><span style="font-size:1.5em;">즐겨찾기</span></a></li>
-				<li><a href=""><span style="font-size:1.5em;">뉴스</span></a></li>
-				<li><a th:href="@{/logout}"><span style="font-size:1.5em;">로그아웃</span></a></li>
+				<li><a href="/users/main"><span style="font-size:3.5em; color:yellow;">Main</span></a></li>
+				<li><a th:href="@{/transfer}"><span style="font-size:3.5em; color:yellow;">송금</span></a></li>
+				<li><a th:href="@{/bankaccounts}"><span style="font-size:3.5em; color:yellow;">계좌조회</span></a></li>
+				<li><a th:href="@{/bookmarks}"><span style="font-size:3.5em; color:yellow;">즐겨찾기</span></a></li>
+				<li><a href=""><span style="font-size:3.5em; color:yellow;">뉴스</span></a></li>
+				<li><a th:href="@{/logout}"><span style="font-size:3.5em; color:yellow;">로그아웃</span></a></li>
 			</ul>
 		</nav>
 		<!-- .navbar -->
@@ -80,7 +80,7 @@
 	</div>
 </header>
 <!-- End Header -->
-<body>
+<body >
 
 	
 
