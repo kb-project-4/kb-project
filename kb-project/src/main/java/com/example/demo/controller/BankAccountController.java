@@ -43,7 +43,15 @@ public class BankAccountController {
 		List<BankAccount> bankAccounts = bankAccountService.getBankAccountByUser(user);
 
 		model.addAttribute("bankAccounts", bankAccounts);
-		return "bankaccount/list";
+
+		if (user.isDisabled()) {//장애인
+
+			return "bankaccount/list2";
+
+		} else {//비장애인
+			return "bankaccount/list";
+
+		}
 
 	}
 
@@ -60,6 +68,7 @@ public class BankAccountController {
 
 		bankAccountService.createBankAccount(bankAccount, bank, user);
 
+		
 		return "redirect:/bankaccounts";
 
 	}
@@ -68,8 +77,17 @@ public class BankAccountController {
 	@GetMapping("/bankaccounts/create")
 	public String createBankAccountform(Model model) {
 		model.addAttribute("bankAccount", new BankAccount());
+		
 		return "bankaccount/create";
 
+	}
+	
+	@GetMapping("/bankaccounts/create2")
+	public String createBankAccountform2(Model model) {
+		model.addAttribute("bankAccount", new BankAccount());
+		
+		return "bankaccount/create2";
+		
 	}
 
 //계좌 생성
@@ -111,8 +129,7 @@ public class BankAccountController {
 		System.out.println("controller bankaccount" + bankAccountDto.toString());
 		bankAccountService.setmainAccount(bankAccountDto);
 		System.out.println("success modify");
-		
-		
+
 		return "redirect:/bankaccounts";
 
 	}

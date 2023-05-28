@@ -42,14 +42,26 @@ public class LogController {
 	}
 
 	@GetMapping("/log/{myaccountnumber}") //
-	public String getlogs(@PathVariable("myaccountnumber") String myaccountnumber, Model model) {
+	public String getlogs(@PathVariable("myaccountnumber") String myaccountnumber, Model model,
+			HttpServletRequest request) {
 
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
 		List<Log> logs = logService.getlogs(myaccountnumber);
 		System.out.println("myaccountnumber" + myaccountnumber);
 		System.out.println("logs" + logs.toString());
 		model.addAttribute("Log", logs);
-		return "log/logs";
-		
+
+		if (user.isDisabled()) {//장애인
+
+			return "log/logs2";
+
+		} else {//비장애인
+			return "log/logs";
+
+		}
+
 	}
 
 	// 다른 HTTP 요청에 대한 메서드 작성 (계좌 생성, 수정, 삭제 등)
