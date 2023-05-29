@@ -32,7 +32,6 @@ public class Log extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -42,6 +41,7 @@ public class Log extends BaseEntity {
 	private String recipient_banknumber;
 	private String category;
 	private String sender_banknumber;
+	private String sender_name;
 	private Long amount;
 
 }

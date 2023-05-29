@@ -126,8 +126,11 @@ public class BankAccountService {
 		transferDto.setRecipient_name(recipient_name);
 		transferDto.setUser(sender);
 		transferDto.setSender_banknumber(sender.getBankAccounts().get(0).getAccountNumber());
+		transferDto.setSender_name(sender.getUsername());
 
 		System.out.println(transferDto);
+		System.out.println("sender name2" + transferDto.getSender_name());
+
 		transferToUser(transferDto, sender);
 	}
 
@@ -139,6 +142,7 @@ public class BankAccountService {
 		BankAccount mybankAccount = new BankAccount();
 
 		System.out.println("senderbanknum" + transferDto.getSender_banknumber().toString());
+		System.out.println("sendername" + transferDto.getSender_name());
 		mybankAccount = bankAccountRepository.findByAccountNumber(transferDto.getSender_banknumber());
 		System.out.println(mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
@@ -170,9 +174,10 @@ public class BankAccountService {
 
 			TransferDto transfergetDto = TransferDto.builder().amount(transferDto.getAmount()).category("입금")
 					.recipient_banknumber(transferDto.getRecipient_banknumber())
-					.sender_banknumber(transferDto.getSender_banknumber())
+					.sender_banknumber(transferDto.getSender_banknumber()).sender_name(transferDto.getSender_name())
 					.recipient_name(transferDto.getRecipient_name()).user(user1).build();
 
+			System.out.println("transfergetdto sendername" + transfergetDto.getSender_name());
 			Log logentityget = transfergetDto.toEntity();// 입금
 
 			logService.save(logentity);
