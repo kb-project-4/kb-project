@@ -39,7 +39,7 @@ public class Log {
 	private String recipient_name;
 	private String recipient_banknumber;
 	private String category;
-	private String my_banknumber;
+	private String sender_banknumber;
 
 	private Long amount;
 

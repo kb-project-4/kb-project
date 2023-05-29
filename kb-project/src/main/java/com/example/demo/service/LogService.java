@@ -14,6 +14,7 @@ import com.example.demo.dto.BankAccountDto;
 import com.example.demo.dto.TransferDto;
 import com.example.demo.entity.BankAccount;
 import com.example.demo.entity.Log;
+import com.example.demo.entity.User;
 import com.example.demo.repository.LogRepository;
 
 @Service
@@ -31,17 +32,18 @@ public class LogService {
 //		this.bankAccountRepository = bankAccountRepository;
 	}
 
-	public void update(Log logentity) {
+	public void save(Log logentity) {
 
 		logRepository.save(logentity); // 계좌 내역 저장
 	}
 
-	public List<Log> getlogs(String mybanknumber) {
+	public List<Log> getlogs(User user, String mybanknumber) {
 		List<Log> logs = logRepository.findAll();
 		List<Log> logsList = new ArrayList<Log>();
-
-		for (Log log : logs) {
-			if (log.getMy_banknumber().equals(mybanknumber)) {
+		String userid = user.getUserid();
+		for (Log log : logs) { //
+			if (log.getUser().getUserid().equals(userid) && (log.getRecipient_banknumber().equals(mybanknumber)
+					|| log.getSender_banknumber().equals(mybanknumber))) {
 
 				logsList.add(log);
 			}

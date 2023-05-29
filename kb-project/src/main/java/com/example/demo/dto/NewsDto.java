@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.example.demo.entity.News;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -48,7 +48,7 @@ public class LogController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		List<Log> logs = logService.getlogs(myaccountnumber);
+		List<Log> logs = logService.getlogs(user,myaccountnumber);
 		System.out.println("myaccountnumber" + myaccountnumber);
 		System.out.println("logs" + logs.toString());
 		model.addAttribute("Log", logs);

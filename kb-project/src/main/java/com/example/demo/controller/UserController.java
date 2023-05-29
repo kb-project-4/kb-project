@@ -226,7 +226,7 @@ public class UserController {
 		Long userId = user.getId();
 		System.out.println("유저 아이디" + userId);
 		TransferDto transferDto = new TransferDto();
-		transferDto.setSender(user2.get());
+		transferDto.setUser(user2.get());
 		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(userId);
 		System.out.println(bankAccounts);
 
@@ -249,10 +249,10 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
-		log.setSender(user);
+		log.setUser(user);
 		log.setCategory("송금");
 		System.out.println(log);
-		System.out.println("user" + log.getSender().getUsername());
+		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
 		String account_password = log.getAccount_password();
@@ -279,6 +279,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("successMessage", "송금이 완료되었습니다."); // 송금 완료 메시지를 추가합니다.
 			return "redirect:/users/main";
 		}
+
 	}
 
 	static boolean verifypassword(User user, String account_password) {

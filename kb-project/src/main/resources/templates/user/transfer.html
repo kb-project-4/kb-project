@@ -31,7 +31,7 @@
 					class="form-select" aria-label="Floating label select example"
 					id="my_banknumber" name="sender_banknumber"
 					th:field="*{sender_banknumber}">
-					<option th:each="bankAccount : ${Log.sender.bankAccounts}"
+					<option th:each="bankAccount : ${Log.user.bankAccounts}"
 						th:value="${bankAccount.accountNumber}"
 						th:text="${bankAccount.accountNumber}"></option>
 				</select>
