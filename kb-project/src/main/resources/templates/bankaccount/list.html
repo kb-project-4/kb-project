@@ -13,53 +13,68 @@
 	<header th:replace="/fragments/header.html :: header"></header>
 	<!-- End Header -->
 	<link href="/css/table.css" rel="stylesheet">
-	    <style>
-        .account-info-container {
-            display: flex;
-            flex-direction: column;
-        }
-        .account-info {
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #f8f8f8;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .account-info .left-section {
-            display: flex;
-            flex-direction: column;
-        }
-        .account-info .left-section .bank-name {
-            font-weight: bold;
-            font-size: 99px;
-            margin-bottom: 5px;
-        }
-        .account-info .left-section .account-number {
-            color: #888;
-            margin-bottom: 5px;
-            	
-        }
-        .account-info .balance {
-            font-weight: bold;
-            font-size: 20px;
-            align-self: flex-end;
-        }
-        .account-info .btn {
-            margin-top: 50px;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 3px;
-            transition: background-color 0.3s ease;
-        }
-        .account-info .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+	<style>
+.account-info-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.account-info {
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px; <<<<<<<
+	HEAD padding: 10px; =======
+	padding: 20px; >>>>>>> 400910
+	eee91eccb99be68c6cee9f7e09dc182991 background-color: #f8f8f8;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.account-info .left-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.account-info .left-section .bank-name {
+	font-weight: bold; <<<<<<<
+	HEAD font-size: 99px;
+	margin-bottom: 5px;
+}
+
+.account-info .left-section .account-number {
+	color: #888; =======
+	font-size: 24px;
+	margin-bottom: 5px;
+}
+
+.account-info .left-section .account-number {
+	font-weight: bold;
+	font-size: 24px; >>>>>>> 400910
+	eee91eccb99be68c6cee9f7e09dc182991 margin-bottom: 5px;
+}
+
+.account-info .balance {
+	font-weight: bold; <<<<<<<
+	HEAD font-size: 20px; =======
+	font-size: 30px; >>>>>>> 400910
+	eee91eccb99be68c6cee9f7e09dc182991 align-self: flex-end;
+}
+
+.account-info .btn {
+	margin-top: 50px;
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 3px;
+	transition: background-color 0.3s ease;
+}
+
+.account-info .btn:hover {
+	background-color: #0056b3;
+}
+</style>
 
 
 	<div th:if="${bankAccounts != null}" id="box" class="container"
@@ -68,9 +83,15 @@
 			<h2>계좌조회</h2>
 		</div>
 		<div class="account-info-container">
-			<div class="account-info" th:each="bankAccount : ${bankAccounts}" >
-				<div class="bank-name" th:text="${bankAccount.bank.bankname}"></div>
-				<div class="account-number" th:text="${bankAccount.accountNumber}"></div>
+
+			<div class="account-info" th:each="bankAccount : ${bankAccounts}">
+				<div class="left-section">
+					<div class="bank-name" th:text="${bankAccount.bank.bankname}"></div>
+				</div>
+				<div class="left-section">
+					<div class="account-number" th:text="${bankAccount.accountNumber}"></div>
+				</div>
+				<hr>
 				<span class="balance"
 					th:text="${#numbers.formatDecimal(bankAccount.amount, 0, 'COMMA', 0, 'POINT')} + '원'"></span>
 				<a class="btn"
@@ -95,7 +116,7 @@
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 		crossorigin="anonymous"></script>
 
-	<!-- Vendor JS Files -->
+	<!— Vendor JS Files —>
 	<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="/assets/vendor/aos/aos.js"></script>
 	<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
@@ -104,7 +125,7 @@
 	<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
 	<script src="/assets/vendor/php-email-form/validate.js"></script>
 
-	<!-- Template Main JS File -->
+	<!— Template Main JS File —>
 	<script src="/assets/js/main.js"></script>
 
 </body>

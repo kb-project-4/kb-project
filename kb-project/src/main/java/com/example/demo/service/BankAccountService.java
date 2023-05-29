@@ -129,7 +129,7 @@ public class BankAccountService {
 		transferDto.setSender_name(sender.getUsername());
 
 		System.out.println(transferDto);
-		System.out.println("sender name" + transferDto.getSender_name());
+		System.out.println("sender name2" + transferDto.getSender_name());
 
 		transferToUser(transferDto, sender);
 	}
