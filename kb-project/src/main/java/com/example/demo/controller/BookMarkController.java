@@ -141,6 +141,28 @@ public class BookMarkController {
 		return "redirect:create";
 	}
 
+	@GetMapping("/edit/{id}")
+	public String editBookMark(@PathVariable("id") Long id, Model model) {
+		BookMark bookMark = bookMarkService.getBookMarkById(id);
+
+		if (bookMark != null) {
+			model.addAttribute("bookMark", bookMark);
+			return "BookMark/bookMarkFormEdit";
+		} else {
+			// Handle error when bookmark is not found
+			return "redirect:/bookmarks";
+		}
+	}
+
+	@PostMapping("/edit/{id}")
+	public String updateBookMark(@PathVariable("id") Long id, @ModelAttribute("bookMark") BookMarkDto updatedBookMark) {
+		BookMark bookMark = bookMarkService.updateBookMark(id, updatedBookMark);
+		if (bookMark != null) {
+			return "redirect:/bookmarks";
+		}
+		return "error";
+	}
+
 	@GetMapping("/delete/{id}")
 	public String deleteBookMark(@PathVariable("id") Long id) {
 		// Delete the bookmark from the database
@@ -213,7 +235,7 @@ public class BookMarkController {
 		else {
 			System.out.println("계좌비밀번호가 일치.");
 			bankaccountservice.transferToUser(log, user);
-			return "user/transferok";
+			return "redirect:/bookmarks";
 		}
 
 	}
