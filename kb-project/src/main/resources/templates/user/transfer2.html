@@ -33,7 +33,7 @@
 					aria-label="Floating label select example" id="my_banknumber"
 					name="sender_banknumber" th:field="*{sender_banknumber}"
 					style="width: 1000px; height: 100px; font-size: 60px">
-					<option th:each="bankAccount : ${Log.sender.bankAccounts}"
+					<option th:each="bankAccount : ${Log.user.bankAccounts}"
 						th:value="${bankAccount.accountNumber}"
 						th:text="${bankAccount.accountNumber}"></option>
 				</select>

@@ -27,7 +27,7 @@
 				class="form-select" aria-label="Floating label select example"
 				id="my_banknumber" name="sender_banknumber"
 				th:field="*{sender_banknumber}" style="font-size:60px; border-color:yellow; background-color: black; color: yellow">
-				<option th:each="bankAccount : ${Log.sender.bankAccounts}"
+				<option th:each="bankAccount : ${Log.user.bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}" style= "border-color: yellow; background-color: yellow"></option>
 			</select>

@@ -27,7 +27,7 @@
 				class="form-select" aria-label="Floating label select example"
 				id="my_banknumber" name="sender_banknumber"
 				th:field="*{sender_banknumber}">
-				<option th:each="bankAccount : ${Log.sender.bankAccounts}"
+				<option th:each="bankAccount : ${Log.user.bankAccounts}"
 					th:value="${bankAccount.accountNumber}"
 					th:text="${bankAccount.accountNumber}"></option>
 			</select>
@@ -60,13 +60,61 @@
 		</div>
 
 		<div class="frame" style="margin-top: 10px;">
-			<button type="submit" class="custom-btn btn-3">
+			<button type="submit" class="custom-btn btn-3" onclick="submitTransferForm(event)">
 				<span>송금</span>
 			</button>
 		</div>
-
-
-
 	</form>
+
+	<script>
+  function submitTransferForm(event) {
+    event.preventDefault(); // 폼 제출 기본 동작 방지
+
+    // 입력값 확인
+    var recipientName = document.getElementById('recipient_name').value;
+    var recipientBankNumber = document.getElementById('recipient_banknumber').value;
+    var senderBankNumber = document.getElementById('my_banknumber').value;
+    var amount = document.getElementById('amount').value;
+    var accountPassword = document.getElementById('account_password').value;
+
+    if (
+      recipientName === '' ||
+      recipientBankNumber === '' ||
+      senderBankNumber === '' ||
+      amount === '' ||
+      accountPassword === ''
+    ) {
+      alert('값을 입력해주세요.');
+      return;
+    }
+
+    // 폼 데이터 전송 처리
+    var form = document.querySelector('form');
+    var formData = new FormData(form);
+    fetch(form.action, {
+      method: form.method,
+      body: formData
+    }).then(function(response) {
+      if (response.ok) {
+        closeModal(); // 모달 닫기
+        refreshBookmarks(); // 북마크 목록 새로고침
+        alert('송금이 완료되었습니다.'); // 송금 완료 알림
+      }
+    });
+  }
+
+  // 모달 닫기
+  function closeModal() {
+    var modal = parent.document.getElementById('myModal');
+    var iframe = parent.document.getElementById('modalIframe');
+    modal.style.display = 'none';
+    iframe.src = ''; // 모달 내부 iframe 초기화
+  }
+
+  // 북마크 목록 새로고침
+  function refreshBookmarks() {
+    parent.location.reload(); // 부모 창(북마크 목록 페이지) 새로고침
+  }
+</script>
 </body>
 </html>
