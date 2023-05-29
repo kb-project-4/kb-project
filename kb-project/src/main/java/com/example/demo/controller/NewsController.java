@@ -1,44 +1,28 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import com.example.demo.entity.BankAccount;
-import com.example.demo.entity.News;
-import com.example.demo.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.TransferDto;
-import com.example.demo.dto.Login;
 import com.example.demo.dto.NewsDto;
-import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
-import com.example.demo.service.BankAccountService;
-import com.example.demo.service.LogService;
-import com.example.demo.service.NewsService;
-import com.example.demo.service.UserService;
 
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.example.demo.service.NewsService;
+
 
 @Controller
 public class NewsController {
 
 	@Autowired
-	private LogService logService;
-
-	@Autowired
 	private NewsService newsService;
-
-	@Autowired
-	private BankAccountRepository bankAccountRepository;
 
 	@GetMapping("/news")
 	public String getNews(Model model, HttpServletRequest request) {
@@ -46,10 +30,9 @@ public class NewsController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		newsService.savenews();
-		List<News> news = newsService.getallnews();
-		System.out.println("newsList" + news.toString());
-		model.addAttribute("newsList", news);
+		List<Map<String, String>> newsUrlCrawler = newsService.newsUrlCrawler();
+		
+		model.addAttribute("newsList", newsUrlCrawler);
 
 		if (user.isDisabled()) {// 장애인
 
@@ -60,5 +43,28 @@ public class NewsController {
 		}
 
 	}
+	
+
+    @GetMapping("/news/detail/{title}")
+    public String getNewsDetail(Model model, HttpServletRequest request, @PathVariable("title") String title) throws IOException {
+        List<Map<String, String>> newsUrlCrawler = newsService.newsUrlCrawler();
+
+        String newsUrl = null;
+        for (Map<String, String> news : newsUrlCrawler) {
+            if (title.equals(news.get("title"))) {
+                newsUrl = news.get("url");
+                break;
+            }
+        }
+
+        if (newsUrl != null) {
+            NewsDto newsDto = newsService.newsDetailsCrawler(newsUrl);
+            model.addAttribute("news", newsDto);
+        } else {
+            model.addAttribute("msg", "error");
+        }
+
+        return "news/newsDetail";
+    }
 
 }

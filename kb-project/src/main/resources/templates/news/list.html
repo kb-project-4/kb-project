@@ -7,55 +7,22 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<style>
-/* 추가적인 CSS 스타일은 이곳에 작성하세요 */
-
-/* 테이블 스타일 */
-table {
-	width: 100%;
-	margin-bottom: 1rem;
-	color: #212529;
-	vertical-align: middle;
-}
-
-thead {
-	background-color: #f8f9fa;
-}
-
-th, td {
-	padding: 0.75rem;
-	vertical-align: top;
-	border-top: 1px solid #dee2e6;
-}
-
-tbody tr:nth-of-type(even) {
-	background-color: #f2f2f2;
-}
-</style>
 </head>
 <body>
-	<h1>News</h1>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Content</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="news : ${newsList}">
-				<td th:text="${news.title}"></td>
-				<td th:text="${news.content}"></td>
-			</tr>
-		</tbody>
-	</table>
+	<h1>뉴스 리스트</h1>
+	<ul>
+		<li th:each="news : ${newsList}"><a
+			th:href="@{/news/detail/{title}(title=${news.title})}"
+			th:text="${news.title}"></a></li>
+	</ul>
 
-	<!-- Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

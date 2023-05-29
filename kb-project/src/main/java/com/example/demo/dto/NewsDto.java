@@ -26,17 +26,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewsDto {
-	private Long id;
 
 	private String title;
 	private String content;
 	private String date;
-
-	public News toEntity() {
-		// TODO Auto-generated method stub
-
-		return News.builder().content(content).date(date).title(title).build();
-
-	}
 
 }
