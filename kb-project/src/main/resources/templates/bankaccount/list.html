@@ -17,6 +17,8 @@
         .account-info-container {
             display: flex;
             flex-direction: column;
+            width:100%;
+            height: 450px;
         }
         .account-info {
             margin-bottom: 10px;
@@ -62,14 +64,15 @@
         }
     </style>
 
-
 	<div th:if="${bankAccounts != null}" id="box" class="container"
-		style="margin-top: 105px; background-color: #FFFFFF; width: 800px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
+		style="margin-top: 105px; background-color: #FFFFFF;
+		 width: 800px; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
 		<div class="p-2 text-center">
 			<h2>계좌조회</h2>
 		</div>
+		<div class="container" style="overflow: auto; margin-bottom: 20px;">
 		<div class="account-info-container">
-			<div class="account-info" th:each="bankAccount : ${bankAccounts}">
+			<div class="account-info" th:each="bankAccount : ${bankAccounts}" >
 				<div class="left-section">
 				<div class="bank-name" th:text="${bankAccount.bank.bankname}"></div>
 				</div>
@@ -83,6 +86,7 @@
 					th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}">
 					계좌내역 </a>
 			</div>
+		</div>
 		</div>
 		<a href="/bankaccounts/create"><button class="custom-btn btn-3">
 				<span>계좌생성</span>
