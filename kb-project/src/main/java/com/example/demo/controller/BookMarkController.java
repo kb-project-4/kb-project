@@ -141,28 +141,6 @@ public class BookMarkController {
 		return "redirect:create";
 	}
 
-	@GetMapping("/edit/{id}")
-	public String editBookMark(@PathVariable("id") Long id, Model model) {
-		BookMark bookMark = bookMarkService.getBookMarkById(id);
-
-		if (bookMark != null) {
-			model.addAttribute("bookMark", bookMark);
-			return "BookMark/bookMarkFormEdit";
-		} else {
-			// Handle error when bookmark is not found
-			return "redirect:/bookmarks";
-		}
-	}
-
-	@PostMapping("/edit/{id}")
-	public String updateBookMark(@PathVariable("id") Long id, @ModelAttribute("bookMark") BookMarkDto updatedBookMark) {
-		BookMark bookMark = bookMarkService.updateBookMark(id, updatedBookMark);
-		if (bookMark != null) {
-			return "redirect:/bookmarks";
-		}
-		return "error";
-	}
-
 	@GetMapping("/delete/{id}")
 	public String deleteBookMark(@PathVariable("id") Long id) {
 		// Delete the bookmark from the database
@@ -170,28 +148,6 @@ public class BookMarkController {
 
 		return "redirect:/bookmarks";
 	}
-//
-//	@GetMapping("/transferbookmark/{recepientAccountNumber}")
-//	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
-//			HttpServletRequest request) {
-//
-//		System.out.println("transferbookmark");
-//		HttpSession session = request.getSession();
-//		User user = (User) session.getAttribute("user");
-//		String userid = user.getUserid();
-//		TransferDto transferDto = new TransferDto();
-//		transferDto.setSender(user);
-//		transferDto.setRecipient_banknumber(recepientAccountNumber);
-//
-//		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
-//		String recipient_name = bankAccount.getUser().getUsername();
-//		transferDto.setRecipient_name(recipient_name);
-//
-//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
-//
-//		model.addAttribute("Log", transferDto);
-//		return "BookMark/transfer";
-//	}
 
 	@GetMapping("/transferbookmark/{recepientAccountNumber}")
 	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,

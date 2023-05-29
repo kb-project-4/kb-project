@@ -39,26 +39,26 @@ public class UserController {
 
 	@Autowired
 	private BankAccountRepository bankAccountRepository;
-
-	@GetMapping("/users")
-	public String getUsers(Model model, HttpServletRequest request) {
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		List<User> userList = userService.getAllUsers();
-		model.addAttribute("users", userList);
-
-		if (user.isDisabled()) {// 장애인
-
-			return "user/list2";
-
-		} else {// 비장애인
-			return "user/list";
-
-		}
-
-	}
+//
+//	@GetMapping("/users")
+//	public String getUsers(Model model, HttpServletRequest request) {
+//
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("user");
+//
+//		List<User> userList = userService.getAllUsers();
+//		model.addAttribute("users", userList);
+//
+//		if (user.isDisabled()) {// 장애인
+//
+//			return "user/list2";
+//
+//		} else {// 비장애인
+//			return "user/list";
+//
+//		}
+//
+//	}
 
 	@GetMapping("/users/{id}")
 	public String getUser(@PathVariable("id") Long id, Model model) {
