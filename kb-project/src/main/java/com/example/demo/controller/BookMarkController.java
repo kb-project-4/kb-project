@@ -185,6 +185,7 @@ public class BookMarkController {
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
+		System.out.println("transferdto.tostring" + transferDto.toString());
 		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(user.getId());
 
 		model.addAttribute("Log", transferDto);
@@ -209,6 +210,7 @@ public class BookMarkController {
 
 		log.setUser(user);
 		log.setCategory("송금");
+		log.setSender_name(user.getUsername());
 		System.out.println(log);
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
