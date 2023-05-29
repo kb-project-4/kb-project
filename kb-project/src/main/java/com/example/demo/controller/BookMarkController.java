@@ -257,7 +257,7 @@ public class BookMarkController {
 		else {
 			System.out.println("계좌비밀번호가 일치.");
 			bankaccountservice.transferToUser(log, user);
-			return "redirect:/users/main";
+			return "user/transferok";
 		}
 
 	}

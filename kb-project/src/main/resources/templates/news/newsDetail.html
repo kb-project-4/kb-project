@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="/css/button.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>News Detail</title>
+</head>
+<body>
+	<div id="box" class="row justify-content-center col-md-5 mx-auto"
+		style="margin-top: 20px; background-color: #FFFFFF; overflow: auto; width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
+		<div class="p-2 text-center">
+			<h1 th:text="${news.title}"></h1>
+		</div>
+		<hr>
+		<div class="container" style="width: 100%; height: 600px;">
+			<p th:text="${news.content}"></p>
+			<hr>
+			<p th:text="${news.date}"></p>
+		</div>
+	</div>
+	<div class="container" style="margin-top: 10px">
+		<button style="margin-left:17.5%;" class="custom-btn btn-1" id="startBtn">
+			<span>읽기</span>
+		</button>
+		<button class="custom-btn btn-1" id="stopBtn">
+			<span>멈추기</span>
+		</button>
+	</div>
+	<script>
+        const titleElement = document.querySelector("h1");
+        const contentElement = document.querySelector("p");
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
+
+        let utterance = new SpeechSynthesisUtterance();
+        let isSpeaking = false;
+        let resumePosition = 0; // 읽기를 재개할 위치 저장
+
+        // 음성 합성 설정
+        utterance.lang = "ko-KR";
+        utterance.volume = 1; // 음량 설정
+        utterance.rate = 0.9; // 읽는 속도 설정
+        utterance.pitch = 0.98; // 음높이 설정
+
+        // 시작 버튼 클릭 이벤트 핸들러
+        startBtn.addEventListener("click", () => {
+            startSpeaking();
+        });
+
+        // 중지 버튼 클릭 이벤트 핸들러
+        stopBtn.addEventListener("click", () => {
+            stopSpeaking();
+        });
+
+        // 페이지 이탈 시 음성 합성 종료
+        window.addEventListener("beforeunload", () => {
+            if (isSpeaking) {
+                stopSpeaking();
+            }
+        });
+
+        // 음성 합성 시작 함수
+        function startSpeaking() {
+            const title = titleElement.innerText;
+            const content = contentElement.innerText;
+
+            // 기사 제목과 내용을 합쳐서 읽기
+            const fullText = `${title} ${content}`;
+
+            // 중지된 위치 이후의 텍스트만 추출하여 읽기
+            const resumedText = fullText.substring(resumePosition);
+
+            let textChunks = splitTextIntoChunks(resumedText);
+
+            speakChunks(textChunks);
+        }
+
+        // 음성 합성 종료 함수
+        function stopSpeaking() {
+            window.speechSynthesis.cancel();
+            isSpeaking = false;
+            resumePosition = utterance.text.length; // 읽은 텍스트의 길이를 저장하여 다시 시작할 때 해당 위치부터 읽기
+        }
+
+        // 텍스트를 '.'과 ','을 기준으로 나누는 함수
+        function splitTextIntoChunks(text) {
+            let chunks = [];
+            let startIndex = 0;
+            let endIndex = 0;
+
+            while (endIndex < text.length) {
+                if (text[endIndex] === '. ' || text[endIndex] === ',') {
+                    const chunk = text.substring(startIndex, endIndex + 1).trim();
+                    chunks.push(chunk);
+                    startIndex = endIndex + 1;
+                }
+                endIndex++;
+            }
+
+            if (startIndex < endIndex) {
+                const chunk = text.substring(startIndex).trim();
+                chunks.push(chunk);
+            }
+
+            return chunks;
+        }
+
+        // 구간별로 읽기 함수
+        function speakChunks(chunks) {
+            if (chunks.length === 0) {
+                isSpeaking = false;
+                return;
+            }
+
+            let currentChunk = chunks.shift();
+
+            utterance.text = currentChunk;
+            window.speechSynthesis.speak(utterance);
+            isSpeaking = true;
+
+            utterance.onend = () => {
+                setTimeout(() => {
+                    speakChunks(chunks);
+                }, 200); // 일정 시간 동안 쉬는 효과를 주기 위해 0.5초 대기
+            };
+        }
+    </script>
+
+</body>
+</html>
