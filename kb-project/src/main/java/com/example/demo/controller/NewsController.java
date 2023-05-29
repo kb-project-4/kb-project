@@ -14,39 +14,34 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.NewsDto;
 import com.example.demo.entity.User;
-
 import com.example.demo.service.NewsService;
-
 
 @Controller
 public class NewsController {
 
-	@Autowired
-	private NewsService newsService;
+    @Autowired
+    private NewsService newsService;
 
-	@GetMapping("/news")
-	public String getNews(Model model, HttpServletRequest request) {
+    @GetMapping("/news")
+    public String getNews(Model model, HttpServletRequest request) {
 
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
 
-		List<Map<String, String>> newsUrlCrawler = newsService.newsUrlCrawler();
-		
-		model.addAttribute("newsList", newsUrlCrawler);
+        List<Map<String, String>> newsUrlCrawler = newsService.newsUrlCrawler();
 
-		if (user.isDisabled()) {// 장애인
+        model.addAttribute("newsList", newsUrlCrawler);
 
-			return "news/list";
-
-		} else {// 비장애인
-			return "news/list";
-		}
-
-	}
-	
+        if (user.isDisabled()) { // 장애인
+            return "news/list";
+        } else { // 비장애인
+            return "news/list";
+        }
+    }
 
     @GetMapping("/news/detail/{title}")
-    public String getNewsDetail(Model model, HttpServletRequest request, @PathVariable("title") String title) throws IOException {
+    public String getNewsDetail(Model model, HttpServletRequest request, @PathVariable("title") String title)
+            throws IOException {
         List<Map<String, String>> newsUrlCrawler = newsService.newsUrlCrawler();
 
         String newsUrl = null;
@@ -64,7 +59,7 @@ public class NewsController {
             model.addAttribute("msg", "error");
         }
 
-        return "news/newsDetail";
+        return "/news/newsDetail";
     }
 
 }

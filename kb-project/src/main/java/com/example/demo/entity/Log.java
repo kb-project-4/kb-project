@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.persistence.CascadeType;
@@ -27,7 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class Log {
+public class Log extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -39,7 +40,8 @@ public class Log {
 	private String recipient_name;
 	private String recipient_banknumber;
 	private String category;
-	private String my_banknumber;
+	private String sender_banknumber;
+	private String sender_name;
 
 	private Long amount;
 

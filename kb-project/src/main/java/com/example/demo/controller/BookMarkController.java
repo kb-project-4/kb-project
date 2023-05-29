@@ -56,12 +56,12 @@ public class BookMarkController {
 		model.addAttribute("userid", userid);
 
 		System.out.println("here2");
-		
-		if (user.isDisabled()) {//장애인
+
+		if (user.isDisabled()) {// 장애인
 
 			return "BookMark/bookMark2";
 
-		} else {//비장애인
+		} else {// 비장애인
 			return "BookMark/bookMark";
 
 		}
@@ -86,11 +86,11 @@ public class BookMarkController {
 		bookMark.setUser(user);
 		model.addAttribute("bookMark", bookMark);
 
-		if (user.isDisabled()) {//장애인
+		if (user.isDisabled()) {// 장애인
 
 			return "BookMark/bookMarkForm2";
 
-		} else {//비장애인
+		} else {// 비장애인
 			return "BookMark/bookMarkForm";
 
 		}
@@ -170,28 +170,6 @@ public class BookMarkController {
 
 		return "redirect:/bookmarks";
 	}
-//
-//	@GetMapping("/transferbookmark/{recepientAccountNumber}")
-//	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
-//			HttpServletRequest request) {
-//
-//		System.out.println("transferbookmark");
-//		HttpSession session = request.getSession();
-//		User user = (User) session.getAttribute("user");
-//		String userid = user.getUserid();
-//		TransferDto transferDto = new TransferDto();
-//		transferDto.setSender(user);
-//		transferDto.setRecipient_banknumber(recepientAccountNumber);
-//
-//		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
-//		String recipient_name = bankAccount.getUser().getUsername();
-//		transferDto.setRecipient_name(recipient_name);
-//
-//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
-//
-//		model.addAttribute("Log", transferDto);
-//		return "BookMark/transfer";
-//	}
 
 	@GetMapping("/transferbookmark/{recepientAccountNumber}")
 	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
@@ -201,7 +179,7 @@ public class BookMarkController {
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 		TransferDto transferDto = new TransferDto();
-		transferDto.setSender(user);
+		transferDto.setUser(user);
 		transferDto.setRecipient_banknumber(recepientAccountNumber);
 
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
@@ -212,11 +190,11 @@ public class BookMarkController {
 		model.addAttribute("Log", transferDto);
 		model.addAttribute("bankAccounts", bankAccounts);
 
-		if (user.isDisabled()) {//장애인
+		if (user.isDisabled()) {// 장애인
 
 			return "BookMark/transfer2";
 
-		} else {//비장애인
+		} else {// 비장애인
 			return "BookMark/transfer";
 
 		}
@@ -229,10 +207,10 @@ public class BookMarkController {
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 
-		log.setSender(user);
+		log.setUser(user);
 		log.setCategory("송금");
 		System.out.println(log);
-		System.out.println("user" + log.getSender().getUsername());
+		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
 		String account_password = log.getAccount_password();
@@ -257,7 +235,7 @@ public class BookMarkController {
 		else {
 			System.out.println("계좌비밀번호가 일치.");
 			bankaccountservice.transferToUser(log, user);
-			return "user/transferok";
+			return "redirect:/bookmarks";
 		}
 
 	}

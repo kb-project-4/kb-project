@@ -19,11 +19,12 @@ import lombok.ToString;
 @ToString
 public class TransferDto {
 
-	private User sender;
+	private User user;
 	private String recipient_name;
 	private String recipient_banknumber;
 	private String category;
 	private String sender_banknumber;
+	private String sender_name;
 	private String account_password;
 
 	private Long amount;
@@ -31,15 +32,14 @@ public class TransferDto {
 	public Log toEntity() {
 
 		Log log = new Log();
-		log.setUser(sender);
+		log.setUser(user);
 		log.setAmount(amount);
-		log.setMy_banknumber(sender_banknumber);
+		log.setSender_banknumber(sender_banknumber);
 		log.setRecipient_banknumber(recipient_banknumber);
 		log.setRecipient_name(recipient_name);
 		log.setCategory(category);
-		
+		log.setSender_name(sender_name);
 
-		
 		return log;
 	}
 

@@ -124,10 +124,13 @@ public class BankAccountService {
 		transferDto.setCategory(category);
 		transferDto.setRecipient_banknumber(recipient_banknumber);
 		transferDto.setRecipient_name(recipient_name);
-		transferDto.setSender(sender);
+		transferDto.setUser(sender);
 		transferDto.setSender_banknumber(sender.getBankAccounts().get(0).getAccountNumber());
+		transferDto.setSender_name(sender.getUsername());
 
 		System.out.println(transferDto);
+		System.out.println("sender name" + transferDto.getSender_name());
+
 		transferToUser(transferDto, sender);
 	}
 
@@ -139,6 +142,7 @@ public class BankAccountService {
 		BankAccount mybankAccount = new BankAccount();
 
 		System.out.println("senderbanknum" + transferDto.getSender_banknumber().toString());
+		System.out.println("sendername" + transferDto.getSender_name());
 		mybankAccount = bankAccountRepository.findByAccountNumber(transferDto.getSender_banknumber());
 		System.out.println(mybankAccount.toString());
 		Long amount = mybankAccount.getAmount();// 본인돈
@@ -166,12 +170,22 @@ public class BankAccountService {
 
 			bankAccount.setAmount(recipent_curmoney + sendamount); // 받는사람계좌 돈 증가
 			updateBankAccount(mybankAccount.toDto()); // 내 계좌에 돈 이빠졋으니 업데이트
-			Log logentity = transferDto.toEntity();
-			logService.update(logentity);
+			Log logentity = transferDto.toEntity();// 송금
+
+			TransferDto transfergetDto = TransferDto.builder().amount(transferDto.getAmount()).category("입금")
+					.recipient_banknumber(transferDto.getRecipient_banknumber())
+					.sender_banknumber(transferDto.getSender_banknumber()).sender_name(transferDto.getSender_name())
+					.recipient_name(transferDto.getRecipient_name()).user(user1).build();
+
+			System.out.println("transfergetdto sendername" + transfergetDto.getSender_name());
+			Log logentityget = transfergetDto.toEntity();// 입금
+
+			logService.save(logentity);
+			logService.save(logentityget);
 		}
 
 	}
- 
+
 	public void setmainAccount(BankAccountDto bankAccountDto) {
 		System.out.println("mainaccount");
 		System.out.println("mainaccount test " + bankAccountDto.toString());
@@ -187,11 +201,10 @@ public class BankAccountService {
 
 		}
 
- 		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
+		Optional<BankAccount> bankAccount = bankAccountRepository.findById(bankAccountDto.getId());
 		System.out.println("bankaccount service" + bankAccount.get().toString());
 		bankAccount.get().setMainAccount(true);
 		System.out.println("bankaccount service modified" + bankAccount.get().toString());
- 
 
 		bankAccountRepository.save(bankAccount.get());
 		System.out.println("fin");
@@ -223,5 +236,4 @@ public class BankAccountService {
 		}
 	}
 
- 
 }

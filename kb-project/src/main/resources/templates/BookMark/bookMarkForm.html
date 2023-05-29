@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/fragments/header.html :: head">
@@ -13,7 +12,6 @@
 		<div class="p-4 text-center">
 			<h2>즐겨찾기 추가</h2>
 		</div>
-
 
 		<div class="mb-3">
 			<label for="bankname" class="form-label">은행명:</label> <input
@@ -36,13 +34,56 @@
 			<input type="hidden" th:field="*{user}">
 		</div>
 
-
 		<div class="frame">
-			<button type="submit" class="custom-btn btn-3">
+			<button type="submit" class="custom-btn btn-3"
+				onclick="submitForm(event)">
 				<span>추가하기</span>
 			</button>
 		</div>
 	</form>
+
+	<script>
+		function submitForm(event) {
+			event.preventDefault(); // 폼 제출 기본 동작 방지
+
+			// 입력값 확인
+			var bankName = document.getElementById('bankname').value;
+			var bankNumber = document.getElementById('banknumber').value;
+			var name = document.getElementById('name').value;
+
+			if (bankName === '' || bankNumber === '' || name === '') {
+				alert('값을 입력해주세요.');
+				return;
+			}
+
+			// 폼 데이터 전송 처리
+			var form = document.querySelector('form');
+			var formData = new FormData(form);
+			fetch(form.action, {
+				method : form.method,
+				body : formData
+			}).then(function(response) {
+				if (response.ok) {
+					alert('추가가 완료되었습니다.'); // 추가 완료 알림
+					closeModal(); // 모달 닫기
+					refreshBookmarks(); // 북마크 목록 새로고침
+				}
+			});
+		}
+
+		// 모달 닫기
+		function closeModal() {
+			var modal = parent.document.getElementById('myModal');
+			var iframe = parent.document.getElementById('modalIframe');
+			modal.style.display = 'none';
+			iframe.src = ''; // 모달 내부 iframe 초기화
+		}
+
+		// 북마크 목록 새로고침
+		function refreshBookmarks() {
+			parent.location.reload(); // 부모 창(북마크 목록 페이지) 새로고침
+		}
+	</script>
 
 </body>
 </html>
