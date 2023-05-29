@@ -42,7 +42,6 @@ public class Log extends BaseEntity {
 	private String recipient_banknumber;
 	private String category;
 	private String sender_banknumber;
-
 	private Long amount;
 
 }
