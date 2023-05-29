@@ -170,28 +170,6 @@ public class BookMarkController {
 
 		return "redirect:/bookmarks";
 	}
-//
-//	@GetMapping("/transferbookmark/{recepientAccountNumber}")
-//	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
-//			HttpServletRequest request) {
-//
-//		System.out.println("transferbookmark");
-//		HttpSession session = request.getSession();
-//		User user = (User) session.getAttribute("user");
-//		String userid = user.getUserid();
-//		TransferDto transferDto = new TransferDto();
-//		transferDto.setSender(user);
-//		transferDto.setRecipient_banknumber(recepientAccountNumber);
-//
-//		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
-//		String recipient_name = bankAccount.getUser().getUsername();
-//		transferDto.setRecipient_name(recipient_name);
-//
-//		System.out.println("log users" + transferDto.getSender().getBankAccounts());
-//
-//		model.addAttribute("Log", transferDto);
-//		return "BookMark/transfer";
-//	}
 
 	@GetMapping("/transferbookmark/{recepientAccountNumber}")
 	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
@@ -257,7 +235,7 @@ public class BookMarkController {
 		else {
 			System.out.println("계좌비밀번호가 일치.");
 			bankaccountservice.transferToUser(log, user);
-			return "user/transferok";
+			return "redirect:/bookmarks";
 		}
 
 	}
