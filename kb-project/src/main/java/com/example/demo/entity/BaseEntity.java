@@ -17,4 +17,13 @@ public abstract class BaseEntity {
 	}
 
 	// getters and setters
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
 }

@@ -16,6 +16,8 @@ td {
 
 		<thead>
 			<tr>
+			
+				<th>날짜</th>
 				<th>보내는사람 계좌번호</th>
 				<th>받는사람 계좌번호</th>
 				<th>카테고리</th>
@@ -26,15 +28,16 @@ td {
 
 		<tbody>
 			<tr th:each="log : ${Log}">
+				<td th:text="${log.createdDate}"></td>
 				<td th:text="${log.sender_banknumber}"></td>
 				<td th:text="${log.recipient_banknumber}"></td>
 				<td th:text="${log.category}"></td>
 				<td th:text="${log.amount!= null ? log.amount: ''}"></td>
 
-			
+
 			</tr>
 
-			
+
 		</tbody>
 
 	</table>

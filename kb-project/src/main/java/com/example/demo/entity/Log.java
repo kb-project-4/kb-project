@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.persistence.CascadeType;
@@ -27,10 +28,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class Log {
+public class Log extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
