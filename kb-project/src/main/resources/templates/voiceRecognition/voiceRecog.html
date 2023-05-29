@@ -8,11 +8,15 @@
     <title>Voice Recognition</title>
 
     <style>
+        body {
+            margin: 50px 40px;
+        }
+
         /* 채팅 UI에 대한 CSS */
         #chatContainer {
             border: 1px solid #ccc;
             padding: 10px;
-            margin-top: 20px;
+            margin-bottom: 20px;
             overflow-y: auto;
             max-height: 400px;
         }
@@ -59,12 +63,11 @@
 <h1>음성 인식</h1>
 
 <div id="result"></div>
-<h1>asdjaksdjaklsdjsakld</h1>
 <h1>채팅</h1>
 <div id="chatContainer"></div>
 
-<button id="startBtn">Start</button>
-<button id="stopBtn">Stop</button>
+<button id="startBtn" class="btn btn-primary btn-lg">Start</button>
+<button id="stopBtn" class="btn btn-primary btn-lg">Stop</button>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
