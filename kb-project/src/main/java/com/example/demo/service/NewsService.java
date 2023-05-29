@@ -15,7 +15,6 @@ import com.example.demo.dto.NewsDto;
 public class NewsService {
 	public List<Map<String, String>> newsUrlCrawler() {
 		List<Map<String, String>> newsTitleAndUrlList = new ArrayList<>();
-		
 		try {
 			// 크롤링할 사이트 URL 설정
 			String url = "https://www.yna.co.kr/economy/finance?site=navi_economy_depth02";
@@ -41,7 +40,7 @@ public class NewsService {
 				item.put("title", title);
 
 				newsTitleAndUrlList.add(item);
-				
+
 				count++;
 			}
 		} catch (Exception e) {
@@ -66,7 +65,7 @@ public class NewsService {
 			Element paragraph = paragraphs.get(i);
 			contentBuilder.append(paragraph.text()).append("\n");
 		}
-		
+
 		String content = contentBuilder.toString();
 
 		// 날짜 추출
