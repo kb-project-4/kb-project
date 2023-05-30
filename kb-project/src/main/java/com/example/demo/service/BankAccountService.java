@@ -94,6 +94,7 @@ public class BankAccountService {
 
 	public BankAccount getBankAccountByAccountnumber(String accountnumber) {
 
+		System.out.println("acc");
 		return bankAccountRepository.findByAccountNumber(accountnumber);
 
 	}
