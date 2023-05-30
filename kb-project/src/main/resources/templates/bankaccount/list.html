@@ -13,68 +13,54 @@
 	<header th:replace="/fragments/header.html :: header"></header>
 	<!-- End Header -->
 	<link href="/css/table.css" rel="stylesheet">
-	<style>
-.account-info-container {
-	display: flex;
-	flex-direction: column;
-}
-
-.account-info {
-	margin-bottom: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px; <<<<<<<
-	HEAD padding: 10px; =======
-	padding: 20px; >>>>>>> 400910
-	eee91eccb99be68c6cee9f7e09dc182991 background-color: #f8f8f8;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-}
-
-.account-info .left-section {
-	display: flex;
-	flex-direction: column;
-}
-
-.account-info .left-section .bank-name {
-	font-weight: bold; <<<<<<<
-	HEAD font-size: 99px;
-	margin-bottom: 5px;
-}
-
-.account-info .left-section .account-number {
-	color: #888; =======
-	font-size: 24px;
-	margin-bottom: 5px;
-}
-
-.account-info .left-section .account-number {
-	font-weight: bold;
-	font-size: 24px; >>>>>>> 400910
-	eee91eccb99be68c6cee9f7e09dc182991 margin-bottom: 5px;
-}
-
-.account-info .balance {
-	font-weight: bold; <<<<<<<
-	HEAD font-size: 20px; =======
-	font-size: 30px; >>>>>>> 400910
-	eee91eccb99be68c6cee9f7e09dc182991 align-self: flex-end;
-}
-
-.account-info .btn {
-	margin-top: 50px;
-	padding: 8px 16px;
-	background-color: #007bff;
-	color: #fff;
-	text-decoration: none;
-	border-radius: 3px;
-	transition: background-color 0.3s ease;
-}
-
-.account-info .btn:hover {
-	background-color: #0056b3;
-}
-</style>
+	    <style>
+        .account-info-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .account-info {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .account-info .left-section {
+            display: flex;
+            flex-direction: column;
+        }
+        .account-info .left-section .bank-name {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .account-info .left-section .account-number {
+        	font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 5px;
+            	
+        }
+        .account-info .balance {
+            font-weight: bold;
+            font-size: 30px;
+            align-self: flex-end;
+        }
+        .account-info .btn {
+            margin-top: 50px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        .account-info .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 
 
 	<div th:if="${bankAccounts != null}" id="box" class="container"
@@ -83,13 +69,12 @@
 			<h2>계좌조회</h2>
 		</div>
 		<div class="account-info-container">
-
 			<div class="account-info" th:each="bankAccount : ${bankAccounts}">
 				<div class="left-section">
-					<div class="bank-name" th:text="${bankAccount.bank.bankname}"></div>
+				<div class="bank-name" th:text="${bankAccount.bank.bankname}"></div>
 				</div>
 				<div class="left-section">
-					<div class="account-number" th:text="${bankAccount.accountNumber}"></div>
+				<div class="account-number" th:text="${bankAccount.accountNumber}"></div>
 				</div>
 				<hr>
 				<span class="balance"

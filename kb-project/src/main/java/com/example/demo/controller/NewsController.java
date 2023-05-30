@@ -54,6 +54,7 @@ public class NewsController {
 
         if (newsUrl != null) {
             NewsDto newsDto = newsService.newsDetailsCrawler(newsUrl);
+            System.out.println(newsDto);
             model.addAttribute("news", newsDto);
         } else {
             model.addAttribute("msg", "error");
