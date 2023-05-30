@@ -8,11 +8,14 @@
 
 </head>
 
-<body>
+<body onload="hideModal()">
+
+
 	<!-- ======= Header ======= -->
 	<header th:replace="/fragments/header.html :: header"></header>
 	<!-- End Header -->
 	<link href="/css/table.css" rel="stylesheet">
+	<link href="/css/bankacc.css" rel="stylesheet">
 	<style>
 .account-info-container {
 	display: flex;
@@ -88,8 +91,9 @@
 					<span class="balance"
 						th:text="${#numbers.formatDecimal(bankAccount.amount, 0, 'COMMA', 0, 'POINT')} + '원'"></span>
 					<a class="btn"
-						th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}">
-						계좌내역 </a>
+
+						th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}"
+						onclick="openModal(this.getAttribute('href')); return false;">계좌내역</a>
 				</div>
 			</div>
 		</div>
@@ -104,33 +108,59 @@
 		<br> <br> <br> <br> <br> <br> <br>
 		<br> <br> <br> <br> <br> <br>
 		<p>No bank accounts found.</p>
-		<div class="p-2 text-center">
-
-			<a href="/bankaccounts/create"><button class="custom-btn btn-3">
-					<span>계좌생성</span>
-				</button></a> <a th:href="@{/users/main}"><button class="custom-btn btn-3">
-					<span> 메인으로 돌아가기 </span>
-				</button></a>
+	</div>
+	<!-모달창띄우기->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeModal()">&times;</span>
+			<iframe id="modalIframe" src="" frameborder="0"
+				style="width: 100%; height: 100%;"></iframe>
 		</div>
+	</div>
+	<div id="preloader"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
 
-		<div id="preloader"></div>
+	<!— Vendor JS Files —> <script
+		src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> <script
+		src="/assets/vendor/aos/aos.js"></script> <script
+		src="/assets/vendor/glightbox/js/glightbox.min.js"></script> <script
+		src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script> <script
+		src="/assets/vendor/swiper/swiper-bundle.min.js"></script> <script
+		src="/assets/vendor/purecounter/purecounter_vanilla.js"></script> <script
+		src="/assets/vendor/php-email-form/validate.js"></script> <!— Template Main JS File —>
+	<script src="/assets/js/main.js"></script> <script>
+	  // 모달 숨기기
+	    function hideModal() {
+	        var modal = document.getElementById('myModal');
+	        modal.style.display = 'none';
+	    }
+        // 모달 열기
+        function openModal(url) {
+            var modal = document.getElementById('myModal');
+            var iframe = document.getElementById('modalIframe');
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-			crossorigin="anonymous"></script>
+            iframe.src = url;
+            modal.style.display = 'block';
+        }
 
-		<!— Vendor JS Files —>
-		<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script src="/assets/vendor/aos/aos.js"></script>
-		<script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
-		<script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-		<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
-		<script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-		<script src="/assets/vendor/php-email-form/validate.js"></script>
+        // 모달 닫기
+        function closeModal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
 
-		<!— Template Main JS File —>
-		<script src="/assets/js/main.js"></script>
+        // 모달 외부 클릭 시 모달 닫기
+        window.onclick = function (event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+>>>>>>> 91a2858d3cd2eb45ba1832f8e8270d33c0fc3556
 </body>
 
 
