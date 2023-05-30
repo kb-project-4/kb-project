@@ -46,17 +46,10 @@ public class BankAccount extends BaseEntity {
 
 	private boolean mainAccount;
 
-	
-	@OneToMany(mappedBy = "BankAccount", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<BookMark> BookMark = new HashSet<BookMark>();
-	
-	
-	
 	public BankAccountDto toDto() {
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)
 				.user(this.user).bank(this.bank).mainAccount(this.mainAccount).build();
 		return dto;
 	}
-	
 
 }

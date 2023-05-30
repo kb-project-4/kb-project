@@ -33,10 +33,10 @@
 					<tr>
 						<td th:text="${bookMark.bookMarkName}"></td>
 						<td th:text="${bookMark.bookMarkAccountNumber}"></td>
-						<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}">삭제</a></td>
+						<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}" style="color: red;">삭제</a></td>
 						<td><a href="#"
 							th:data-accountNumber="${bookMark.bookMarkAccountNumber}"
-							onclick="openTransferModal(this.getAttribute('data-accountNumber'))">송금</a></td>
+							onclick="openTransferModal(this.getAttribute('data-accountNumber'))" style="color: blue;">송금</button></a></td>
 
 					</tr>
 				</tbody>
