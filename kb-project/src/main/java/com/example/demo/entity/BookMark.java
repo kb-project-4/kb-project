@@ -40,6 +40,7 @@ public class BookMark {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user")
 	private User user;
+	
 
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
