@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head head th:replace="/fragments/header.html :: head"></head>
+    <head head th:replace="/fragments/header2.html :: head"></head>
     <head>
 
         <meta charset="UTF-8">
@@ -20,13 +20,13 @@
                 /*align-items: center;*/
                 height: 80vh;
 
-                width: 80%;
-                max-width: 867px;
+                width: 1300px;
+                max-width: 2400px;
                 margin: 25px 10px;
                 /*height: calc(100% - 50px);*/
                 border: var(--border);
                 border-radius: 5px;
-                background-color: #f3f2f2;
+                background-color: #000000;
                 border: 1px solid #ccc;
                 padding: 10px;
                 margin-bottom: 20px;
@@ -45,8 +45,9 @@
             }
 
             .userMessage {
-                background-color: #DCF8C6;
-                color: #333;
+                background-color: black;
+                color: yellow;
+                font-size:50px;
                 padding: 5px 10px;
                 border-radius: 10px;
                 margin-left: 10px;
@@ -58,8 +59,9 @@
             }
 
             .serverMessage {
-                background-color: #cbdff8;
-                color: #333;
+                background-color: #000000;
+                color: yellow;
+                font-size:50px;
                 padding: 5px 10px;
                 border-radius: 10px;
                 margin-right: 10px;
@@ -77,23 +79,26 @@
 
     </head>
 
-    <body>
+    <body style="background-color:black; margin-top: 200px;">
         <!-- ======= Header ======= -->
-        <header th:replace="/fragments/header.html :: header"></header>
+        <header th:replace="/fragments/header2.html :: header"></header>
         <!-- End Header -->
 
-        <h1>음성 인식</h1>
-
         <div id="result"></div>
-        <h1>채팅</h1>
+        <h1 style="color:yellow; font-size:50px;">채팅</h1>
         <div id="chatContainer">
+            <div class="message serverMessageContainer">
+            </div>
 
+            <div class="message userMessageContainer">
+
+            </div>
 
         </div>
 
         <div id="buttons">
-            <button id="startBtn" class="btn btn-primary btn-lg">Start</button>
-            <button id="stopBtn" class="btn btn-primary btn-lg">Stop</button>
+            <button id="startBtn" style="background-color:black; border-color:yellow; width:200px; height:120px; color:yellow; font-size:60px;">Start</button>
+            <button id="stopBtn"  style="background-color:black; border-color:yellow; width:200px; height:120px; color:yellow; font-size:60px; margin-left:50px;">Stop</button>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
