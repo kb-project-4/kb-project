@@ -29,7 +29,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 		.addInterceptors(ipHandshakeInterceptor)
 		.addInterceptors(new HttpSessionHandshakeInterceptor())
 		.setHandshakeHandler(new DefaultHandshakeHandler());
-		
 	}
 
 	

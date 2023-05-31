@@ -118,7 +118,7 @@ public class BankAccountService {
 	public void transferToBookMarkUser(BookMark bookMark, User sender, Long amount) {
 		String recipient_name = bookMark.getBookMarkName();
 		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
-		String category = "transfer";
+		String category = "송금";
 
 		TransferDto transferDto = new TransferDto(); // transfer Dto Create
 		transferDto.setAmount(amount);

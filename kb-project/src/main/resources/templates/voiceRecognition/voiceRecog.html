@@ -1,215 +1,210 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head head th:replace="/fragments/header.html :: head"></head>
-    <head>
+<head head th:replace="/fragments/header.html :: head"></head>
+<head>
 
-        <meta charset="UTF-8">
-        <title>Voice Recognition</title>
+<meta charset="UTF-8">
+<title>Voice Recognition</title>
 
-        <style>
-            body {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin: 70px 40px;
-            }
+<style>
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 70px 40px;
+}
 
-            /* 채팅 UI에 대한 CSS */
-            #chatContainer {
-                /*align-items: center;*/
-                height: 80vh;
+/* 채팅 UI에 대한 CSS */
+#chatContainer {
+	/*align-items: center;*/
+	height: 80vh;
+	width: 80%;
+	max-width: 867px;
+	margin: 25px 10px;
+	/*height: calc(100% - 50px);*/
+	border: var(- -border);
+	border-radius: 5px;
+	background-color: #f3f2f2;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 20px;
+	overflow-y: auto;
+	max-height: 400px;
+}
 
-                width: 80%;
-                max-width: 867px;
-                margin: 25px 10px;
-                /*height: calc(100% - 50px);*/
-                border: var(--border);
-                border-radius: 5px;
-                background-color: #f3f2f2;
-                border: 1px solid #ccc;
-                padding: 10px;
-                margin-bottom: 20px;
-                overflow-y: auto;
-                max-height: 400px;
-            }
+.message {
+	margin-bottom: 10px;
+	border-radius: 15px;
+}
 
-            .message {
-                margin-bottom: 10px;
-                border-radius: 15px;
-            }
+.userMessageContainer {
+	display: flex;
+	justify-content: flex-end;
+}
 
-            .userMessageContainer {
-                display: flex;
-                justify-content: flex-end;
-            }
+.userMessage {
+	background-color: #DCF8C6;
+	color: #333;
+	padding: 5px 10px;
+	border-radius: 10px;
+	margin-left: 10px;
+}
 
-            .userMessage {
-                background-color: #DCF8C6;
-                color: #333;
-                padding: 5px 10px;
-                border-radius: 10px;
-                margin-left: 10px;
-            }
+.serverMessageContainer {
+	display: flex;
+	justify-content: flex-start;
+}
 
-            .serverMessageContainer {
-                display: flex;
-                justify-content: flex-start;
-            }
+.serverMessage {
+	background-color: #cbdff8;
+	color: #333;
+	padding: 5px 10px;
+	border-radius: 10px;
+	margin-right: 10px;
+	text-align: left;
+}
 
-            .serverMessage {
-                background-color: #cbdff8;
-                color: #333;
-                padding: 5px 10px;
-                border-radius: 10px;
-                margin-right: 10px;
-                text-align: left;
-            }
+#buttons {
+	
+}
 
-            #buttons {
-            }
+.btn {
+	margin: 15px;
+}
+</style>
 
-            .btn {
-                margin: 15px;
+</head>
 
-            }
-        </style>
+<body>
+	<!-- ======= Header ======= -->
+	<header th:replace="/fragments/header.html :: header"></header>
+	<!-- End Header -->
 
-    </head>
+	<h1>음성 인식</h1>
 
-    <body>
-        <!-- ======= Header ======= -->
-        <header th:replace="/fragments/header.html :: header"></header>
-        <!-- End Header -->
+	<div id="result"></div>
+	<h1>채팅</h1>
+	<div id="chatContainer">
+		<!-- <div class="message serverMessageContainer">
+			<div class="serverMessage">서버 메시지</div>
+		</div>
 
-        <h1>음성 인식</h1>
+		<div class="message userMessageContainer">
+			<div class="userMessage">유저 메시지</div>
+		</div> -->
 
-        <div id="result"></div>
-        <h1>채팅</h1>
-        <div id="chatContainer">
-           <!--  <div class="message serverMessageContainer">
-                <div class="serverMessage">
-                    서버 메시지
-                </div>
-            </div>
+	</div>
 
-            <div class="message userMessageContainer">
-                <div class="userMessage">
-                     유저 메시지
-                </div>
-            </div> -->
+	<div id="buttons">
+		<button id="startBtn" class="btn btn-primary btn-lg">Start</button>
+		<button id="stopBtn" class="btn btn-primary btn-lg">Stop</button>
+	</div>
 
-        </div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <div id="buttons">
-            <button id="startBtn" class="btn btn-primary btn-lg">Start</button>
-            <button id="stopBtn" class="btn btn-primary btn-lg">Stop</button>
-        </div>
+	<script>
+		const socket = new WebSocket('ws://localhost:8080/socket');
+		let recognition;
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		// 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
+		socket.onopen = function(event) {
+			console.log('WebSocket connection established.');
+			message = "무엇을 도와드릴까요?"
+			speakText(message)
+			displayMessage(message, 'server');
+		};
 
-        <script>
-            const socket = new WebSocket('ws://localhost:8080/socket');
-            let recognition;
+		// 웹 소켓으로부터 메시지를 받았을 때 실행되는 이벤트 핸들러
+		socket.onmessage = function(event) {
+			const message = event.data;
+			console.log('Received message:', message);
+			displayMessage(message, 'server'); // 서버 메시지를 채팅 UI에 표시
+			speakText(message);
+		};
 
-            // 웹 소켓이 열렸을 때 실행되는 이벤트 핸들러
-            socket.onopen = function (event) {
-                console.log('WebSocket connection established.');
-                message = "무엇을 도와드릴까요?"
-                speakText(message)
-                displayMessage(message, 'server');
-            };
+		// 웹 소켓이 닫혔을 때 실행되는 이벤트 핸들러
+		socket.onclose = function(event) {
+			console.log('WebSocket connection closed.');
+		};
 
-            // 웹 소켓으로부터 메시지를 받았을 때 실행되는 이벤트 핸들러
-            socket.onmessage = function (event) {
-                const message = event.data;
-                console.log('Received message:', message);
-                displayMessage(message, 'server'); // 서버 메시지를 채팅 UI에 표시
-                speakText(message);
-            };
+		// 에러시 출력
+		socket.onerror = function(event) {
+			console.error('WebSocket error:', event);
+		};
 
-            // 웹 소켓이 닫혔을 때 실행되는 이벤트 핸들러
-            socket.onclose = function (event) {
-                console.log('WebSocket connection closed.');
-            };
+		// 서버로 메시지를 보내는 함수
+		function sendMessage(message) {
+			socket.send(message);
+		}
 
-            // 에러시 출력
-            socket.onerror = function (event) {
-                console.error('WebSocket error:', event);
-            };
+		// 사용자 메시지와 서버 메시지를 번갈아가며 채팅 UI에 표시하는 함수
+		function displayMessage(message, sender) {
+			const messageContainerClass = sender === 'user' ? 'userMessageContainer'
+					: 'serverMessageContainer';
+			const messageClass = sender === 'user' ? 'userMessage'
+					: 'serverMessage';
 
-            // 서버로 메시지를 보내는 함수
-            function sendMessage(message) {
-                socket.send(message);
-            }
+			const messageHTML = '<div class="message ' + messageContainerClass + '">'
+					+ '<div class="' + messageClass + '">'
+					+ message
+					+ '</div>'
+					+ '</div>';
 
-            // 사용자 메시지와 서버 메시지를 번갈아가며 채팅 UI에 표시하는 함수
-            function displayMessage(message, sender) {
-                const messageContainerClass = sender === 'user' ? 'userMessageContainer'
-                    : 'serverMessageContainer';
-                const messageClass = sender === 'user' ? 'userMessage'
-                    : 'serverMessage';
+			$('#chatContainer').append(messageHTML);
+			scrollToBottom();
+		}
 
-                const messageHTML = '<div class="message ' + messageContainerClass + '">'
-                    + '<div class="' + messageClass + '">'
-                    + message
-                    + '</div>'
-                    + '</div>';
+		// 채팅 UI를 맨 아래로 스크롤하는 함수
+		function scrollToBottom() {
+			$('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
+		}
 
-                $('#chatContainer').append(messageHTML);
-                scrollToBottom();
-            }
+		// 음성 인식 시작
+		$(document).ready(function() {
+			$('#startBtn').click(startRecognition);
+			$('#stopBtn').click(stopRecognition);
+		});
 
-            // 채팅 UI를 맨 아래로 스크롤하는 함수
-            function scrollToBottom() {
-                $('#chatContainer').scrollTop($('#chatContainer')[0].scrollHeight);
-            }
+		function startRecognition() {
+			recognition = new webkitSpeechRecognition();
+			recognition.lang = 'ko-KR';
+			recognition.continuous = true;
 
-            // 음성 인식 시작
-            $(document).ready(function () {
-                $('#startBtn').click(startRecognition);
-                $('#stopBtn').click(stopRecognition);
-            });
+			recognition.onresult = function(event) {
+				const transcript = event.results[0][0].transcript;
+				console.log(transcript);
+				displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
+				processMessage(transcript);
+			};
 
-            function startRecognition() {
-                recognition = new webkitSpeechRecognition();
-                recognition.lang = 'ko-KR';
-                recognition.continuous = true;
+			recognition.onerror = function(event) {
+				console.error('음성 인식 오류:', event.error);
+			};
 
-                recognition.onresult = function (event) {
-                    const transcript = event.results[0][0].transcript;
-                    console.log(transcript);
-                    displayMessage(transcript, 'user'); // 사용자 메시지를 채팅 UI에 표시
-                    processMessage(transcript);
-                };
+			recognition.start();
+		}
 
-                recognition.onerror = function (event) {
-                    console.error('음성 인식 오류:', event.error);
-                };
+		function stopRecognition() {
+			if (recognition) {
+				recognition.stop();
+			}
+		}
 
-                recognition.start();
-            }
+		function processMessage(message) {
+			sendMessage(message); // 메시지를 서버로 전송
+		}
 
-            function stopRecognition() {
-                if (recognition) {
-                    recognition.stop();
-                }
-            }
+		function speakText(text) {
+			const msg = new SpeechSynthesisUtterance();
+			msg.text = text;
+			msg.lang = 'ko-KR';
+			msg.rate = 0.9
+			window.speechSynthesis.speak(msg);
+		}
+	</script>
 
-            function processMessage(message) {
-                sendMessage(message); // 메시지를 서버로 전송
-            }
-
-            function speakText(text) {
-                const msg = new SpeechSynthesisUtterance();
-                msg.text = text;
-                msg.lang = 'ko-KR';
-                msg.rate = 0.9
-                window.speechSynthesis.speak(msg);
-            }
-        </script>
-
-    </body>
+</body>
 
 
 </html>
