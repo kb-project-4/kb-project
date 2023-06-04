@@ -206,8 +206,8 @@ public class UserController {
 
 		model.addAttribute("userid", userid);
 
-		if (user.isDisabled()) {// 장애인
-
+		if (user.isDisabled()) {
+			// 장애인
 			return "user/main2";
 
 		} else {// 비장애인
