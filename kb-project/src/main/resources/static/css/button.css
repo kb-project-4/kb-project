@@ -65,6 +65,28 @@ background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
    background: rgb(0,3,255);
 background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
 }
+/*다른 색*/
+.btn-blue{
+  background: rgb(0,172,238);
+  border: none;
+   width: 50px;
+  height:100%;
+  line-height: 50px;
+  padding: 0;
+  border: none;
+}
+
+/*다른 색*/
+.btn-red {
+  background: rgb(255,27,0);
+  border: none;
+   width: 50px;
+  height:100%;
+  line-height: 50px;
+  padding: 0;
+  border: none;
+}
+
 
 /* 2 */
 .btn-2 {

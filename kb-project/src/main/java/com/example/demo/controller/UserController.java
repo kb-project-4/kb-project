@@ -251,7 +251,8 @@ public class UserController {
 
 		log.setUser(user);
 		log.setCategory("송금");
-		System.out.println(log);
+		log.setSender_name(user.getUsername());
+		System.out.println("log.tostring" + log.toString());
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");
 
@@ -267,14 +268,9 @@ public class UserController {
 			return "redirect:/transfer";
 		}
 
-		// if (account_password.equals(user.getAccount_password())) {
-//
-//			bankaccountservice.transferToUser(log, user);
-//			return "redirect:/users/main";
-//		}
-
 		else {
 			System.out.println("계좌비밀번호가 일치.");
+			System.out.println("log.sendername" + log.getSender_name());
 			bankaccountservice.transferToUser(log, user);
 			redirectAttributes.addFlashAttribute("successMessage", "송금이 완료되었습니다."); // 송금 완료 메시지를 추가합니다.
 			return "redirect:/users/main";

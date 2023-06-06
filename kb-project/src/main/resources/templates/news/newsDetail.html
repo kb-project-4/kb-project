@@ -6,27 +6,27 @@
 <title>News Detail</title>
 </head>
 <body>
-	<div id="box" class="row justify-content-center col-md-5 mx-auto"
-		style="margin-top: 20px; background-color: #FFFFFF; overflow: auto; width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
-		<div class="p-2 text-center">
-			<h1 th:text="${news.title}"></h1>
-		</div>
-		<hr>
-		<div class="container" style="width: 100%; height: 600px;">
-			<p th:text="${news.content}"></p>
-			<hr>
-			<p th:text="${news.date}"></p>
-		</div>
-	</div>
-	<div class="container" style="margin-top: 10px">
-		<button style="margin-left:17.5%;" class="custom-btn btn-1" id="startBtn">
-			<span>읽기</span>
-		</button>
-		<button class="custom-btn btn-1" id="stopBtn">
-			<span>멈추기</span>
-		</button>
-	</div>
-	<script>
+   <div id="box" class="row justify-content-center col-md-5 mx-auto"
+      style="margin-top: 20px; background-color: #FFFFFF; overflow: auto; width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);">
+      <div class="p-2 text-center">
+         <h1 th:text="${news.title}"></h1>
+      </div>
+      <hr>
+      <div class="container" style="width: 100%; height: 600px;">
+         <p th:text="${news.content}"></p>
+         <hr>
+         <p th:text="${news.date}"></p>
+      </div>
+   </div>
+   <div class="container" style="margin-top: 10px">
+      <button style="margin-left:17.5%;" class="custom-btn btn-1" id="startBtn">
+         <span>읽기</span>
+      </button>
+      <button class="custom-btn btn-1" id="stopBtn">
+         <span>멈추기</span>
+      </button>
+   </div>
+   <script>
         const titleElement = document.querySelector("h1");
         const contentElement = document.querySelector("p");
         const startBtn = document.getElementById("startBtn");
@@ -39,7 +39,7 @@
         // 음성 합성 설정
         utterance.lang = "ko-KR";
         utterance.volume = 1; // 음량 설정
-        utterance.rate = 0.9; // 읽는 속도 설정
+        utterance.rate = 0.85; // 읽는 속도 설정
         utterance.pitch = 0.98; // 음높이 설정
 
         // 시작 버튼 클릭 이벤트 핸들러
@@ -89,7 +89,7 @@
             let endIndex = 0;
 
             while (endIndex < text.length) {
-                if (text[endIndex] === '. ' || text[endIndex] === ',') {
+                if (text[endIndex] === '. ' || text[endIndex] === ',' ) {
                     const chunk = text.substring(startIndex, endIndex + 1).trim();
                     chunks.push(chunk);
                     startIndex = endIndex + 1;

@@ -175,16 +175,19 @@ public class BookMarkController {
 	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
 			HttpServletRequest request) {
 
+		System.out.println("recepientAccountNumber"+recepientAccountNumber);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 		TransferDto transferDto = new TransferDto();
 		transferDto.setUser(user);
 		transferDto.setRecipient_banknumber(recepientAccountNumber);
-
+		
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
+		System.out.println("bankaccount     "+ bankAccount.toString());
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
+		System.out.println("transferdto.tostring" + transferDto.toString());
 		List<BankAccount> bankAccounts = bankAccountRepository.findAllByUserId(user.getId());
 
 		model.addAttribute("Log", transferDto);
@@ -209,6 +212,7 @@ public class BookMarkController {
 
 		log.setUser(user);
 		log.setCategory("송금");
+		log.setSender_name(user.getUsername());
 		System.out.println(log);
 		System.out.println("user" + log.getUser().getUsername());
 		System.out.println("flag");

@@ -47,20 +47,20 @@ public class LogController {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+
+		List<Log> logs = logService.getlogs(user, myaccountnumber);
 		
-		List<Log> logs = logService.getlogs(user,myaccountnumber);
-		
+
 		System.out.println("myaccountnumber" + myaccountnumber);
 		System.out.println("logs" + logs.toString());
 		model.addAttribute("Log", logs);
 
-		if (user.isDisabled()) {//장애인
+		if (user.isDisabled()) {// 장애인
 
 			return "log/logs2";
 
-		} else {//비장애인
+		} else {// 비장애인
 			return "log/logs";
-
 		}
 
 	}
