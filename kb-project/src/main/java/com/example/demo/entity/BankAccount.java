@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 
 import com.example.demo.dto.BankAccountDto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -45,6 +47,9 @@ public class BankAccount extends BaseEntity {
 	private Bank bank;
 
 	private boolean mainAccount;
+
+	@OneToMany(mappedBy = "bankAccount", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<BookMark> bookmarks = new ArrayList<BookMark>();
 
 	public BankAccountDto toDto() {
 		BankAccountDto dto = BankAccountDto.builder().id(this.id).accountNumber(this.accountNumber).amount(this.amount)

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,22 +31,28 @@ public class BookMark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+//
+//	private String bookMarkName;
+//
+//	private String bookMarkAccountNumber;
+//
+//	private String bookMarkBankname;
 
-	private String bookMarkName;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "bank_account_id")
+	private BankAccount bankAccount;
 
-	private String bookMarkAccountNumber;
-
-	private String bookMarkBankname;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user")
 	private User user;
 
 	public BookMarkDto toDto() {
 		BookMarkDto dto = new BookMarkDto();
-		dto.setBookMarkName(this.bookMarkName);
-		dto.setBookMarkAccountNumber(this.bookMarkAccountNumber);
-		dto.setBookMarkBankname(this.bookMarkBankname);
+		dto.setBankAccount(this.bankAccount);
+//		dto.setBookMarkName(this.bookMarkName);
+//		dto.setBookMarkAccountNumber(this.bookMarkAccountNumber);
+//		dto.setBookMarkBankname(this.bookMarkBankname);
 		dto.setUser(this.user);
 		return dto;
 	}

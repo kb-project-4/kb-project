@@ -34,28 +34,4 @@ public class Bank {
 
 	private String bankname;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public List<BankAccount> getBankAccounts() {
-		return bankAccounts;
-	}
-
-	public void setBankAccounts(List<BankAccount> bankAccounts) {
-		this.bankAccounts = bankAccounts;
-	}
-
-	public String getBankname() {
-		return bankname;
-	}
-
-	public void setBankname(String bankname) {
-		this.bankname = bankname;
-	}
-
 }

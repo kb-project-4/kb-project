@@ -94,6 +94,7 @@ public class BookMarkController {
 			return "BookMark/bookMarkForm";
 
 		}
+
 	}
 
 	@PostMapping("/create")
@@ -101,37 +102,53 @@ public class BookMarkController {
 			HttpServletRequest request) {
 
 		session = request.getSession();
-		User user = (User) session.getAttribute("user");
+		User user = (User) session.getAttribute("user"); // 본인
 
 		System.out.println(user.toString());
 		String userid = user.getUserid();
 
 		System.out.println("userid_create" + userid);
 
-		System.out.println("bookmark1 name" + bookMark.getBookMarkName());
+//		System.out.println("bookmark1 name" + bookMark.getBookMarkName());
+		System.out.println("bookmark1 name" + bookMark.getBankAccount().getUser().getUsername());
 
 		BookMark bookMark2 = bookMark.toEntity();// 폼에서 입력한 북마크 내용
 
-		System.out.println("bookmark getname " + bookMark2.getBookMarkName());
+//		System.out.println("bookmark getname " + bookMark2.getBookMarkName());
+		System.out.println("bookmark getname " + bookMark2.getUser().getUsername());
 
-		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) { // db에 잇는 유저
+//		if (userService.getUserByUsername(bookMark2.getBookMarkName()) != null) { // db에 잇는 유저
+		if (userService.getUserByUsername(bookMark2.getUser().getUsername()) != null) { // db에 잇는 유저
 
-			User targetUser = userService.getUserByUsername(bookMark2.getBookMarkName());
-			System.out.println("targetuser" + targetUser.toString());
+//			User targetUser = userService.getUserByUsername(bookMark2.getBookMarkName());
+			User targetUser = userService.getUserByUsername(bookMark2.getBankAccount().getUser().getUsername());
+			System.out.println("targetusername" + targetUser.getUsername());
+			System.out.println("targetuseraddress" + targetUser.getAddress());
+			System.out.println("targetuserbankacc" + targetUser.getBankAccounts().toString());
 
 			List<BankAccount> bankAccounts = targetUser.getBankAccounts();
 
 			System.out.println("bankaccounts" + bankAccounts.toString());
-			System.out.println("bookMark2.getBookMarkAccountNumber " + bookMark2.getBookMarkAccountNumber());
+//			System.out.println("bookMark2.getBookMarkAccountNumber " + bookMark2.getBookMarkAccountNumber());
+			System.out.println("bookMark2.getBookMarkAccountNumber " + bookMark2.getBankAccount().getAccountNumber());
 
 			BankAccount targetBankAccount = bankAccountRepository
-					.findByAccountNumber(bookMark2.getBookMarkAccountNumber());
+//					.findByAccountNumber(bookMark2.getBookMarkAccountNumber());
+					.findByAccountNumber(bookMark2.getBankAccount().getAccountNumber());
 
 			if (bankAccounts.indexOf(targetBankAccount) == -1) { // 계좌가 존재하지 않을 경우
 				System.out.println("계좌를 똑바로 입력");
 				return "redirect:create";
 			} else { // 등록 성공
+				System.out.println("enroll");
+				String accountnumber = bookMark.getBankAccount().getAccountNumber();
+				System.out.println("accountnum" + accountnumber);
+				BankAccount bankAccount = bankAccountRepository.findByUserAndAccountNumber(targetUser, accountnumber);
+				bookMark.setBankAccount(bankAccount);
+				System.out.println("bookmark" + bookMark.toString());
+				System.out.println("flag");
 				bookMarkService.createBookMark(bookMark);
+
 				return "redirect:/bookmarks";
 			}
 		}
@@ -175,16 +192,16 @@ public class BookMarkController {
 	public String transferform(@PathVariable("recepientAccountNumber") String recepientAccountNumber, Model model,
 			HttpServletRequest request) {
 
-		System.out.println("recepientAccountNumber"+recepientAccountNumber);
+		System.out.println("recepientAccountNumber" + recepientAccountNumber);
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userid = user.getUserid();
 		TransferDto transferDto = new TransferDto();
 		transferDto.setUser(user);
 		transferDto.setRecipient_banknumber(recepientAccountNumber);
-		
+
 		BankAccount bankAccount = bankaccountservice.getBankAccountByAccountnumber(recepientAccountNumber);
-		System.out.println("bankaccount     "+ bankAccount.toString());
+		System.out.println("bankaccount     " + bankAccount.toString());
 		String recipient_name = bankAccount.getUser().getUsername();
 		transferDto.setRecipient_name(recipient_name);
 		System.out.println("transferdto.tostring" + transferDto.toString());

@@ -89,11 +89,19 @@
 
 					<th style="border: 1px solid yellow"><span
 						style="font-size: 60px; color: yellow">계좌번호</span></th>
+
 					<th><a
 						th:href="@{/log/{accountNumber}(accountNumber=${bankAccount.accountNumber})}"
 						style="font-size: 60px; color: yellow"> <span
 							th:text="${bankAccount.accountNumber}"></span>
 					</a></th>
+
+					<th style="border: 1px solid yellow"><a class="btn"
+						th:href="@{/bankaccounts/delete/{id}(id=${bankAccount.id})}"
+						style="font-size: 60px; color: yellow"> 계좌삭제 </a></th>
+
+
+
 				</tr>
 			</thead>
 			<tbody style="border: 1px solid yellow; background-color: black;">
@@ -109,9 +117,9 @@
 				<tr style="border: 1px solid yellow; background-color: black;">
 					<th style="border: 1px solid yellow; background-color: black;"><a
 						th:href="@{/bankaccounts/mainAccount/{id}(id=${bankAccount.id})}"
-						style="color: red;">
-					</a></th>
+						style="color: red;"> </a></th>
 				</tr>
+
 			</tbody>
 			<br />
 			<br />
@@ -129,6 +137,7 @@
 	</div>
 
 </div>
+
 <div th:unless="${bankAccounts != null}">
 	<br> <br> <br> <br> <br> <br> <br> <br>
 	<br> <br> <br> <br> <br>

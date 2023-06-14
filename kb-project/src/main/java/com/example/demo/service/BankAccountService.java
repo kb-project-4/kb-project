@@ -116,8 +116,10 @@ public class BankAccountService {
 	// BookMark User에게 송금
 	// 음성인식 + 즐겨찾기 사용자에게 송금
 	public void transferToBookMarkUser(BookMark bookMark, User sender, Long amount) {
-		String recipient_name = bookMark.getBookMarkName();
-		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
+//		String recipient_name = bookMark.getBookMarkName();
+//		String recipient_banknumber = bookMark.getBookMarkAccountNumber();
+		String recipient_name = bookMark.getBankAccount().getUser().getUsername();
+		String recipient_banknumber = bookMark.getBankAccount().getAccountNumber();
 		String category = "송금";
 
 		TransferDto transferDto = new TransferDto(); // transfer Dto Create

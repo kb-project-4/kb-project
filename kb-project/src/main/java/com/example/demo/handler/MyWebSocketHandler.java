@@ -39,7 +39,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	GPTChatRestService gptChatRestService; // chat gpt rest api
-	
+
 	static private HttpServletRequest request;
 
 	static long amount;
@@ -57,8 +57,8 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("연결 시도중");
-		userState = UserState.INITIAL; // 현재는 초기상태    
-	    InetSocketAddress clientAddress = session.getRemoteAddress();
+		userState = UserState.INITIAL; // 현재는 초기상태
+		InetSocketAddress clientAddress = session.getRemoteAddress();
 		clientIp = clientAddress.getAddress().getHostAddress();
 		System.out.println("clientIp: " + clientIp);
 	}
@@ -98,23 +98,22 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 		else
 			action = "etc";
 
- 		System.out.println("socket received action : " + action);
+		System.out.println("socket received action : " + action);
 
 		if (userState == UserState.INITIAL) {
 			System.out.println(clientIp);
 			System.out.println(user.getClientSafeIp());
-			
+
 			if (action.equals("송금")) {
-				if (bookMarkService.findByUserAndBookMarkName(user, name) == null) {
+//				if (bookMarkService.findByUserAndBookMarkName(user, name) == null) {
+				if (bookMarkService.findByUserAndname(user, name) == null) {
 					session.sendMessage(new TextMessage(name + "은 즐겨찾기에 존재하지 않는 사용자입니다. 다시 말씀해주세요."));
-				}
-				else if(!clientIp.equals(user.getClientSafeIp())) {
+				} else if (!clientIp.equals(user.getClientSafeIp())) {
 					session.sendMessage(new TextMessage("인가되지 않은 사용자의 PC 입니다."));
-				}
-				else {
+				} else {
 					session.sendMessage(new TextMessage(name + "에게 " + amount + "원 송금하시겠습니까?")); // Client에게 값 전송
 					userState = UserState.WAITING_CONFIRMATION;
-				} 
+				}
 			}
 
 			else if (action.equals("조회")) {
@@ -132,8 +131,12 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 				List<BookMark> bookMarkUsers = bookMarkService.getAllBookMarkUserName(user);
 				String msg = "현재 즐겨찾기에 추가된 사용자는 ";
 				for (BookMark bookMarkUser : bookMarkUsers) {
-					if(bookMarkService.findByUserAndBookMarkName(user, bookMarkUser.getBookMarkName()) != null){
-						msg += " " + bookMarkUser.getBookMarkBankname() + "은행의 " + bookMarkUser.getBookMarkName();
+//					if(bookMarkService.findByUserAndBookMarkName(user, bookMarkUser.getBookMarkName()) != null){
+					if (bookMarkService.findByUserAndname(user,
+							bookMarkUser.getBankAccount().getUser().getUsername()) != null) {
+//						msg += " " + bookMarkUser.getBookMarkBankname() + "은행의 " + bookMarkUser.getBookMarkName();
+						msg += " " + bookMarkUser.getBankAccount().getBank().getBankname() + "은행의 "
+								+ bookMarkUser.getBankAccount().getUser().getUsername();
 					}
 				}
 				msg += " 입니다.";
@@ -151,7 +154,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
 		else if (userState == UserState.WAITING_CONFIRMATION) { // 상태가 예, 아니오로 바뀌었을 떄, (송금용 예/아니오)
 			if (action.equals("예")) {
-				BookMark bookMarkUser = bookMarkService.findByUserAndBookMarkName(user, name);
+				BookMark bookMarkUser = bookMarkService.findByUserAndname(user, name);
 
 				bankAccountService.transferToBookMarkUser(bookMarkUser, user, amount);
 				session.sendMessage(new TextMessage("송금이 완료되었습니다."));

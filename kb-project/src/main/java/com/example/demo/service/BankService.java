@@ -29,6 +29,7 @@ public class BankService {
 	}
 
 	public Bank createBank(Bank bank) {
+		System.out.println("bank service" + bank.toString());
 		return bankRepository.save(bank);
 	}
 

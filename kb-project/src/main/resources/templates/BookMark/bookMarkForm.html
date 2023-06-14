@@ -16,18 +16,18 @@
 		<div class="mb-3">
 			<label for="bankname" class="form-label">은행명:</label> <input
 				id="bankname" class="form-control" type="text"
-				th:field="*{bookMarkBankname}">
+				th:field="*{bankAccount.bank.bankname}">
 		</div>
 
 		<div class="mb-3">
 			<label for="banknumber" class="form-label">계좌번호:</label> <input
 				type="text" id="banknumber" class="form-control"
-				th:field="*{bookMarkAccountNumber}">
+				th:field="*{bankAccount.accountNumber}">
 		</div>
 
 		<div class="mb-3">
 			<label for="name" class="form-label">이름</label> <input type="text"
-				class="form-control" id="name" th:field="*{bookMarkName}" required>
+				class="form-control" id="name" th:field="*{bankAccount.user.username}" required>
 		</div>
 
 		<div>

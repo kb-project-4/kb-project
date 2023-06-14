@@ -16,6 +16,7 @@ import java.time.Duration;
 @Configuration
 public class ChatGPTConfig {
 
+	
   @Value("${gpt.token}")
   private String token;
 
@@ -25,5 +26,6 @@ public class ChatGPTConfig {
     log.info("token : {}을 활용한 OpenAiService 을 생성합니다.", token);
     return new OpenAiService(token, Duration.ofSeconds(60));
   }
-
+  
+  
 }

@@ -31,11 +31,11 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td th:text="${bookMark.bookMarkName}"></td>
-						<td th:text="${bookMark.bookMarkAccountNumber}"></td>
-						<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}" style="color: red;">삭제</a></td>
+						<td th:text="${bookMark.bankAccount.user.username}"></td>
+						<td th:text="${bookMark.bankAccount.accountNumber}"></td>
+ 						<td><a th:href="@{/bookmarks/delete/{id}(id=${bookMark.id})}" style="color: red;">삭제</a></td>
 						<td><a href="#"
-							th:data-accountNumber="${bookMark.bookMarkAccountNumber}"
+							th:data-accountNumber="${bookMark.bankAccount.accountNumber}"
 							onclick="openTransferModal(this.getAttribute('data-accountNumber'))" style="color: blue;">송금</button></a></td>
 
 					</tr>
